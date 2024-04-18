@@ -1,0 +1,18 @@
+ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+}
+
+li {
+  border-radius: 0.6vw;
+  margin-left: 2vw;
+  padding: 0.4vw;
+  transition: background-color 1s ease;
+}
+
+li:hover {
+  background-color: lightskyblue;
+  cursor: pointer;
+}

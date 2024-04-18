@@ -1,0 +1,16 @@
+.body-table-row:nth-child(odd) {
+  background-color: lightblue;
+}
+
+.head-table-cell {
+  background-color: lightgray;
+}
+
+.title-of-table-in-input-page {
+  margin-right: 2vw;
+}
+
+.title-and-table-in-input-page {
+  display: flex;
+  justify-content: right;
+}
