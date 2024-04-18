@@ -5,7 +5,7 @@ const columns = [
   {
     accessorKey: "ratio",
     header: () => {
-      return <>יחס- מובהק אל מול ראשונZי</>;
+      return <>יחס- מובהק אל מול ראשוני</>;
     },
   },
   { accessorKey: "meaning", header: "משמעות" },

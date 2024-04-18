@@ -29,41 +29,41 @@ export default function GenericTable({
 
   return (
     <>
-      <div className="title-of-table-in-input-page">
+      <div
+        style={{
+          border: "2px solid",
+          display: "inline-block",
+        }}
+      >
         <b>{tableTitle}</b>
 
-        <div className="table-in-input-page">
-          <table>
-            <thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr className="head-table-cell" key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <th key={header.id}>
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody>
-              {table.getRowModel().rows.map((row) => (
-                <tr className="body-table-row" key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <table>
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr className="head-table-cell" key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.id}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr className="body-table-row" key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </>
   );
