@@ -1,7 +1,7 @@
 import "../../Styles/NavBarStyles.css";
 export default function LevelsNavBar() {
   return (
-    <nav>
+    <nav style={{ backgroundColor: "lightgrey", borderRadius: "2vw" }}>
       <ul>
         <li>נתוני בסיס</li>
         <li>טבלאות פרמטרים</li>

@@ -5,7 +5,6 @@ import "./Styles/TableStyles.css";
 function App() {
   return (
     <div>
-      <LevelsNavBar></LevelsNavBar>
       <InputScreen></InputScreen>
     </div>
   );

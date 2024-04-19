@@ -3,6 +3,7 @@ import GenericTable from "./GenericTable";
 import Input from "../Input";
 import DropDownList from "../DropDownList";
 
+const style1 = { width: "2.5vw" };
 const columns = [
   {
     accessorKey: "tax_darga",
@@ -13,7 +14,7 @@ const columns = [
   },
   {
     accessorKey: "efficiencyTax",
-    header: "מס התייעלות",
+    header: "% מס התייעלות",
     cell: (props) => {
       return (
         <Input
@@ -21,6 +22,8 @@ const columns = [
           minI={0}
           maxI={100}
           setpI={0.05}
+          addLogo={" %"}
+          styleI={style1}
         ></Input>
       );
     },

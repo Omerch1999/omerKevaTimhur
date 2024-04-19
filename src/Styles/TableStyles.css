@@ -2,6 +2,11 @@
   background-color: lightblue;
 }
 
+.body-table-row {
+  white-space: nowrap;
+}
+
 .head-table-cell {
   background-color: lightgray;
+  white-space: nowrap;
 }

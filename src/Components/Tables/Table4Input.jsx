@@ -5,13 +5,22 @@ const columns = [
   {
     accessorKey: "ratio",
     header: () => {
-      return <>יחס- מובהק אל מול ראשוני</>;
+      return (
+        <div style={{ whiteSpace: "pre-wrap" }}>
+          {"- יחס  \n מובהק אל מול ראשוני"}
+        </div>
+      );
     },
   },
   { accessorKey: "meaning", header: "משמעות" },
   {
     accessorKey: "option",
-    header: "תוצאה מתקבלת",
+    header: () => {
+      return <div style={{ whiteSpace: "pre-wrap" }}>{"תוצאה מתקבלת"}</div>;
+    },
+    cell: (props) => {
+      return <div style={{ textAlign: "center" }}>{props.getValue()}</div>;
+    },
   },
 ];
 export default function Table4Input() {

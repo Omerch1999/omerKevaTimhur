@@ -4,6 +4,13 @@ import Input from "../Input";
 import GenericTable from "./GenericTable";
 const columns = [
   {
+    accessorKey: "name",
+    header: "מקצוע",
+    cell: (props) => {
+      return <div style={{ direction: "rtl" }}>{props.getValue()}</div>;
+    },
+  },
+  {
     accessorKey: "lvl",
     header: "מקדם הקצאה",
     cell: (props) => {
@@ -11,10 +18,6 @@ const columns = [
         <Input getValue={props.getValue} minI={0} maxI={1} setpI={0.01}></Input>
       );
     },
-  },
-  {
-    accessorKey: "name",
-    header: "מקצוע",
   },
 ];
 
@@ -24,6 +27,7 @@ export default function Table1Input() {
       columnsForTable={columns}
       dataForTable={mekadmi_haktza_level1}
       tableTitle={"שלב 1- מקדמי הקצאה עבור קבוצת מקדם"}
+      isVertical={0}
     ></GenericTable>
   );
 }

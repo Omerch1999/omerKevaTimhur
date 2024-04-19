@@ -1,4 +1,11 @@
-.tables-in-page {
+.tables-in-page-first-row {
   display: flex;
+  align-items: flex-start;
+  flex-direction: row-reverse;
+}
+
+.tables-in-page-second-row {
+  display: flex;
+  align-items: flex-start;
   flex-direction: row-reverse;
 }

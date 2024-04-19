@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "../Styles/TableStyles.css";
 export default function Input({
   getValue,
   row,
@@ -7,6 +8,8 @@ export default function Input({
   minI = 0,
   maxI = 1,
   setpI = 0.01,
+  addLogo = "",
+  styleI,
 }) {
   //type: 1 0-1 by 0.01
   const initialValue = getValue();
@@ -21,16 +24,20 @@ export default function Input({
   }, [initialValue]);
 
   return (
-    <input
-      type="number"
-      min={minI}
-      max={maxI}
-      step={setpI}
-      value={value}
-      onBlur={onBlur}
-      onChange={(e) => {
-        setValue(e.target.value);
-      }}
-    ></input>
+    <div>
+      <input
+        style={styleI}
+        type="number"
+        min={minI}
+        max={maxI}
+        step={setpI}
+        value={value}
+        onBlur={onBlur}
+        onChange={(e) => {
+          setValue(e.target.value);
+        }}
+      ></input>
+      {addLogo}
+    </div>
   );
 }
