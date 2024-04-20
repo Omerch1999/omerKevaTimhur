@@ -18,7 +18,7 @@ const columns = [
     cell: (props) => {
       return (
         <Input
-          getValue={props.getValue}
+          getValue={parseFloat(props.getValue()).toFixed(2)}
           minI={0}
           maxI={100}
           setpI={0.05}

@@ -6,7 +6,7 @@ const columns = [
     accessorKey: "ratio",
     header: "תמהיל",
     cell: (props) => {
-      return <Input getValue={props.getValue}></Input>;
+      return <Input getValue={props.getValue()}></Input>;
     },
   },
 

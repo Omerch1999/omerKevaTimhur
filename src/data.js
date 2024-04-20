@@ -58,7 +58,7 @@ export const mekadmi_haktza_level1 = [
 
 export const tax_darga_level2 = [
   { id: 222221, name: "קצין ראשוני" },
-  { id: 222222, name: "נגד מובהק" },
+  { id: 222233, name: "נגד מובהק" },
 ];
 
 export const mekadmi_itiaalut_level2 = [
@@ -166,7 +166,7 @@ export const mekadmi_itiaalut_level2 = [
 
 export const model_segel_tax_level3 = [
   {
-    id: 222222,
+    id: 222233,
     name: "נגד מובהק",
     tax: 0.73,
   },
@@ -217,7 +217,7 @@ export const tamhil_level6 = [
 
 export const tax_darga_level6 = [
   { id: 222221, name: "קצין ראשוני" },
-  { id: 222223, name: "נגד ראשוני" },
+  { id: 222231, name: "נגד ראשוני" },
 ];
 
 export const tax_targeted_percentage_level6 = [
@@ -264,4 +264,42 @@ export const tax_targeted_percentage_level6 = [
   { id: 3007, name: 'מח"א 111', tax_darga: "לא ידוע" },
   { id: 9035, name: "מפק כנף 7", tax_darga: "לא ידוע" },
   { id: 3478, name: 'שט"ל 121', tax_darga: "לא ידוע" },
+];
+
+export const costs_airforce = [
+  {
+    id: 222221,
+    name: "קצין ראשוני",
+    price: 188000,
+  },
+  {
+    id: 222222,
+    name: "קצין מובהק",
+    price: 313000,
+  },
+  {
+    id: 222223,
+    name: "קצין בכיר",
+    price: 615000,
+  },
+  {
+    id: 222231,
+    name: "נגד קצר",
+    price: 125000,
+  },
+  {
+    id: 222232,
+    name: "נגד ראשוני",
+    price: 150000,
+  },
+  {
+    id: 222233,
+    name: "נגד מובהק",
+    price: 250000,
+  },
+  {
+    id: 222220,
+    name: "מונחי ראשוני",
+    price: 137000,
+  },
 ];

@@ -15,7 +15,12 @@ const columns = [
     header: "מקדם הקצאה",
     cell: (props) => {
       return (
-        <Input getValue={props.getValue} minI={0} maxI={1} setpI={0.01}></Input>
+        <Input
+          getValue={parseFloat(props.getValue()).toFixed(2)}
+          minI={0}
+          maxI={1}
+          setpI={0.01}
+        ></Input>
       );
     },
   },

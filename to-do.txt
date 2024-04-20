@@ -1,0 +1,2 @@
+add row and columns indexes and update functions for all components that use 
+Input component. (like airforce price table)

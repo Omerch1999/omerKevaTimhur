@@ -10,13 +10,14 @@ export default function Input({
   setpI = 0.01,
   addLogo = "",
   styleI,
+  updateFunction,
 }) {
   //type: 1 0-1 by 0.01
-  const initialValue = getValue();
+  const initialValue = getValue;
   const [value, setValue] = useState(initialValue);
 
   const onBlur = () => {
-    console.log(value);
+    table.options.meta.updateTableData(row.index, column.id, value);
   };
 
   useEffect(() => {
@@ -35,6 +36,7 @@ export default function Input({
         onBlur={onBlur}
         onChange={(e) => {
           setValue(e.target.value);
+          updateFunction(row.index, column.id, e.target.value);
         }}
       ></input>
       {addLogo}

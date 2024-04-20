@@ -7,6 +7,7 @@ import Table6Input11 from "../Tables/Table6Input11";
 
 import "../../Styles/InputScreenStyles.css";
 import Table6Input12 from "../Tables/Table6Input12";
+import TablePriceAirFrceInput from "../Tables/TablePriceAirForceInput";
 export default function InputScreen() {
   return (
     <div className="omerTemp">
@@ -20,6 +21,7 @@ export default function InputScreen() {
         <Table2Input></Table2Input>
         <Table6Input11></Table6Input11>
         <Table6Input12></Table6Input12>
+        <TablePriceAirFrceInput></TablePriceAirFrceInput>
       </div>
     </div>
   );

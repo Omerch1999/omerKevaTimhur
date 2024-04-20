@@ -3,7 +3,7 @@ import {
   getCoreRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../Styles/TableStyles.css";
 
 export default function GenericTable({
@@ -14,18 +14,25 @@ export default function GenericTable({
 }) {
   const columns = columnsForTable;
   const [data, setData] = useState(dataForTable);
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    // meta: {
-    //   updateData: (rowIndex, columnId, value) =>
-    //     setData((prev) =>
-    //       prev.map((row, index) =>
-    //         index === rowIndex ? { ...prev[rowIndex], [columnId]: value } : row
-    //       )
-    //     ),
-    // },
+    meta: {
+      updateTableData: (rowIndex, columnId, value) => {
+        setData((prev) => {
+          const newData = prev.map((row, index) => {
+            if (rowIndex === index) {
+              return { ...prev[rowIndex], [columnId]: parseFloat(value) };
+            }
+            return row;
+          });
+
+          return newData;
+        });
+      },
+    },
   });
 
   if (isVertical === 1) {
