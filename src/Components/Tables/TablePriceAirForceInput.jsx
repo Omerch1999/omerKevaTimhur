@@ -53,6 +53,7 @@ export default function TablePriceAirFrceInput() {
                 min={tableData[props.row.index].price}
                 max={tableData[props.row.index].price}
                 readOnly={true}
+                addonAfter={"₪"}
               ></InputNumber>
             </Tooltip>
           );
@@ -63,6 +64,7 @@ export default function TablePriceAirFrceInput() {
             min={0}
             max={1000000}
             step={1}
+            addonAfter={"₪"}
             onChange={(value) => {
               handleSetTaleData(props.row.index, props.column.id, value);
             }}
