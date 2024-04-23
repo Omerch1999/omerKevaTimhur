@@ -1,22 +1,22 @@
 import GenericTable from "./GenericTable";
 import { model_segel_tax_level3 } from "../../data";
 import Input from "../Input";
+import { InputNumber } from "antd";
 
-const style1 = { width: "2.2vw" };
 const columns = [
   {
     accessorKey: "tax",
     header: "מס התייעלות",
     cell: (props) => {
+      const styleForCell = { scale: "85%" };
       return (
-        <Input
-          getValue={props.getValue()}
-          minI={0}
-          maxI={1}
-          setpI={0.01}
-          addLogo="%"
-          styleI={style1}
-        ></Input>
+        <InputNumber
+          style={styleForCell}
+          defaultValue={props.getValue()}
+          min={0}
+          max={1}
+          step={0.01}
+        ></InputNumber>
       );
     },
   },

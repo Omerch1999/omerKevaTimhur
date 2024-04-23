@@ -1,3 +1,4 @@
+import { InputNumber } from "antd";
 import { mekadmi_haktza_level1 } from "../../data";
 import Input from "../Input";
 
@@ -14,13 +15,15 @@ const columns = [
     accessorKey: "lvl",
     header: "מקדם הקצאה",
     cell: (props) => {
+      const styleForCell = { scale: "85%" };
       return (
-        <Input
-          getValue={parseFloat(props.getValue()).toFixed(2)}
-          minI={0}
-          maxI={1}
-          setpI={0.01}
-        ></Input>
+        <InputNumber
+          style={styleForCell}
+          defaultValue={props.getValue()}
+          min={0}
+          max={1}
+          step={0.01}
+        ></InputNumber>
       );
     },
   },

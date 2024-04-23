@@ -1,12 +1,22 @@
 import GenericTable from "./GenericTable";
 import { tamhil_level6 } from "../../data";
 import Input from "../Input";
+import { InputNumber } from "antd";
 const columns = [
   {
     accessorKey: "ratio",
     header: "תמהיל",
     cell: (props) => {
-      return <Input getValue={props.getValue()}></Input>;
+      const styleForCell = { scale: "90%", width: "4vw" };
+      return (
+        <InputNumber
+          style={styleForCell}
+          defaultValue={props.getValue()}
+          min={0}
+          max={1}
+          step={0.01}
+        ></InputNumber>
+      );
     },
   },
 

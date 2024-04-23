@@ -6,7 +6,14 @@ const columns = [
     accessorKey: "tax_darga",
     header: "קנס בדרגה",
     cell: (props) => {
-      return <DropDownList optionsZ={tax_darga_level6}></DropDownList>;
+      const styleForCell = { scale: "90%", width: "6vw" };
+      return (
+        <DropDownList
+          optionsZ={tax_darga_level6}
+          defaultValueZ={props.getValue()}
+          styleZ={styleForCell}
+        ></DropDownList>
+      );
     },
   },
   {

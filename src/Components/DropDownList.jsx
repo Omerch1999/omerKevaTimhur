@@ -1,9 +1,14 @@
-export default function DropDownList({ optionsZ }) {
+import { Select } from "antd";
+export default function DropDownList({ optionsZ, defaultValueZ, styleZ }) {
+  const options = optionsZ.map((item) => ({
+    value: item.id,
+    label: item.name,
+  }));
   return (
-    <select>
-      {optionsZ.map((item) => {
-        return <option key={item.id}>{item.name}</option>;
-      })}
-    </select>
+    <Select
+      options={options}
+      defaultValue={defaultValueZ}
+      style={styleZ}
+    ></Select>
   );
 }

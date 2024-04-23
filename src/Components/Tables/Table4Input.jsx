@@ -11,6 +11,9 @@ const columns = [
         </div>
       );
     },
+    cell: (props) => (
+      <div style={{ textAlign: "center" }}>{props.getValue()}</div>
+    ),
   },
   { accessorKey: "meaning", header: "משמעות" },
   {

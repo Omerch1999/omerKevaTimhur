@@ -2,29 +2,37 @@ import { mekadmi_itiaalut_level2, tax_darga_level2 } from "../../data";
 import GenericTable from "./GenericTable";
 import Input from "../Input";
 import DropDownList from "../DropDownList";
+import { InputNumber } from "antd";
 
-const style1 = { width: "2.5vw" };
 const columns = [
   {
     accessorKey: "tax_darga",
     header: "קנס בדרגה",
     cell: (props) => {
-      return <DropDownList optionsZ={tax_darga_level2}></DropDownList>;
+      const styleForCell = { scale: "90%", width: "6vw" };
+      return (
+        <DropDownList
+          optionsZ={tax_darga_level2}
+          defaultValueZ={props.getValue()}
+          styleZ={styleForCell}
+        ></DropDownList>
+      );
     },
   },
   {
     accessorKey: "efficiencyTax",
     header: "% מס התייעלות",
     cell: (props) => {
+      const styleForCell = { scale: "90%", width: "5.5vw" };
       return (
-        <Input
-          getValue={parseFloat(props.getValue()).toFixed(2)}
-          minI={0}
-          maxI={100}
-          setpI={0.05}
-          addLogo={" %"}
-          styleI={style1}
-        ></Input>
+        <InputNumber
+          style={styleForCell}
+          defaultValue={props.getValue()}
+          min={0}
+          max={100}
+          step={0.05}
+          addonAfter={"%"}
+        ></InputNumber>
       );
     },
   },

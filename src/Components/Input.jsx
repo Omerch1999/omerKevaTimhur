@@ -36,6 +36,7 @@ export default function Input({
         onBlur={onBlur}
         onChange={(e) => {
           setValue(e.target.value);
+          console.log("column.id", column.id);
           updateFunction(row.index, column.id, e.target.value);
         }}
       ></input>

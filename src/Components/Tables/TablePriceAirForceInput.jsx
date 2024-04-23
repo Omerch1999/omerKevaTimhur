@@ -2,9 +2,7 @@ import GenericTable from "../Tables/GenericTable";
 import Input from "../Input";
 import { costs_airforce } from "../../data";
 import { useEffect, useState } from "react";
-import { Tooltip } from "antd";
-GenericTable;
-const style1 = { width: "3.5vw", color: "red" };
+import { InputNumber, Tooltip } from "antd";
 
 export default function TablePriceAirFrceInput() {
   const [tableData, setTableData] = useState(costs_airforce);
@@ -26,13 +24,6 @@ export default function TablePriceAirFrceInput() {
     const priceNagadRishoni = tableData.find((row) => row.id === 222232).price;
 
     setTableData((prev) => {
-      // return [
-      //   ...prev,
-      //   {
-      //     ...prev.find((row) => row.id === 222220),
-      //     price: (priceNagadkatsar + priceNagadRishoni) / 2,
-      //   },
-      // ];
       const newData = prev.map((item) => {
         if (item.id === 222220) {
           return { ...item, price: (priceNagadkatsar + priceNagadRishoni) / 2 };
@@ -57,23 +48,25 @@ export default function TablePriceAirFrceInput() {
               placement="topRight"
               title="שדה מחושב - ממוצע מחיר נגד קצר וראשוני"
             >
-              <div>{tableData[props.row.index].price + " ₪"}</div>
+              <InputNumber
+                defaultValue={tableData[props.row.index].price}
+                min={tableData[props.row.index].price}
+                max={tableData[props.row.index].price}
+                readOnly={true}
+              ></InputNumber>
             </Tooltip>
           );
         }
         return (
-          <Input
-            row={props.row}
-            column={props.column}
-            table={props.table}
-            styleI={style1}
-            getValue={tableData[props.row.index].price}
-            maxI={1000000}
-            minI={1}
-            addLogo="₪"
-            setpI={0}
-            updateFunction={handleSetTaleData}
-          ></Input>
+          <InputNumber
+            defaultValue={tableData[props.row.index].price}
+            min={0}
+            max={1000000}
+            step={1}
+            onChange={(value) => {
+              handleSetTaleData(props.row.index, props.column.id, value);
+            }}
+          ></InputNumber>
         );
       },
     },
