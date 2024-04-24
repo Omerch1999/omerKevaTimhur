@@ -19,13 +19,14 @@ export default function TablePriceAirFrceInput() {
     });
   }
 
+  //on change price of nagad katzar or nagad rishoni, it calculate the avarage price "מונחי ראשוני"
   useEffect(() => {
     const priceNagadkatsar = tableData.find((row) => row.id === 222231).price;
     const priceNagadRishoni = tableData.find((row) => row.id === 222232).price;
 
     setTableData((prev) => {
       const newData = prev.map((item) => {
-        if (item.id === 222220) {
+        if (item.id === 222230) {
           return { ...item, price: (priceNagadkatsar + priceNagadRishoni) / 2 };
         }
         return item;
@@ -42,13 +43,21 @@ export default function TablePriceAirFrceInput() {
       accessorKey: "price",
       header: "מחיר",
       cell: (props) => {
-        if (props.row.original.id === 222220) {
+        const styleForCell = { scale: "95%", width: "6vw" };
+        const styleForCellGreen = {
+          width: "6vw",
+          scale: "95%",
+          border: "2px solid green",
+        };
+        if (props.row.original.id === 222230) {
+          //calculated fild
           return (
             <Tooltip
               placement="topRight"
               title="שדה מחושב - ממוצע מחיר נגד קצר וראשוני"
             >
               <InputNumber
+                style={styleForCellGreen}
                 defaultValue={tableData[props.row.index].price}
                 min={tableData[props.row.index].price}
                 max={tableData[props.row.index].price}
@@ -59,7 +68,9 @@ export default function TablePriceAirFrceInput() {
           );
         }
         return (
+          //regular input fild
           <InputNumber
+            style={styleForCell}
             defaultValue={tableData[props.row.index].price}
             min={0}
             max={1000000}
@@ -72,7 +83,10 @@ export default function TablePriceAirFrceInput() {
         );
       },
     },
-    { accessorKey: "name", header: "דרגה" },
+    {
+      accessorKey: "name",
+      header: "דרגה",
+    },
   ];
 
   return (

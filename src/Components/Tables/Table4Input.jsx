@@ -19,7 +19,7 @@ const columns = [
   {
     accessorKey: "option",
     header: () => {
-      return <div style={{ whiteSpace: "pre-wrap" }}>{"תוצאה מתקבלת"}</div>;
+      return <div>{"תוצאה מתקבלת"}</div>;
     },
     cell: (props) => {
       return <div style={{ textAlign: "center" }}>{props.getValue()}</div>;

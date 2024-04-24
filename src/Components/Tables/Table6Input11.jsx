@@ -7,7 +7,7 @@ const columns = [
     accessorKey: "ratio",
     header: "תמהיל",
     cell: (props) => {
-      const styleForCell = { scale: "90%", width: "4vw" };
+      const styleForCell = { scale: "95%", width: "4vw" };
       return (
         <InputNumber
           style={styleForCell}

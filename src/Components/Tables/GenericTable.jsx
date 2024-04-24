@@ -38,7 +38,7 @@ export default function GenericTable({
   if (isVertical === 1) {
     return (
       <>
-        <div style={{ padding: "10px" }}>
+        <div>
           <div style={{ textAlign: "center", fontWeight: "bold" }}>
             {tableTitle}
           </div>
@@ -80,7 +80,7 @@ export default function GenericTable({
   if (isVertical === 0) {
     return (
       <>
-        <div style={{ padding: "10px" }}>
+        <div>
           <div style={{ textAlign: "center", fontWeight: "bold" }}>
             {tableTitle}
           </div>

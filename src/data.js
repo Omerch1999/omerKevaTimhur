@@ -268,9 +268,9 @@ export const tax_targeted_percentage_level6 = [
 
 export const costs_airforce = [
   {
-    id: 222221,
-    name: "קצין ראשוני",
-    price: 188000,
+    id: 222223,
+    name: "קצין בכיר",
+    price: 615000,
   },
   {
     id: 222222,
@@ -278,19 +278,9 @@ export const costs_airforce = [
     price: 313000,
   },
   {
-    id: 222223,
-    name: "קצין בכיר",
-    price: 615000,
-  },
-  {
-    id: 222231,
-    name: "נגד קצר",
-    price: 125000,
-  },
-  {
-    id: 222232,
-    name: "נגד ראשוני",
-    price: 150000,
+    id: 222221,
+    name: "קצין ראשוני",
+    price: 188000,
   },
   {
     id: 222233,
@@ -298,8 +288,69 @@ export const costs_airforce = [
     price: 250000,
   },
   {
-    id: 222220,
+    id: 222230,
     name: "מונחי ראשוני",
     price: 137000,
+  },
+  {
+    id: 222232,
+    name: "נגד ראשוני",
+    price: 150000,
+  },
+
+  {
+    id: 222231,
+    name: "נגד קצר",
+    price: 125000,
+  },
+];
+
+export const costs_agat = [
+  {
+    id: 222223,
+    name: "קצין בכיר",
+    price: 634577,
+  },
+  {
+    id: 222222,
+    name: "קצין מובהק",
+    price: 386337,
+  },
+  {
+    id: 222221,
+    name: "קצין ראשוני",
+    price: 259338,
+    percentege: 0.25,
+  },
+  {
+    id: 222224,
+    name: "קצין קצר",
+    price: 206203,
+  },
+  {
+    id: 222220,
+    name: "קצין ראשוני ממוצע ותמהיל",
+    price: 219486.75,
+  },
+  {
+    id: 222233,
+    name: "נגד מובהק",
+    price: 280517,
+  },
+  {
+    id: 222230,
+    name: "מונחי ראשוני",
+    price: 154324,
+  },
+  {
+    id: 222232,
+    name: "נגד ראשוני ארוך",
+    price: 165384,
+  },
+
+  {
+    id: 222231,
+    name: "נגד ראשוני קצר",
+    price: 143264,
   },
 ];
