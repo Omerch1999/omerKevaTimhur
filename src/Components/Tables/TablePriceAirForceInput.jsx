@@ -7,7 +7,8 @@ import { InputNumber, Tooltip } from "antd";
 export default function TablePriceAirFrceInput() {
   const [tableData, setTableData] = useState(costs_airforce);
 
-  function handleSetTaleData(rowIndex, columnId, value) {
+  function handleSetTableData(rowIndex, columnId, value) {
+    //save the changes of input in state
     setTableData((prev) => {
       const newData = prev.map((row, index) => {
         if (rowIndex === index) {
@@ -43,9 +44,9 @@ export default function TablePriceAirFrceInput() {
       accessorKey: "price",
       header: "מחיר",
       cell: (props) => {
-        const styleForCell = { scale: "95%", width: "6vw" };
+        const styleForCell = { width: "6.7vw", scale: "95%" };
         const styleForCellGreen = {
-          width: "6vw",
+          width: "6.7vw",
           scale: "95%",
           border: "2px solid green",
         };
@@ -77,7 +78,7 @@ export default function TablePriceAirFrceInput() {
             step={1}
             addonAfter={"₪"}
             onChange={(value) => {
-              handleSetTaleData(props.row.index, props.column.id, value);
+              handleSetTableData(props.row.index, props.column.id, value);
             }}
           ></InputNumber>
         );

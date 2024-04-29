@@ -1,19 +1,22 @@
 import { InputNumber, Tooltip } from "antd";
 import { costs_agat } from "../../data";
 import GenericTable from "./GenericTable";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function TablePriceAgatInput() {
   const [tableData, setTableData] = useState(costs_agat);
+  const [tamhil, setTamhil] = useState([0.25, 0.75]); //[rishoni, katzar ]
+
+  useEffect(() => {}, []);
   const columns = [
     {
       accessorKey: "price",
       header: "עלות",
       cell: (props) => {
         const styleForCellGreen = {
+          width: "6.7vw",
           scale: "95%",
           border: "2px solid green",
-          width: "6vw",
         };
         if (tableData[props.row.index].id === 222220) {
           return (
@@ -57,12 +60,18 @@ export default function TablePriceAgatInput() {
                   placement="topRight"
                   title="תמהיל- חישוב מחיר קצין ראשוני ממוצע ותמהיל"
                 >
-                  <InputNumber
+                  <InputNumber //katzin rishoni tamhil
                     style={styleForCell}
-                    defaultValue={0.25}
+                    defaultValue={tamhil[0]}
                     min={0}
                     max={1}
                     step={0.01}
+                    onChange={(value) => {
+                      setTamhil((prev) => {
+                        console.log(prev);
+                        return [value, prev[1]];
+                      });
+                    }}
                   ></InputNumber>
                 </Tooltip>
               ) : (
@@ -70,12 +79,18 @@ export default function TablePriceAgatInput() {
                   placement="topRight"
                   title="תמהיל- חישוב מחיר קצין ראשוני ממוצע ותמהיל"
                 >
-                  <InputNumber
+                  <InputNumber //katzin katzar tamhil
                     style={styleForCell}
-                    defaultValue={0.75}
+                    defaultValue={tamhil[1]}
                     min={0}
                     max={1}
                     step={0.01}
+                    onChange={(value) => {
+                      setTamhil((prev) => {
+                        console.log(prev);
+                        return [prev[0], value];
+                      });
+                    }}
                   ></InputNumber>
                 </Tooltip>
               )}
