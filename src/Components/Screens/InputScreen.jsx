@@ -7,8 +7,10 @@ import Table6Input11 from "../Tables/Table6Input11";
 import Table6Input12 from "../Tables/Table6Input12";
 import TablePriceAirFrceInput from "../Tables/TablePriceAirForceInput";
 import TablePriceAgatInput from "../Tables/TablePriceAgatInput";
+import Table6InputTargetMatseva from "../Tables/Table6InputTargetMatseva";
 
 import "../../Styles/InputScreenStyles.css";
+import Table8Input from "../Tables/Table8Input";
 
 export default function InputScreen() {
   return (
@@ -34,6 +36,8 @@ export default function InputScreen() {
         <div>
           <TablePriceAirFrceInput></TablePriceAirFrceInput>
           <TablePriceAgatInput></TablePriceAgatInput>
+          <Table8Input></Table8Input>
+          <Table6InputTargetMatseva></Table6InputTargetMatseva>
         </div>
       </div>
     </div>

@@ -326,6 +326,7 @@ export const costs_agat = [
     id: 222224,
     name: "קצין קצר",
     price: 206203,
+    percentege: 0.75,
   },
   {
     id: 222220,
@@ -354,3 +355,5 @@ export const costs_agat = [
     price: 143264,
   },
 ];
+
+export const hitkansutPercentage = 2.57;

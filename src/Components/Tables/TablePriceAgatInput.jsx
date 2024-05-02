@@ -5,9 +5,67 @@ import { useState, useEffect } from "react";
 
 export default function TablePriceAgatInput() {
   const [tableData, setTableData] = useState(costs_agat);
-  const [tamhil, setTamhil] = useState([0.25, 0.75]); //[rishoni, katzar ]
+  const [tamhilKatzar, setTamhilKatzar] = useState([
+    costs_agat.find((row) => row.id === 222224).percentege,
+  ]); //save only katzin katzar because katzin rishoni will be: 1-katzinKatzar
 
-  useEffect(() => {}, []);
+  //save the changes of input in state
+  function handleSetTableData(rowIndex, columnId, value) {
+    setTableData((prev) => {
+      const newData = prev.map((row, index) => {
+        if (rowIndex === index) {
+          return { ...prev[rowIndex], [columnId]: parseFloat(value) };
+        }
+        return row;
+      });
+      return newData;
+    });
+  }
+
+  //on change price of nagad katzar or nagad rishoni, it calculate the avarage price "מונחי ראשוני"
+  useEffect(() => {
+    const priceNagadKatsar = tableData.find((row) => row.id === 222231).price;
+    const priceNagadRishoni = tableData.find((row) => row.id === 222232).price;
+
+    setTableData((prev) => {
+      const newData = prev.map((item) => {
+        if (item.id === 222230) {
+          return { ...item, price: (priceNagadKatsar + priceNagadRishoni) / 2 };
+        }
+        return item;
+      });
+      return newData;
+    });
+  }, [
+    tableData.find((row) => row.id === 222231).price,
+    tableData.find((row) => row.id === 222232).price,
+  ]);
+
+  //on change price of katzin katzar or katzin rishoni, it calculate the price "קצין ראשוני ממוצע ותמהיל"
+  useEffect(() => {
+    const priceKatzinKatzar = tableData.find((row) => row.id === 222224).price;
+    const priceKatzinRishoni = tableData.find((row) => row.id === 222221).price;
+
+    setTableData((prev) => {
+      const newData = prev.map((item) => {
+        if (item.id === 222220) {
+          return {
+            ...item,
+            price:
+              priceKatzinKatzar * tamhilKatzar +
+              priceKatzinRishoni * (1 - tamhilKatzar),
+          };
+        }
+        return item;
+      });
+      return newData;
+    });
+  }, [
+    tamhilKatzar,
+    tableData.find((row) => row.id === 222221).price,
+    tableData.find((row) => row.id === 222224).price,
+  ]);
+
   const columns = [
     {
       accessorKey: "price",
@@ -18,7 +76,12 @@ export default function TablePriceAgatInput() {
           scale: "95%",
           border: "2px solid green",
         };
+        const styleForCell = {
+          width: "6.7vw",
+          scale: "95%",
+        };
         if (tableData[props.row.index].id === 222220) {
+          //katzin rishoni memutza v tamhil
           return (
             <Tooltip
               placement="topRight"
@@ -26,14 +89,38 @@ export default function TablePriceAgatInput() {
             >
               <InputNumber
                 style={styleForCellGreen}
-                defaultValue={props.getValue()}
+                defaultValue={tableData[props.row.index].price.toFixed(2)}
                 readOnly={true}
                 addonAfter={"₪"}
               ></InputNumber>
             </Tooltip>
           );
         }
-        return <InputNumber defaultValue={props.getValue()}></InputNumber>;
+        if (tableData[props.row.index].id === 222230) {
+          return (
+            <Tooltip
+              placement="topRight"
+              title="שדה מחושב - ממוצע מחיר נגד קצר וראשוני"
+            >
+              <InputNumber
+                style={styleForCellGreen}
+                defaultValue={tableData[props.row.index].price.toFixed(2)}
+                readOnly={true}
+                addonAfter={"₪"}
+              ></InputNumber>
+            </Tooltip>
+          );
+        }
+        return (
+          <InputNumber
+            style={styleForCell}
+            defaultValue={tableData[props.row.index].price}
+            addonAfter={"₪"}
+            onChange={(value) => {
+              handleSetTableData(props.row.index, props.column.id, value);
+            }}
+          ></InputNumber>
+        );
       },
     },
     {
@@ -62,15 +149,12 @@ export default function TablePriceAgatInput() {
                 >
                   <InputNumber //katzin rishoni tamhil
                     style={styleForCell}
-                    defaultValue={tamhil[0]}
+                    defaultValue={(1 - tamhilKatzar).toFixed(2)}
                     min={0}
                     max={1}
                     step={0.01}
                     onChange={(value) => {
-                      setTamhil((prev) => {
-                        console.log(prev);
-                        return [value, prev[1]];
-                      });
+                      setTamhilKatzar((1 - value).toFixed(2));
                     }}
                   ></InputNumber>
                 </Tooltip>
@@ -81,15 +165,12 @@ export default function TablePriceAgatInput() {
                 >
                   <InputNumber //katzin katzar tamhil
                     style={styleForCell}
-                    defaultValue={tamhil[1]}
+                    defaultValue={tamhilKatzar}
                     min={0}
                     max={1}
                     step={0.01}
                     onChange={(value) => {
-                      setTamhil((prev) => {
-                        console.log(prev);
-                        return [prev[0], value];
-                      });
+                      setTamhilKatzar(value.toFixed(2));
                     }}
                   ></InputNumber>
                 </Tooltip>

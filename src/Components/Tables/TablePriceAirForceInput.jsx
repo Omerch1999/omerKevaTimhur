@@ -7,8 +7,8 @@ import { InputNumber, Tooltip } from "antd";
 export default function TablePriceAirFrceInput() {
   const [tableData, setTableData] = useState(costs_airforce);
 
+  //save the changes of input in state
   function handleSetTableData(rowIndex, columnId, value) {
-    //save the changes of input in state
     setTableData((prev) => {
       const newData = prev.map((row, index) => {
         if (rowIndex === index) {
