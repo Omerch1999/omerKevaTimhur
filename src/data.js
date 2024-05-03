@@ -357,3 +357,37 @@ export const costs_agat = [
 ];
 
 export const hitkansutPercentage = 2.57;
+
+export const avarage_ratio_lvl8 = [
+  {
+    id: 222223,
+    name: "קצין בכיר",
+    ratio: 1,
+  },
+  {
+    id: 222222,
+    name: "קצין מובהק",
+    ratio: 1,
+  },
+  {
+    id: 222221,
+    name: "קצין ראשוני",
+    ratio: 0.75,
+  },
+  {
+    id: 222233,
+    name: "נגד מובהק",
+    ratio: 0.73,
+  },
+  {
+    id: 222232,
+    name: "נגד ראשוני",
+    ratio: 0.6,
+  },
+
+  {
+    id: 222231,
+    name: "נגד קצר",
+    ratio: 0.6,
+  },
+];

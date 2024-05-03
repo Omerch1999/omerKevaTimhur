@@ -39,7 +39,13 @@ export default function GenericTable({
     return (
       <>
         <div>
-          <div style={{ textAlign: "center", fontWeight: "bold" }}>
+          <div
+            style={{
+              textAlign: "center",
+              fontWeight: "bold",
+              textDecoration: "underline",
+            }}
+          >
             {tableTitle}
           </div>
 
@@ -81,7 +87,13 @@ export default function GenericTable({
     return (
       <>
         <div>
-          <div style={{ textAlign: "center", fontWeight: "bold" }}>
+          <div
+            style={{
+              textAlign: "center",
+              fontWeight: "bold",
+              textDecoration: "underline",
+            }}
+          >
             {tableTitle}
           </div>
           <table>

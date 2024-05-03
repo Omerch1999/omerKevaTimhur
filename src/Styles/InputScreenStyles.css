@@ -1,11 +1,11 @@
 .tables-in-page-first-row {
   display: flex;
-  align-items: flex-start;
-  flex-direction: row-reverse;
+  justify-content: center;
 }
 
 .tables-in-page-second-row {
   display: flex;
   align-items: flex-start;
   flex-direction: row-reverse;
+  justify-content: space-around;
 }

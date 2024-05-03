@@ -15,7 +15,6 @@ import Table8Input from "../Tables/Table8Input";
 export default function InputScreen() {
   return (
     <div>
-      <LevelsNavBar></LevelsNavBar>
       <div className="tables-in-page-first-row">
         <Table1Input></Table1Input>
       </div>
@@ -33,7 +32,13 @@ export default function InputScreen() {
         <Table2Input></Table2Input>
         <Table6Input11></Table6Input11>
         <Table6Input12></Table6Input12>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <TablePriceAirFrceInput></TablePriceAirFrceInput>
           <TablePriceAgatInput></TablePriceAgatInput>
           <Table8Input></Table8Input>
