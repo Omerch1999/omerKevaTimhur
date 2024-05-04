@@ -1,5 +1,9 @@
 import TableHakzaViewPoint from "./Components/TableHakzaViewPoint";
 
 export default function TiubimIadaniim() {
-  return <TableHakzaViewPoint />;
+  return (
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <TableHakzaViewPoint />
+    </div>
+  );
 }

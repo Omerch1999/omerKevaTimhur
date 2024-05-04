@@ -399,10 +399,50 @@ export const TiubimIdaniimHaktzaData = [
     category: "",
     madorInChargeOf: "",
     tiubExplanation: "מעבר לאזרוח מלא במטבחים",
-    begda: new Date("1/1/2024"),
+    begda: "2024-00-01",
     enda: "2024-12-31",
     timeDiff: 1.002739726,
     comment: "תוקף מול רונית במודל טיובים 5.7.22",
+    kvutzonMinui: [
+      {
+        id: 222223,
+        name: "קצין בכיר",
+        amount: 0,
+      },
+      {
+        id: 222222,
+        name: "קצין מובהק",
+        amount: 0,
+      },
+      {
+        id: 222221,
+        name: "קצין ראשוני",
+        amount: 0,
+      },
+      {
+        id: 222233,
+        name: "נגד מובהק",
+        amount: 0,
+      },
+      {
+        id: 222232,
+        name: "נגד ראשוני",
+        amount: -3,
+      },
+    ],
+    total: -3,
+    munahiRishoni: -3,
+  },
+  {
+    id: 7171,
+    name: "להק המודיעין 5619",
+    category: "",
+    madorInChargeOf: "",
+    tiubExplanation: "סתם בדיקה",
+    begda: "2024-00-01",
+    enda: "2024-12-31",
+    timeDiff: 1.002739726,
+    comment: "סתם בדיקה",
     kvutzonMinui: [
       {
         id: 222223,

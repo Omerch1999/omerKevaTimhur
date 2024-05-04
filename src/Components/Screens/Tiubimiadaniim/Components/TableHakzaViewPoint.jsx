@@ -10,20 +10,26 @@ export default function TableHakzaViewPoint() {
       accessorKey: "begda",
       header: "תאריך התחלה",
       cell: (props) => {
-        const datezz = new Date(props.getValue());
-        console.log(datezz);
+        console.log(TiubimIdaniimHaktzaData[0].begda);
         const dateFormat = "YYYY-MM-DD";
         dayjs.extend(customParseFormat);
         return (
           <DatePicker
-            defaultValue={dayjs("2019-09-03", dateFormat)}
+            defaultValue={dayjs(TiubimIdaniimHaktzaData[0].begda, dateFormat)}
+            format={"DD-MM-YYYY"}
           ></DatePicker>
         );
 
         //return <div>{datez.toLocaleDateString("en-GB")}</div>;
       },
     },
-    { accessorKey: "tiubExplanation", header: "הסבר טיוב" },
+    {
+      accessorKey: "tiubExplanation",
+      header: "הסבר טיוב",
+      cell: (props) => (
+        <div style={{ textAlign: "center" }}>{props.getValue()}</div>
+      ),
+    },
     { accessorKey: "madorInChargeOf", header: "מדור אחראי" },
     { accessorKey: "category", header: "קטגוריה" },
     { accessorKey: "name", header: "כותרת" },
