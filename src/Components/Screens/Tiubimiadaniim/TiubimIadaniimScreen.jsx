@@ -1,3 +1,5 @@
+import TableHakzaViewPoint from "./Components/TableHakzaViewPoint";
+
 export default function TiubimIadaniim() {
-  return <div>omer</div>;
+  return <TableHakzaViewPoint />;
 }
