@@ -1,6 +1,6 @@
 import { InputNumber, Tooltip } from "antd";
-import { costs_agat } from "../../data";
-import GenericTable from "./GenericTable";
+import { costs_agat } from "../../../../data";
+import GenericTable from "../../../Tables/GenericTable";
 import { useState, useEffect } from "react";
 
 export default function TablePriceAgatInput() {

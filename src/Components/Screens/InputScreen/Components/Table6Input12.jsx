@@ -1,6 +1,10 @@
-import DropDownList from "../DropDownList";
-import { tax_darga_level6, tax_targeted_percentage_level6 } from "../../data";
-import GenericTable from "./GenericTable";
+import DropDownList from "../../../DropDownList";
+import {
+  tax_darga_level6,
+  tax_targeted_percentage_level6,
+} from "../../../../data";
+import GenericTable from "../../../Tables/GenericTable";
+
 const columns = [
   {
     accessorKey: "tax_darga",

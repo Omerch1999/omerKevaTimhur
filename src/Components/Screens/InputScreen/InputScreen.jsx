@@ -1,16 +1,15 @@
-import LevelsNavBar from "../NavBars/LevelsNavBar";
-import Table1Input from "../Tables/Table1Input";
-import Table2Input from "../Tables/Table2Input";
-import Table3Input from "../Tables/Table3Input";
-import Table4Input from "../Tables/Table4Input";
-import Table6Input11 from "../Tables/Table6Input11";
-import Table6Input12 from "../Tables/Table6Input12";
-import TablePriceAirFrceInput from "../Tables/TablePriceAirForceInput";
-import TablePriceAgatInput from "../Tables/TablePriceAgatInput";
-import Table6InputTargetMatseva from "../Tables/Table6InputTargetMatseva";
+import Table1Input from "./Components/Table1Input";
+import Table2Input from "./Components/Table2Input";
+import Table3Input from "./Components/Table3Input";
+import Table4Input from "./Components/Table4Input";
+import Table6Input11 from "./Components/Table6Input11";
+import Table6Input12 from "./Components/Table6Input12";
+import TablePriceAirFrceInput from "./Components/TablePriceAirForceInput";
+import TablePriceAgatInput from "./Components/TablePriceAgatInput";
+import Table6InputTargetMatseva from "./Components/Table6InputTargetMatseva";
+import Table8Input from "./Components/Table8Input";
 
-import "../../Styles/InputScreenStyles.css";
-import Table8Input from "../Tables/Table8Input";
+import "../../../Styles/InputScreenStyles.css";
 
 export default function InputScreen() {
   return (

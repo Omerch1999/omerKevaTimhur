@@ -1,9 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import InputScreen from "./Components/Screens/InputScreen";
+import InputScreen from "./Components/Screens/InputScreen/InputScreen";
+import TiubimIadaniim from "./Components/Screens/Tiubimiadaniim/TiubimIadaniimScreen";
+import LevelsNavBar from "./Components/NavBars/LevelsNavBar";
 
 import "./Styles/TableStyles.css";
-import TiubimIadaniim from "./Components/Screens/TiubimIadaniimScreen";
-import LevelsNavBar from "./Components/NavBars/LevelsNavBar";
 
 const router = createBrowserRouter([
   {

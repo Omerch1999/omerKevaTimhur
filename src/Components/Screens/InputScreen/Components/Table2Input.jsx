@@ -1,7 +1,6 @@
-import { mekadmi_itiaalut_level2, tax_darga_level2 } from "../../data";
-import GenericTable from "./GenericTable";
-import Input from "../Input";
-import DropDownList from "../DropDownList";
+import { mekadmi_itiaalut_level2, tax_darga_level2 } from "../../../../data";
+import GenericTable from "../../../Tables/GenericTable";
+import DropDownList from "../../../DropDownList";
 import { InputNumber } from "antd";
 
 const columns = [

@@ -1,8 +1,7 @@
 import { InputNumber } from "antd";
-import { mekadmi_haktza_level1 } from "../../data";
-import Input from "../Input";
+import { mekadmi_haktza_level1 } from "../../../../data";
+import GenericTable from "../../../Tables/GenericTable";
 
-import GenericTable from "./GenericTable";
 const columns = [
   {
     accessorKey: "name",

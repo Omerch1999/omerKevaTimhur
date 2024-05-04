@@ -1,13 +1,13 @@
-import GenericTable from "./GenericTable";
-import { tamhil_level6 } from "../../data";
-import Input from "../Input";
+import GenericTable from "../../../Tables/GenericTable";
+import { model_segel_tax_level3 } from "../../../../data";
 import { InputNumber } from "antd";
+
 const columns = [
   {
-    accessorKey: "ratio",
-    header: "תמהיל",
+    accessorKey: "tax",
+    header: "מס התייעלות",
     cell: (props) => {
-      const styleForCell = { scale: "95%", width: "4vw" };
+      const styleForCell = { scale: "85%" };
       return (
         <InputNumber
           style={styleForCell}
@@ -19,18 +19,17 @@ const columns = [
       );
     },
   },
-
   {
     accessorKey: "name",
-    header: 'קס"מ',
+    header: "דרגה",
   },
 ];
-export default function Table6Input11() {
+export default function Table3Input() {
   return (
     <GenericTable
-      tableTitle={"שלב 6- תמהיל נגד קצר/ראשוני"}
-      dataForTable={tamhil_level6}
       columnsForTable={columns}
+      dataForTable={model_segel_tax_level3}
+      tableTitle={"שלב 3- מודל הסגל"}
     ></GenericTable>
   );
 }

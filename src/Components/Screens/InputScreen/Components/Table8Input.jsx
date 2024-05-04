@@ -1,6 +1,6 @@
 import { InputNumber } from "antd";
-import { avarage_ratio_lvl8 } from "../../data";
-import GenericTable from "./GenericTable";
+import { avarage_ratio_lvl8 } from "../../../../data";
+import GenericTable from "../../../Tables/GenericTable";
 export default function Table8Input() {
   const columns = [
     {

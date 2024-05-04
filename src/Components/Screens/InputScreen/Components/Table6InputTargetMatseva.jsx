@@ -1,6 +1,6 @@
 import { InputNumber } from "antd";
 import { useState } from "react";
-import { hitkansutPercentage } from "../../data";
+import { hitkansutPercentage } from "../../../../data";
 
 export default function Table6InputTarget() {
   const [hitkansutPercentageS, setHitkansutPercentageS] = useState(

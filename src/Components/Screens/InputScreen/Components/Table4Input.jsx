@@ -1,5 +1,5 @@
-import GenericTable from "./GenericTable";
-import { compare_options_level4 } from "../../data";
+import GenericTable from "../../../Tables/GenericTable";
+import { compare_options_level4 } from "../../../../data";
 
 const columns = [
   {

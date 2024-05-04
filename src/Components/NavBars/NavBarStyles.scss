@@ -12,12 +12,14 @@ ul {
   transition: background-color 1s ease;
 }
 
-li:hover {
+.li:hover {
   background-color: grey;
   cursor: pointer;
 }
 
 li .active {
   @extend .li;
-  background-color: red;
+  margin-left: 0;
+  background-color: grey;
+  font-weight: bold;
 }

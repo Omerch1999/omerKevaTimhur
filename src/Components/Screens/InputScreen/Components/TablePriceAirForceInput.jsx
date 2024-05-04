@@ -1,6 +1,5 @@
-import GenericTable from "../Tables/GenericTable";
-import Input from "../Input";
-import { costs_airforce } from "../../data";
+import GenericTable from "../../../Tables/GenericTable";
+import { costs_airforce } from "../../../../data";
 import { useEffect, useState } from "react";
 import { InputNumber, Tooltip } from "antd";
 

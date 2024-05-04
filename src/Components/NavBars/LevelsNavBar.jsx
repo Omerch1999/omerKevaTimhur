@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import "../../Styles/NavBarStyles.scss";
+import "./NavBarStyles.scss";
 
 export default function LevelsNavBar() {
   const noLinkStyle = { color: "black", textDecoration: "none" };
