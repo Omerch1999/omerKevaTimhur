@@ -1,21 +1,41 @@
 import GenericTable from "../../../Tables/GenericTable";
 import { TiubimIdaniimHaktzaData } from "../../../../data";
-import { DatePicker } from "antd";
+import { DatePicker, Input } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import TextArea from "antd/es/input/TextArea";
 
 export default function TableHakzaViewPoint() {
+  const dateFormat = "YYYY-MM-DD";
+
   const columns = [
+    {
+      accessorKey: "enda",
+      header: "תאריך סיום",
+      cell: (props) => {
+        return (
+          <DatePicker
+            defaultValue={dayjs(
+              TiubimIdaniimHaktzaData[props.row.index].enda,
+              dateFormat
+            )}
+            format={"DD-MM-YYYY"}
+          ></DatePicker>
+        );
+
+        //return <div>{datez.toLocaleDateString("en-GB")}</div>;
+      },
+    },
     {
       accessorKey: "begda",
       header: "תאריך התחלה",
       cell: (props) => {
-        console.log(TiubimIdaniimHaktzaData[0].begda);
-        const dateFormat = "YYYY-MM-DD";
-        dayjs.extend(customParseFormat);
         return (
           <DatePicker
-            defaultValue={dayjs(TiubimIdaniimHaktzaData[0].begda, dateFormat)}
+            defaultValue={dayjs(
+              TiubimIdaniimHaktzaData[props.row.index].begda,
+              dateFormat
+            )}
             format={"DD-MM-YYYY"}
           ></DatePicker>
         );
@@ -27,12 +47,24 @@ export default function TableHakzaViewPoint() {
       accessorKey: "tiubExplanation",
       header: "הסבר טיוב",
       cell: (props) => (
-        <div style={{ textAlign: "center" }}>{props.getValue()}</div>
+        <TextArea
+          style={{ direction: "rtl" }}
+          defaultValue={props.getValue()}
+        ></TextArea>
+        //<div style={{ textAlign: "center" }}>{props.getValue()}</div>
       ),
     },
-    { accessorKey: "madorInChargeOf", header: "מדור אחראי" },
-    { accessorKey: "category", header: "קטגוריה" },
-    { accessorKey: "name", header: "כותרת" },
+    {
+      accessorKey: "madorInChargeOf",
+      header: "מדור אחראי",
+      cell: (props) => <Input></Input>,
+    },
+    {
+      accessorKey: "category",
+      header: "קטגוריה",
+      cell: (props) => <Input></Input>,
+    },
+    { accessorKey: "name", header: 'קס"מ' },
   ];
 
   return (
