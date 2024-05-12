@@ -15,10 +15,9 @@ import { Input } from "antd";
 import { useState } from "react";
 
 export default function InputScreen() {
-  const [inpd, setInpd] = useState("init");
   return (
     <div>
-      <Input
+      {/* <Input
         defaultValue={inpd}
         onChange={(e) => {
           setInpd(e.target.value);
@@ -27,7 +26,7 @@ export default function InputScreen() {
           console.log(dataToPass);
           axios.post("http://localhost:4000/log", { dataToPass });
         }}
-      ></Input>
+      ></Input> */}
       <div className="tables-in-page-first-row">
         <Table1Input></Table1Input>
       </div>

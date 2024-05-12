@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import "../../Styles/TableStyles.css";
+import { Row, Col } from "antd";
 
 export default function GenericTable({
   columnsForTable,
@@ -97,6 +98,18 @@ export default function GenericTable({
             {tableTitle}
           </div>
           <table>
+            <thead>
+              <tr>
+                <Row>
+                  <Col span={17} push={9} style={{ backgroundColor: "red" }}>
+                    נגדים
+                  </Col>
+                  <Col span={17} pull={8} style={{ backgroundColor: "blue" }}>
+                    קצינים
+                  </Col>
+                </Row>
+              </tr>
+            </thead>
             <tbody
               style={{
                 display: "flex",
