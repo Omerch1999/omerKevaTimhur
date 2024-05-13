@@ -1,6 +1,16 @@
 .body-table-row:nth-child(odd) {
   background-color: lightblue;
 }
+.body-table-row:nth-child(even) {
+  background-color: #def7ff;
+}
+
+.body-table-row-input-1:nth-child(-n + 10) {
+  background-color: lightblue;
+}
+.body-table-row-input-1:nth-child(n + 11) {
+  background-color: #def7ff;
+}
 
 .body-table-row {
   white-space: nowrap;

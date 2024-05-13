@@ -35,6 +35,7 @@ export default function Table1Input() {
       dataForTable={mekadmi_haktza_level1}
       tableTitle={"שלב 1- מקדמי הקצאה עבור קבוצת מקדם"}
       isVertical={0}
+      styleForRow={"body-table-row-input-1"}
     ></GenericTable>
   );
 }

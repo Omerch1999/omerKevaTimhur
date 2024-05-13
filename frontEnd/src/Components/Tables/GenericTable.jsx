@@ -5,12 +5,12 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import "../../Styles/TableStyles.css";
-import { Row, Col } from "antd";
 
 export default function GenericTable({
   columnsForTable,
   dataForTable,
   tableTitle,
+  styleForRow = "body-table-row",
   isVertical = 1,
 }) {
   const columns = columnsForTable;
@@ -67,7 +67,7 @@ export default function GenericTable({
             </thead>
             <tbody>
               {table.getRowModel().rows.map((row) => (
-                <tr className="body-table-row" key={row.id}>
+                <tr className={styleForRow} key={row.id}>
                   {row.getVisibleCells().map((cell) => (
                     <td key={cell.id}>
                       {flexRender(
@@ -96,20 +96,12 @@ export default function GenericTable({
             }}
           >
             {tableTitle}
+            <div style={{ display: "flex" }}>
+              <div style={{ width: "42.1%" }}>קצינים</div>
+              <div style={{ width: "57.9%" }}>נגדים</div>
+            </div>
           </div>
           <table>
-            <thead>
-              <tr>
-                <Row>
-                  <Col span={17} push={9} style={{ backgroundColor: "red" }}>
-                    נגדים
-                  </Col>
-                  <Col span={17} pull={8} style={{ backgroundColor: "blue" }}>
-                    קצינים
-                  </Col>
-                </Row>
-              </tr>
-            </thead>
             <tbody
               style={{
                 display: "flex",
@@ -132,7 +124,7 @@ export default function GenericTable({
               ))}
 
               {table.getRowModel().rows.map((row) => (
-                <tr key={row.id} className="body-table-row">
+                <tr key={row.id} className={styleForRow}>
                   <td key={row.id}>
                     {row.getVisibleCells().map((cell) => (
                       <div key={cell.id}>
