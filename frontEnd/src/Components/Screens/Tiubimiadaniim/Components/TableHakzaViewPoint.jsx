@@ -2,29 +2,54 @@ import GenericTable from "../../../Tables/GenericTable";
 import { TiubimIdaniimHaktzaData } from "../../../../data";
 import { DatePicker, Input } from "antd";
 import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
 import TextArea from "antd/es/input/TextArea";
+import { useState } from "react";
 
 export default function TableHakzaViewPoint() {
-  const dateFormat = "YYYY-MM-DD";
+  const dateFormat = "DD-MM-YYYY";
+  const [tiubimIdaniimHaktzaState, SetTiubimIdaniimHaktzaState] = useState(
+    TiubimIdaniimHaktzaData
+  );
 
   const columns = [
     {
-      accessorKey: "enda",
-      header: "תאריך סיום",
+      accessorKey: "name",
+      header: 'קס"מ',
       cell: (props) => {
-        return (
-          <DatePicker
-            defaultValue={dayjs(
-              TiubimIdaniimHaktzaData[props.row.index].enda,
-              dateFormat
-            )}
-            format={"DD-MM-YYYY"}
-          ></DatePicker>
-        );
-
-        //return <div>{datez.toLocaleDateString("en-GB")}</div>;
+        return <div>{tiubimIdaniimHaktzaState[props.row.index].name}</div>;
       },
+    },
+    {
+      accessorKey: "category",
+      header: "קטגוריה",
+      cell: (props) => (
+        <Input
+          defaultValue={tiubimIdaniimHaktzaState[props.row.index].category}
+        ></Input>
+      ),
+    },
+    {
+      accessorKey: "madorInChargeOf",
+      header: "מדור אחראי",
+      cell: (props) => (
+        <Input
+          defaultValue={
+            tiubimIdaniimHaktzaState[props.row.index].madorInChargeOf
+          }
+        ></Input>
+      ),
+    },
+    {
+      accessorKey: "tiubExplanation",
+      header: "הסבר טיוב",
+      cell: (props) => (
+        <TextArea
+          style={{ direction: "rtl" }}
+          defaultValue={
+            tiubimIdaniimHaktzaState[props.row.index].tiubExplanation
+          }
+        ></TextArea>
+      ),
     },
     {
       accessorKey: "begda",
@@ -36,40 +61,61 @@ export default function TableHakzaViewPoint() {
               TiubimIdaniimHaktzaData[props.row.index].begda,
               dateFormat
             )}
-            format={"DD-MM-YYYY"}
+            format={dateFormat}
           ></DatePicker>
         );
-
-        //return <div>{datez.toLocaleDateString("en-GB")}</div>;
       },
     },
     {
-      accessorKey: "tiubExplanation",
-      header: "הסבר טיוב",
-      cell: (props) => (
-        <TextArea
-          style={{ direction: "rtl" }}
-          defaultValue={props.getValue()}
-        ></TextArea>
-        //<div style={{ textAlign: "center" }}>{props.getValue()}</div>
-      ),
+      accessorKey: "enda",
+      header: "תאריך סיום",
+      cell: (props) => {
+        return (
+          <DatePicker
+            defaultValue={dayjs(
+              TiubimIdaniimHaktzaData[props.row.index].enda,
+              dateFormat
+            )}
+            format={dateFormat}
+          ></DatePicker>
+        );
+      },
     },
     {
-      accessorKey: "madorInChargeOf",
-      header: "מדור אחראי",
-      cell: (props) => <Input></Input>,
+      accessorKey: "timeDiff",
+      header: "מקדם זמן נדרש",
+      cell: (props) => {
+        return (
+          <div style={{ textAlign: "center" }}>
+            {TiubimIdaniimHaktzaData[props.row.index].timeDiff.toFixed(2)}
+          </div>
+        );
+      },
     },
     {
-      accessorKey: "category",
-      header: "קטגוריה",
-      cell: (props) => <Input></Input>,
+      accessorKey: "comment",
+      header: "הערה",
+      cell: (props) => {
+        return (
+          <TextArea
+            style={{ direction: "rtl" }}
+            defaultValue={tiubimIdaniimHaktzaState[props.row.index].comment}
+          ></TextArea>
+        );
+      },
     },
-    { accessorKey: "name", header: 'קס"מ' },
+    { accessorKey: "kvutzotMinuiKatzinBahir", header: "קצין בכיר" },
+    { accessorKey: "kvutzotMinuiKatzinMuvak", header: "קצין מובהק" },
+    { accessorKey: "kvutzotMinuiKatzinRishoni", header: "קצין ראשוני" },
+    { accessorKey: "kvutzotMinuiNagadMuvak", header: "נגד מובהק" },
+    { accessorKey: "kvutzotMinuiNagadRishoni", header: "נגד ראשוני" },
+    { accessorKey: "total", header: 'סה"כ' },
+    { accessorKey: "munahiRishoni", header: "מונחי ראשוני" },
   ];
 
   return (
     <GenericTable
-      columnsForTable={columns}
+      columnsForTable={columns.reverse()}
       dataForTable={TiubimIdaniimHaktzaData}
     ></GenericTable>
   );

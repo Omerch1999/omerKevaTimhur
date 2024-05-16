@@ -6,6 +6,7 @@ const columns = [
   {
     accessorKey: "tax",
     header: "מס התייעלות",
+    enableSorting: false,
     cell: (props) => {
       const styleForCell = { scale: "85%" };
       return (
@@ -22,6 +23,7 @@ const columns = [
   {
     accessorKey: "name",
     header: "דרגה",
+    enableSorting: false,
   },
 ];
 export default function Table3Input() {

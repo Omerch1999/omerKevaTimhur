@@ -2,9 +2,11 @@ import {
   useReactTable,
   getCoreRowModel,
   flexRender,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import "../../Styles/TableStyles.css";
+import { Button } from "antd";
 
 export default function GenericTable({
   columnsForTable,
@@ -20,6 +22,7 @@ export default function GenericTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     meta: {
       updateTableData: (rowIndex, columnId, value) => {
         setData((prev) => {
@@ -56,6 +59,31 @@ export default function GenericTable({
                 <tr className="head-table-cell" key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <th key={header.id}>
+                      {header.column.getCanSort() ? (
+                        header.column.getIsSorted() === "asc" ? (
+                          <Button
+                            type="text"
+                            onClick={header.column.getToggleSortingHandler()}
+                          >
+                            &uarr;
+                          </Button>
+                        ) : header.column.getIsSorted() === "desc" ? (
+                          <Button
+                            type="text"
+                            onClick={header.column.getToggleSortingHandler()}
+                          >
+                            &darr;
+                          </Button>
+                        ) : (
+                          <Button
+                            type="text"
+                            onClick={header.column.getToggleSortingHandler()}
+                          >
+                            &uarr; &darr;
+                          </Button>
+                        )
+                      ) : null}
+
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext()

@@ -10,23 +10,10 @@ import Table6InputTargetMatseva from "./Components/Table6InputTargetMatseva";
 import Table8Input from "./Components/Table8Input";
 
 import "../../../Styles/InputScreenStyles.css";
-import axios from "axios";
-import { Input } from "antd";
-import { useState } from "react";
 
 export default function InputScreen() {
   return (
     <div>
-      {/* <Input
-        defaultValue={inpd}
-        onChange={(e) => {
-          setInpd(e.target.value);
-          console.log(inpd);
-          const dataToPass = e.target.value;
-          console.log(dataToPass);
-          axios.post("http://localhost:4000/log", { dataToPass });
-        }}
-      ></Input> */}
       <div className="tables-in-page-first-row">
         <Table1Input></Table1Input>
       </div>

@@ -11,16 +11,18 @@ const columns = [
         </div>
       );
     },
+    enableSorting: false,
     cell: (props) => (
       <div style={{ textAlign: "center" }}>{props.getValue()}</div>
     ),
   },
-  { accessorKey: "meaning", header: "משמעות" },
+  { accessorKey: "meaning", header: "משמעות", enableSorting: false },
   {
     accessorKey: "option",
     header: () => {
       return <div>{"תוצאה מתקבלת"}</div>;
     },
+    enableSorting: false,
     cell: (props) => {
       return <div style={{ textAlign: "center" }}>{props.getValue()}</div>;
     },
