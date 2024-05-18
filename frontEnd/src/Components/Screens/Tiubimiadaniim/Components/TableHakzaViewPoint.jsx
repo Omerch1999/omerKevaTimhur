@@ -1,15 +1,35 @@
 import GenericTable from "../../../Tables/GenericTable";
 import { TiubimIdaniimHaktzaData } from "../../../../data";
-import { DatePicker, Input } from "antd";
+import { DatePicker, Input, InputNumber } from "antd";
 import dayjs from "dayjs";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
+import { debounce } from "lodash";
 
 export default function TableHakzaViewPoint() {
   const dateFormat = "DD-MM-YYYY";
   const [tiubimIdaniimHaktzaState, SetTiubimIdaniimHaktzaState] = useState(
     TiubimIdaniimHaktzaData
   );
+
+  function SetTiubimIdaniimHaktzaStateHandler(indexC, keyC, valueC) {
+    const updatedTiubimIdaniimHaktzaT = [...tiubimIdaniimHaktzaState];
+    const updatedTiubimIdaniimHaktzaO = {
+      ...updatedTiubimIdaniimHaktzaT[indexC],
+    };
+    console.log(updatedTiubimIdaniimHaktzaT);
+    console.log(updatedTiubimIdaniimHaktzaO);
+  }
+
+  //const handleInputChangeDebounced = debounce(handleInputChange, 500);
+
+  const sumForFooter = (titleHeader) => {
+    const sumCol = tiubimIdaniimHaktzaState.reduce(
+      (sum, currentV) => sum + currentV[titleHeader],
+      0
+    );
+    return sumCol;
+  };
 
   const columns = [
     {
@@ -48,6 +68,7 @@ export default function TableHakzaViewPoint() {
           defaultValue={
             tiubimIdaniimHaktzaState[props.row.index].tiubExplanation
           }
+          onChange={() => SetTiubimIdaniimHaktzaStateHandler(1, 2, 3)}
         ></TextArea>
       ),
     },
@@ -104,13 +125,100 @@ export default function TableHakzaViewPoint() {
         );
       },
     },
-    { accessorKey: "kvutzotMinuiKatzinBahir", header: "קצין בכיר" },
-    { accessorKey: "kvutzotMinuiKatzinMuvak", header: "קצין מובהק" },
-    { accessorKey: "kvutzotMinuiKatzinRishoni", header: "קצין ראשוני" },
-    { accessorKey: "kvutzotMinuiNagadMuvak", header: "נגד מובהק" },
-    { accessorKey: "kvutzotMinuiNagadRishoni", header: "נגד ראשוני" },
-    { accessorKey: "total", header: 'סה"כ' },
-    { accessorKey: "munahiRishoni", header: "מונחי ראשוני" },
+    {
+      accessorKey: "kvutzotMinuiKatzinBahir",
+      header: "קצין בכיר",
+      cell: (props) => {
+        return (
+          <InputNumber
+            defaultValue={
+              TiubimIdaniimHaktzaData[props.row.index].kvutzotMinuiKatzinBahir
+            }
+          ></InputNumber>
+        );
+      },
+      footer: () => {
+        return sumForFooter("kvutzotMinuiKatzinBahir");
+      },
+    },
+    {
+      accessorKey: "kvutzotMinuiKatzinMuvak",
+      header: "קצין מובהק",
+      cell: (props) => {
+        return (
+          <InputNumber
+            defaultValue={
+              TiubimIdaniimHaktzaData[props.row.index].kvutzotMinuiKatzinMuvak
+            }
+          ></InputNumber>
+        );
+      },
+      footer: () => {
+        return sumForFooter("kvutzotMinuiKatzinMuvak");
+      },
+    },
+    {
+      accessorKey: "kvutzotMinuiKatzinRishoni",
+      header: "קצין ראשוני",
+      cell: (props) => {
+        return (
+          <InputNumber
+            defaultValue={
+              TiubimIdaniimHaktzaData[props.row.index].kvutzotMinuiKatzinRishoni
+            }
+          ></InputNumber>
+        );
+      },
+      footer: () => {
+        return sumForFooter("kvutzotMinuiKatzinRishoni");
+      },
+    },
+    {
+      accessorKey: "kvutzotMinuiNagadMuvak",
+      header: "נגד מובהק",
+      cell: (props) => {
+        return (
+          <InputNumber
+            defaultValue={
+              TiubimIdaniimHaktzaData[props.row.index].kvutzotMinuiNagadMuvak
+            }
+          ></InputNumber>
+        );
+      },
+      footer: () => {
+        return sumForFooter("kvutzotMinuiNagadMuvak");
+      },
+    },
+    {
+      accessorKey: "kvutzotMinuiNagadRishoni",
+      header: "נגד ראשוני",
+      cell: (props) => {
+        return (
+          <InputNumber
+            defaultValue={
+              TiubimIdaniimHaktzaData[props.row.index].kvutzotMinuiNagadRishoni
+            }
+          ></InputNumber>
+        );
+      },
+      footer: () => {
+        return sumForFooter("kvutzotMinuiNagadRishoni");
+      },
+    },
+    {
+      accessorKey: "total",
+      header: 'סה"כ',
+      footer: () => {
+        return sumForFooter("total");
+      },
+    },
+    {
+      accessorKey: "munahiRishoni",
+      header: "מונחי ראשוני",
+      footer: () => {
+        return sumForFooter("munahiRishoni");
+      },
+    },
   ];
 
   return (

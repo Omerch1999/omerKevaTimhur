@@ -107,6 +107,20 @@ export default function GenericTable({
                 </tr>
               ))}
             </tbody>
+            <tfoot>
+              {table.getFooterGroups().map((footerGroup) => (
+                <tr key={footerGroup.id}>
+                  {footerGroup.headers.map((footer) => (
+                    <th key={footer.id}>
+                      {flexRender(
+                        footer.column.columnDef.footer,
+                        footer.getContext()
+                      )}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </tfoot>
           </table>
         </div>
       </>
@@ -125,6 +139,7 @@ export default function GenericTable({
           >
             {tableTitle}
             <div style={{ display: "flex" }}>
+              {/* need to add styles by other option to save it generic */}
               <div style={{ width: "42.1%" }}>קצינים</div>
               <div style={{ width: "57.9%" }}>נגדים</div>
             </div>
@@ -139,11 +154,11 @@ export default function GenericTable({
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id} className="head-table-cell">
                   <th key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => (
-                      <div key={header.id}>
+                    {headerGroup.headers.map((footer) => (
+                      <div key={footer.id}>
                         {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
+                          footer.column.columnDef.header,
+                          footer.getContext()
                         )}
                       </div>
                     ))}
