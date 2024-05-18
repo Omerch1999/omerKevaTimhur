@@ -4,7 +4,6 @@ import { DatePicker, Input, InputNumber } from "antd";
 import dayjs from "dayjs";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
-import { debounce } from "lodash";
 
 export default function TableHakzaViewPoint() {
   const dateFormat = "DD-MM-YYYY";
@@ -13,15 +12,16 @@ export default function TableHakzaViewPoint() {
   );
 
   function SetTiubimIdaniimHaktzaStateHandler(indexC, keyC, valueC) {
-    const updatedTiubimIdaniimHaktzaT = [...tiubimIdaniimHaktzaState];
-    const updatedTiubimIdaniimHaktzaO = {
-      ...updatedTiubimIdaniimHaktzaT[indexC],
-    };
-    console.log(updatedTiubimIdaniimHaktzaT);
-    console.log(updatedTiubimIdaniimHaktzaO);
+    const updatedTiubimIdaniimHaktza = tiubimIdaniimHaktzaState.map(
+      (item, index) => {
+        if (index === indexC) {
+          return { ...item, [keyC]: valueC };
+        }
+        return item;
+      }
+    );
+    SetTiubimIdaniimHaktzaState(updatedTiubimIdaniimHaktza);
   }
-
-  //const handleInputChangeDebounced = debounce(handleInputChange, 500);
 
   const sumForFooter = (titleHeader) => {
     const sumCol = tiubimIdaniimHaktzaState.reduce(
@@ -68,7 +68,13 @@ export default function TableHakzaViewPoint() {
           defaultValue={
             tiubimIdaniimHaktzaState[props.row.index].tiubExplanation
           }
-          onChange={() => SetTiubimIdaniimHaktzaStateHandler(1, 2, 3)}
+          onBlur={(e) => {
+            SetTiubimIdaniimHaktzaStateHandler(
+              props.row.index,
+              "tiubExplanation",
+              e.target.value
+            );
+          }}
         ></TextArea>
       ),
     },
