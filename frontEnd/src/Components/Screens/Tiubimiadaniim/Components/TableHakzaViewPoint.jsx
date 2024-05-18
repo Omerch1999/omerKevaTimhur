@@ -269,6 +269,7 @@ export default function TableHakzaViewPoint() {
 
   return (
     <GenericTable
+      tableTitle={"טיובים ידניים - הקצאה"}
       columnsForTable={columns.reverse()}
       dataForTable={TiubimIdaniimHaktzaData}
     ></GenericTable>
