@@ -1,2 +1,1 @@
-add row and columns indexes and update functions for all components that use 
-Input component. (like airforce price table)
+1.in each table change the dataForTable to the state instead of the input!

@@ -164,6 +164,13 @@ export default function TableHakzaViewPoint() {
             defaultValue={
               tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiKatzinMuvak
             }
+            onChange={(e) =>
+              SetTiubimIdaniimHaktzaStateHandler(
+                props.row.index,
+                "kvutzotMinuiKatzinMuvak",
+                e
+              )
+            }
           ></InputNumber>
         );
       },
@@ -181,6 +188,13 @@ export default function TableHakzaViewPoint() {
               tiubimIdaniimHaktzaState[props.row.index]
                 .kvutzotMinuiKatzinRishoni
             }
+            onChange={(e) =>
+              SetTiubimIdaniimHaktzaStateHandler(
+                props.row.index,
+                "kvutzotMinuiKatzinRishoni",
+                e
+              )
+            }
           ></InputNumber>
         );
       },
@@ -197,6 +211,13 @@ export default function TableHakzaViewPoint() {
             defaultValue={
               tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiNagadMuvak
             }
+            onChange={(e) =>
+              SetTiubimIdaniimHaktzaStateHandler(
+                props.row.index,
+                "kvutzotMinuiNagadMuvak",
+                e
+              )
+            }
           ></InputNumber>
         );
       },
@@ -212,6 +233,13 @@ export default function TableHakzaViewPoint() {
           <InputNumber
             defaultValue={
               tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiNagadRishoni
+            }
+            onChange={(e) =>
+              SetTiubimIdaniimHaktzaStateHandler(
+                props.row.index,
+                "kvutzotMinuiNagadRishoni",
+                e
+              )
             }
           ></InputNumber>
         );
