@@ -3,7 +3,7 @@ import { TiubimIdaniimHaktzaData } from "../../../../data";
 import { DatePicker, Input, InputNumber } from "antd";
 import dayjs from "dayjs";
 import TextArea from "antd/es/input/TextArea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function TableHakzaViewPoint() {
   const dateFormat = "DD-MM-YYYY";
@@ -21,6 +21,7 @@ export default function TableHakzaViewPoint() {
       }
     );
     SetTiubimIdaniimHaktzaState(updatedTiubimIdaniimHaktza);
+    console.log(updatedTiubimIdaniimHaktza);
   }
 
   const sumForFooter = (titleHeader) => {
@@ -85,7 +86,7 @@ export default function TableHakzaViewPoint() {
         return (
           <DatePicker
             defaultValue={dayjs(
-              TiubimIdaniimHaktzaData[props.row.index].begda,
+              tiubimIdaniimHaktzaState[props.row.index].begda,
               dateFormat
             )}
             format={dateFormat}
@@ -100,7 +101,7 @@ export default function TableHakzaViewPoint() {
         return (
           <DatePicker
             defaultValue={dayjs(
-              TiubimIdaniimHaktzaData[props.row.index].enda,
+              tiubimIdaniimHaktzaState[props.row.index].enda,
               dateFormat
             )}
             format={dateFormat}
@@ -114,7 +115,7 @@ export default function TableHakzaViewPoint() {
       cell: (props) => {
         return (
           <div style={{ textAlign: "center" }}>
-            {TiubimIdaniimHaktzaData[props.row.index].timeDiff.toFixed(2)}
+            {tiubimIdaniimHaktzaState[props.row.index].timeDiff.toFixed(2)}
           </div>
         );
       },
@@ -138,7 +139,14 @@ export default function TableHakzaViewPoint() {
         return (
           <InputNumber
             defaultValue={
-              TiubimIdaniimHaktzaData[props.row.index].kvutzotMinuiKatzinBahir
+              tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiKatzinBahir
+            }
+            onChange={(e) =>
+              SetTiubimIdaniimHaktzaStateHandler(
+                props.row.index,
+                "kvutzotMinuiKatzinBahir",
+                e
+              )
             }
           ></InputNumber>
         );
@@ -154,7 +162,7 @@ export default function TableHakzaViewPoint() {
         return (
           <InputNumber
             defaultValue={
-              TiubimIdaniimHaktzaData[props.row.index].kvutzotMinuiKatzinMuvak
+              tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiKatzinMuvak
             }
           ></InputNumber>
         );
@@ -170,7 +178,8 @@ export default function TableHakzaViewPoint() {
         return (
           <InputNumber
             defaultValue={
-              TiubimIdaniimHaktzaData[props.row.index].kvutzotMinuiKatzinRishoni
+              tiubimIdaniimHaktzaState[props.row.index]
+                .kvutzotMinuiKatzinRishoni
             }
           ></InputNumber>
         );
@@ -186,7 +195,7 @@ export default function TableHakzaViewPoint() {
         return (
           <InputNumber
             defaultValue={
-              TiubimIdaniimHaktzaData[props.row.index].kvutzotMinuiNagadMuvak
+              tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiNagadMuvak
             }
           ></InputNumber>
         );
@@ -202,7 +211,7 @@ export default function TableHakzaViewPoint() {
         return (
           <InputNumber
             defaultValue={
-              TiubimIdaniimHaktzaData[props.row.index].kvutzotMinuiNagadRishoni
+              tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiNagadRishoni
             }
           ></InputNumber>
         );
@@ -214,6 +223,9 @@ export default function TableHakzaViewPoint() {
     {
       accessorKey: "total",
       header: 'סה"כ',
+      cell: (props) => {
+        return <div>{tiubimIdaniimHaktzaState[props.row.index].total}</div>;
+      },
       footer: () => {
         return sumForFooter("total");
       },
