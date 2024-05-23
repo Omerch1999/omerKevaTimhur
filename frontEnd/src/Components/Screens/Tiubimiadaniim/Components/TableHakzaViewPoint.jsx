@@ -1,15 +1,28 @@
 import GenericTable from "../../../Tables/GenericTable";
-import { TiubimIdaniimHaktzaData } from "../../../../data";
-import { DatePicker, Input, InputNumber } from "antd";
+import { TiubimIdaniimHaktzaData, bsisim_list } from "../../../../data";
+import { DatePicker, Form, Input, InputNumber } from "antd";
 import dayjs from "dayjs";
 import TextArea from "antd/es/input/TextArea";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Button, Modal } from "antd";
+import DropDownList from "../../../DropDownList";
 
 export default function TableHakzaViewPoint() {
   const dateFormat = "DD-MM-YYYY";
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [tiubimIdaniimHaktzaState, SetTiubimIdaniimHaktzaState] = useState(
     TiubimIdaniimHaktzaData
   );
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   function SetTiubimIdaniimHaktzaStateHandler(indexC, keyC, valueC) {
     const updatedTiubimIdaniimHaktza = tiubimIdaniimHaktzaState.map(
@@ -268,10 +281,35 @@ export default function TableHakzaViewPoint() {
   ];
 
   return (
-    <GenericTable
-      tableTitle={"טיובים ידניים - הקצאה"}
-      columnsForTable={columns.reverse()}
-      dataForTable={TiubimIdaniimHaktzaData}
-    ></GenericTable>
+    <div>
+      <div style={{ display: "flex", justifyContent: "right" }}>
+        <Button onClick={showModal}>הוסף שורה</Button>
+      </div>
+
+      <Modal
+        title="הוספת שורה"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Form style={{ direction: "rtl" }}>
+          <Form.Item label='קס"מ' name="Kasm">
+            <DropDownList optionsZ={bsisim_list}></DropDownList>
+          </Form.Item>
+          <Form.Item label="קטגוריה" name="category">
+            <DropDownList></DropDownList>
+          </Form.Item>
+          <Form.Item label="הסבר טיוב:" name="Input">
+            <TextArea />
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      <GenericTable
+        tableTitle={"טיובים ידניים - הקצאה"}
+        columnsForTable={columns.reverse()}
+        dataForTable={TiubimIdaniimHaktzaData}
+      ></GenericTable>
+    </div>
   );
 }

@@ -1,9 +1,20 @@
 import { Select } from "antd";
+import { useEffect, useState } from "react";
 export default function DropDownList({ optionsZ, defaultValueZ, styleZ }) {
-  const options = optionsZ.map((item) => ({
-    value: item.id,
-    label: item.name,
-  }));
+  const [options, setOptions] = useState([
+    { value: "option A", label: "option A" },
+    { value: "option B", label: "option B" },
+  ]);
+  useEffect(() => {
+    if (optionsZ) {
+      const optionsTemp = optionsZ.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setOptions(optionsTemp);
+    }
+  }, []);
+
   return (
     <Select
       options={options}
