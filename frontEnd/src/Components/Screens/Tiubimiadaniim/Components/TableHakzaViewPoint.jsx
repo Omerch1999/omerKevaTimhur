@@ -24,19 +24,68 @@ export default function TableHakzaViewPoint() {
     setIsModalOpen(false);
   };
 
+  /**returns the total column if one of the five rows of all types of ktzinim and nagadim
+   * @param {number} indexC - the index (row number).
+   * @returns {number} - sum of all ktzinim and nagadim sum
+   */
+  function calcTotalColumn(indexC) {
+    const sum =
+      tiubimIdaniimHaktzaState[indexC].kvutzotMinuiKatzinBahir +
+      tiubimIdaniimHaktzaState[indexC].kvutzotMinuiKatzinMuvak +
+      tiubimIdaniimHaktzaState[indexC].kvutzotMinuiKatzinRishoni +
+      tiubimIdaniimHaktzaState[indexC].kvutzotMinuiNagadMuvak +
+      tiubimIdaniimHaktzaState[indexC].kvutzotMinuiNagadRishoni;
+    return sum;
+  }
+
+  /**
+   * updates the state after changing the cell
+   * @param {number} indexC - the index (row number).
+   * @param {string} keyC - the column you want to update.
+   * @param {*} valueC - the value that will be set at indexC row, at KeyC column
+   */
   function SetTiubimIdaniimHaktzaStateHandler(indexC, keyC, valueC) {
-    const updatedTiubimIdaniimHaktza = tiubimIdaniimHaktzaState.map(
-      (item, index) => {
+    SetTiubimIdaniimHaktzaState((prev) => {
+      const updatedTiubimIdaniimHaktza = prev.map((item, index) => {
+        //if the user chages the rows of the 5 types it effects the "total" column
         if (index === indexC) {
+          if (
+            keyC === "kvutzotMinuiKatzinBahir" ||
+            keyC === "kvutzotMinuiKatzinMuvak" ||
+            keyC === "kvutzotMinuiKatzinRishoni" ||
+            keyC === "kvutzotMinuiNagadMuvak" ||
+            keyC === "kvutzotMinuiNagadRishoni"
+          ) {
+            //sumTotal calculate the total of 5 columns and adds the delta between the input (valueC) and the prev (item[keyC])
+            const sumTotal = calcTotalColumn(indexC) + valueC - item[keyC];
+            return { ...item, [keyC]: valueC, total: sumTotal };
+          }
+          //if the user changes begda or endda it effects the timeDiff column
+          if (keyC === "begda" || keyC === "endda") {
+            let begdaT, enddaT;
+            if (keyC === "begda") {
+              begdaT = new Date(dayjs(valueC, dateFormat)).getTime();
+              enddaT = new Date(dayjs(item.endda, dateFormat)).getTime();
+            } else {
+              //keyC === "endda"
+              begdaT = new Date(dayjs(item.begda, dateFormat)).getTime();
+              enddaT = new Date(dayjs(valueC, dateFormat)).getTime();
+            }
+            const diffT = (enddaT - begdaT) / 1000 / 31556926;
+            console.log("begdaT " + begdaT);
+            console.log("enddaT " + enddaT);
+            console.log(diffT);
+          }
           return { ...item, [keyC]: valueC };
         }
         return item;
-      }
-    );
-    SetTiubimIdaniimHaktzaState(updatedTiubimIdaniimHaktza);
-    console.log(updatedTiubimIdaniimHaktza);
+      });
+      console.log(updatedTiubimIdaniimHaktza);
+      return updatedTiubimIdaniimHaktza;
+    });
   }
 
+  //calculates total of column in the footer
   const sumForFooter = (titleHeader) => {
     const sumCol = tiubimIdaniimHaktzaState.reduce(
       (sum, currentV) => sum + currentV[titleHeader],
@@ -102,22 +151,50 @@ export default function TableHakzaViewPoint() {
               tiubimIdaniimHaktzaState[props.row.index].begda,
               dateFormat
             )}
+            showToday={false}
             format={dateFormat}
+            onBlur={(e) => {
+              SetTiubimIdaniimHaktzaStateHandler(
+                props.row.index,
+                "begda",
+                e.target.value
+              );
+
+              // const at1 = new Date(
+              //   tiubimIdaniimHaktzaState[props.row.index].begda
+              // ).getTime();
+
+              // const at2 = new Date(
+              //   tiubimIdaniimHaktzaState[props.row.index].endda
+              // ).getTime();
+
+              // const at3 = at2 - at1;
+
+              // console.log("at2 " + at2);
+              // console.log("at1 " + at1);
+            }}
           ></DatePicker>
         );
       },
     },
     {
-      accessorKey: "enda",
+      accessorKey: "endda",
       header: "תאריך סיום",
       cell: (props) => {
         return (
           <DatePicker
             defaultValue={dayjs(
-              tiubimIdaniimHaktzaState[props.row.index].enda,
+              tiubimIdaniimHaktzaState[props.row.index].endda,
               dateFormat
             )}
             format={dateFormat}
+            onBlur={(e) => {
+              SetTiubimIdaniimHaktzaStateHandler(
+                props.row.index,
+                "endda",
+                e.target.value
+              );
+            }}
           ></DatePicker>
         );
       },
@@ -273,7 +350,7 @@ export default function TableHakzaViewPoint() {
     },
     {
       accessorKey: "munahiRishoni",
-      header: "מונחי ראשוני",
+      header: "מונחי ראשוני -TODO",
       footer: () => {
         return sumForFooter("munahiRishoni");
       },
@@ -299,8 +376,17 @@ export default function TableHakzaViewPoint() {
           <Form.Item label="קטגוריה" name="category">
             <DropDownList></DropDownList>
           </Form.Item>
+          <Form.Item label="מדור אחראי" name="madorInChargeOf">
+            <DropDownList></DropDownList>
+          </Form.Item>
           <Form.Item label="הסבר טיוב:" name="Input">
             <TextArea />
+          </Form.Item>
+          <Form.Item label="תאריך התחלה" name="begda">
+            <DatePicker format={dateFormat}></DatePicker>
+          </Form.Item>
+          <Form.Item label="תאריך סיום" name="enda">
+            <DatePicker format={dateFormat}></DatePicker>
           </Form.Item>
         </Form>
       </Modal>
