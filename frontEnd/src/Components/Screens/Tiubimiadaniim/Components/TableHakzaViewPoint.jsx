@@ -14,6 +14,13 @@ export default function TableHakzaViewPoint() {
     TiubimIdaniimHaktzaData
   );
 
+  const [reactTableZ, setReactTableZ] = useState();
+
+  function ret(val) {
+    console.log(val);
+    setReactTableZ(val);
+  }
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -220,13 +227,19 @@ export default function TableHakzaViewPoint() {
             defaultValue={
               tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiKatzinBahir
             }
-            onChange={(e) =>
+            onChange={(e) => {
               SetTiubimIdaniimHaktzaStateHandler(
                 props.row.index,
                 "kvutzotMinuiKatzinBahir",
                 e
-              )
-            }
+              );
+
+              reactTableZ.options.meta?.updateTableData(
+                props.row.index,
+                "kvutzotMinuiKatzinBahir",
+                e
+              );
+            }}
           ></InputNumber>
         );
       },
@@ -384,6 +397,7 @@ export default function TableHakzaViewPoint() {
         tableTitle={"טיובים ידניים - הקצאה"}
         columnsForTable={columns.reverse()}
         dataForTable={tiubimIdaniimHaktzaState}
+        ret={ret}
       ></GenericTable>
     </div>
   );
