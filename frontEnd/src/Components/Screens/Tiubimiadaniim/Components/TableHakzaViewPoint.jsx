@@ -79,7 +79,7 @@ export default function TableHakzaViewPoint() {
         return item;
       });
       console.log(updatedTiubimIdaniimHaktza);
-      debugger;
+
       return updatedTiubimIdaniimHaktza;
     });
   }

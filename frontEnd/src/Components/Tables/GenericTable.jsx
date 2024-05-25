@@ -23,20 +23,20 @@ export default function GenericTable({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    meta: {
-      updateTableData: (rowIndex, columnId, value) => {
-        setData((prev) => {
-          const newData = prev.map((row, index) => {
-            if (rowIndex === index) {
-              return { ...prev[rowIndex], [columnId]: parseFloat(value) };
-            }
-            return row;
-          });
+    // meta: {
+    //   updateTableData: (rowIndex, columnId, value) => {
+    //     setData((prev) => {
+    //       const newData = prev.map((row, index) => {
+    //         if (rowIndex === index) {
+    //           return { ...prev[rowIndex], [columnId]: parseFloat(value) };
+    //         }
+    //         return row;
+    //       });
 
-          return newData;
-        });
-      },
-    },
+    //       return newData;
+    //     });
+    //   },
+    // },
   });
 
   if (isVertical === 1) {
