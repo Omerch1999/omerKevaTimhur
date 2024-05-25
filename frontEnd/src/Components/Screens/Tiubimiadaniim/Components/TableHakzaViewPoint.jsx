@@ -72,15 +72,14 @@ export default function TableHakzaViewPoint() {
               enddaT = new Date(dayjs(valueC, dateFormat)).getTime();
             }
             const diffT = (enddaT - begdaT) / 1000 / 31556926;
-            console.log("begdaT " + begdaT);
-            console.log("enddaT " + enddaT);
-            console.log(diffT);
+            return { ...item, [keyC]: valueC, timeDiff: diffT };
           }
           return { ...item, [keyC]: valueC };
         }
         return item;
       });
       console.log(updatedTiubimIdaniimHaktza);
+      debugger;
       return updatedTiubimIdaniimHaktza;
     });
   }
@@ -152,26 +151,14 @@ export default function TableHakzaViewPoint() {
               dateFormat
             )}
             showToday={false}
+            allowClear={false}
             format={dateFormat}
-            onBlur={(e) => {
+            onChange={(date, dateString) => {
               SetTiubimIdaniimHaktzaStateHandler(
                 props.row.index,
                 "begda",
-                e.target.value
+                dateString
               );
-
-              // const at1 = new Date(
-              //   tiubimIdaniimHaktzaState[props.row.index].begda
-              // ).getTime();
-
-              // const at2 = new Date(
-              //   tiubimIdaniimHaktzaState[props.row.index].endda
-              // ).getTime();
-
-              // const at3 = at2 - at1;
-
-              // console.log("at2 " + at2);
-              // console.log("at1 " + at1);
             }}
           ></DatePicker>
         );
@@ -187,12 +174,14 @@ export default function TableHakzaViewPoint() {
               tiubimIdaniimHaktzaState[props.row.index].endda,
               dateFormat
             )}
+            showToday={false}
+            allowClear={false}
             format={dateFormat}
-            onBlur={(e) => {
+            onChange={(date, dateString) => {
               SetTiubimIdaniimHaktzaStateHandler(
                 props.row.index,
                 "endda",
-                e.target.value
+                dateString
               );
             }}
           ></DatePicker>
@@ -394,7 +383,7 @@ export default function TableHakzaViewPoint() {
       <GenericTable
         tableTitle={"טיובים ידניים - הקצאה"}
         columnsForTable={columns.reverse()}
-        dataForTable={TiubimIdaniimHaktzaData}
+        dataForTable={tiubimIdaniimHaktzaState}
       ></GenericTable>
     </div>
   );

@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.7",
-    "@tanstack/react-table": "^8.15.3",
+    "@tanstack/react-table": "^8.17.3",
     "antd": "^5.16.2",
     "axios": "^1.6.8",
     "lodash": "^4.17.21",

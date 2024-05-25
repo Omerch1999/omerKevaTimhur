@@ -394,11 +394,11 @@ export const avarage_ratio_lvl8 = [
 
 export const TiubimIdaniimHaktzaData = [
   {
-    id: 3334,
-    name: 'מפק בח"א 28',
+    id: 4518,
+    name: 'מפק בח"א 10',
     category: "",
     madorInChargeOf: "",
-    tiubExplanation: "מעבר לאזרוח מלא במטבחים",
+    tiubExplanation: "מעבר לאזרוח מלאים",
     begda: "01-01-2024",
     endda: "31-12-2024",
     timeDiff: 1.002739726,
