@@ -1,3 +1,6 @@
+import dayjs from "dayjs";
+const dateFormat = "DD-MM-YYYY";
+
 import {
   useReactTable,
   getCoreRowModel,
@@ -14,14 +17,33 @@ export default function GenericTable({
   tableTitle,
   styleForRow = "body-table-row",
   isVertical = 1,
-  ret,
+  retTableP,
+  retTableV,
 }) {
   const columns = columnsForTable;
   const [data, setData] = useState(dataForTable);
 
   useEffect(() => {
-    ret(table);
+    if (tableTitle === "טיובים ידניים - הקצאה") {
+      retTableP(table);
+    }
   }, []);
+
+  useEffect(() => {
+    if (tableTitle === "טיובים ידניים - הקצאה") {
+      retTableV(data);
+    }
+  }, [data]);
+
+  function calcTotalColumn(indexC) {
+    const sum =
+      data[indexC].kvutzotMinuiKatzinBahir +
+      data[indexC].kvutzotMinuiKatzinMuvak +
+      data[indexC].kvutzotMinuiKatzinRishoni +
+      data[indexC].kvutzotMinuiNagadMuvak +
+      data[indexC].kvutzotMinuiNagadRishoni;
+    return sum;
+  }
 
   const table = useReactTable({
     data,
@@ -29,16 +51,39 @@ export default function GenericTable({
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     meta: {
-      updateTableData: (rowIndex, columnId, value) => {
+      updateTableData: (indexC, keyC, valueC) => {
         setData((prev) => {
-          const newData = prev.map((row, index) => {
-            if (rowIndex === index) {
-              return {
-                ...prev[rowIndex],
-                [columnId]: parseFloat(value),
-              };
+          const newData = prev.map((item, index) => {
+            //if the user chages the rows of the 5 types it effects the "total" column
+            if (index === indexC) {
+              if (
+                keyC === "kvutzotMinuiKatzinBahir" ||
+                keyC === "kvutzotMinuiKatzinMuvak" ||
+                keyC === "kvutzotMinuiKatzinRishoni" ||
+                keyC === "kvutzotMinuiNagadMuvak" ||
+                keyC === "kvutzotMinuiNagadRishoni"
+              ) {
+                //sumTotal calculate the total of 5 columns and adds the delta between the input (valueC) and the prev (item[keyC])
+                const sumTotal = calcTotalColumn(indexC) + valueC - item[keyC];
+                return { ...item, [keyC]: valueC, total: sumTotal };
+              }
+              //if the user changes begda or endda it effects the timeDiff column
+              if (keyC === "begda" || keyC === "endda") {
+                let begdaT, enddaT;
+                if (keyC === "begda") {
+                  begdaT = new Date(dayjs(valueC, dateFormat)).getTime();
+                  enddaT = new Date(dayjs(item.endda, dateFormat)).getTime();
+                } else {
+                  //keyC === "endda"
+                  begdaT = new Date(dayjs(item.begda, dateFormat)).getTime();
+                  enddaT = new Date(dayjs(valueC, dateFormat)).getTime();
+                }
+                const diffT = (enddaT - begdaT) / 1000 / 31556926;
+                return { ...item, [keyC]: valueC, timeDiff: diffT };
+              }
+              return { ...item, [keyC]: valueC };
             }
-            return row;
+            return item;
           });
 
           return newData;

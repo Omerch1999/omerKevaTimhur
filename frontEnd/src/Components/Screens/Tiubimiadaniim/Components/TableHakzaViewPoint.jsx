@@ -14,11 +14,16 @@ export default function TableHakzaViewPoint() {
     TiubimIdaniimHaktzaData
   );
 
-  const [reactTableZ, setReactTableZ] = useState();
+  const [reactTableP, setReactTableP] = useState();
 
-  function ret(val) {
-    console.log(val);
-    setReactTableZ(val);
+  function retTableP(val) {
+    //return genericTable POINTER for Meta Functions Calling
+    setReactTableP(val);
+  }
+
+  function retTableV(val) {
+    //return genericTable Value for updating this state table also
+    SetTiubimIdaniimHaktzaState(val);
   }
 
   const showModal = () => {
@@ -31,65 +36,65 @@ export default function TableHakzaViewPoint() {
     setIsModalOpen(false);
   };
 
-  /**returns the total column if one of the five rows of all types of ktzinim and nagadim
-   * @param {number} indexC - the index (row number).
-   * @returns {number} - sum of all ktzinim and nagadim sum
-   */
-  function calcTotalColumn(indexC) {
-    const sum =
-      tiubimIdaniimHaktzaState[indexC].kvutzotMinuiKatzinBahir +
-      tiubimIdaniimHaktzaState[indexC].kvutzotMinuiKatzinMuvak +
-      tiubimIdaniimHaktzaState[indexC].kvutzotMinuiKatzinRishoni +
-      tiubimIdaniimHaktzaState[indexC].kvutzotMinuiNagadMuvak +
-      tiubimIdaniimHaktzaState[indexC].kvutzotMinuiNagadRishoni;
-    return sum;
-  }
+  // /**returns the total column if one of the five rows of all types of ktzinim and nagadim
+  //  * @param {number} indexC - the index (row number).
+  //  * @returns {number} - sum of all ktzinim and nagadim sum
+  //  */
+  // function calcTotalColumn(indexC) {
+  //   const sum =
+  //     tiubimIdaniimHaktzaState[indexC].kvutzotMinuiKatzinBahir +
+  //     tiubimIdaniimHaktzaState[indexC].kvutzotMinuiKatzinMuvak +
+  //     tiubimIdaniimHaktzaState[indexC].kvutzotMinuiKatzinRishoni +
+  //     tiubimIdaniimHaktzaState[indexC].kvutzotMinuiNagadMuvak +
+  //     tiubimIdaniimHaktzaState[indexC].kvutzotMinuiNagadRishoni;
+  //   return sum;
+  // }
 
-  /**
-   * updates the state after changing the cell
-   * @param {number} indexC - the index (row number).
-   * @param {string} keyC - the column you want to update.
-   * @param {*} valueC - the value that will be set at indexC row, at KeyC column
-   */
-  function SetTiubimIdaniimHaktzaStateHandler(indexC, keyC, valueC) {
-    SetTiubimIdaniimHaktzaState((prev) => {
-      const updatedTiubimIdaniimHaktza = prev.map((item, index) => {
-        //if the user chages the rows of the 5 types it effects the "total" column
-        if (index === indexC) {
-          if (
-            keyC === "kvutzotMinuiKatzinBahir" ||
-            keyC === "kvutzotMinuiKatzinMuvak" ||
-            keyC === "kvutzotMinuiKatzinRishoni" ||
-            keyC === "kvutzotMinuiNagadMuvak" ||
-            keyC === "kvutzotMinuiNagadRishoni"
-          ) {
-            //sumTotal calculate the total of 5 columns and adds the delta between the input (valueC) and the prev (item[keyC])
-            const sumTotal = calcTotalColumn(indexC) + valueC - item[keyC];
-            return { ...item, [keyC]: valueC, total: sumTotal };
-          }
-          //if the user changes begda or endda it effects the timeDiff column
-          if (keyC === "begda" || keyC === "endda") {
-            let begdaT, enddaT;
-            if (keyC === "begda") {
-              begdaT = new Date(dayjs(valueC, dateFormat)).getTime();
-              enddaT = new Date(dayjs(item.endda, dateFormat)).getTime();
-            } else {
-              //keyC === "endda"
-              begdaT = new Date(dayjs(item.begda, dateFormat)).getTime();
-              enddaT = new Date(dayjs(valueC, dateFormat)).getTime();
-            }
-            const diffT = (enddaT - begdaT) / 1000 / 31556926;
-            return { ...item, [keyC]: valueC, timeDiff: diffT };
-          }
-          return { ...item, [keyC]: valueC };
-        }
-        return item;
-      });
-      console.log(updatedTiubimIdaniimHaktza);
+  // /**
+  //  * updates the state after changing the cell
+  //  * @param {number} indexC - the index (row number).
+  //  * @param {string} keyC - the column you want to update.
+  //  * @param {*} valueC - the value that will be set at indexC row, at KeyC column
+  //  */
+  // function SetTiubimIdaniimHaktzaStateHandler(indexC, keyC, valueC) {
+  //   SetTiubimIdaniimHaktzaState((prev) => {
+  //     const updatedTiubimIdaniimHaktza = prev.map((item, index) => {
+  //       //if the user chages the rows of the 5 types it effects the "total" column
+  //       if (index === indexC) {
+  //         if (
+  //           keyC === "kvutzotMinuiKatzinBahir" ||
+  //           keyC === "kvutzotMinuiKatzinMuvak" ||
+  //           keyC === "kvutzotMinuiKatzinRishoni" ||
+  //           keyC === "kvutzotMinuiNagadMuvak" ||
+  //           keyC === "kvutzotMinuiNagadRishoni"
+  //         ) {
+  //           //sumTotal calculate the total of 5 columns and adds the delta between the input (valueC) and the prev (item[keyC])
+  //           const sumTotal = calcTotalColumn(indexC) + valueC - item[keyC];
+  //           return { ...item, [keyC]: valueC, total: sumTotal };
+  //         }
+  //         //if the user changes begda or endda it effects the timeDiff column
+  //         if (keyC === "begda" || keyC === "endda") {
+  //           let begdaT, enddaT;
+  //           if (keyC === "begda") {
+  //             begdaT = new Date(dayjs(valueC, dateFormat)).getTime();
+  //             enddaT = new Date(dayjs(item.endda, dateFormat)).getTime();
+  //           } else {
+  //             //keyC === "endda"
+  //             begdaT = new Date(dayjs(item.begda, dateFormat)).getTime();
+  //             enddaT = new Date(dayjs(valueC, dateFormat)).getTime();
+  //           }
+  //           const diffT = (enddaT - begdaT) / 1000 / 31556926;
+  //           return { ...item, [keyC]: valueC, timeDiff: diffT };
+  //         }
+  //         return { ...item, [keyC]: valueC };
+  //       }
+  //       return item;
+  //     });
+  //     console.log(updatedTiubimIdaniimHaktza);
 
-      return updatedTiubimIdaniimHaktza;
-    });
-  }
+  //     return updatedTiubimIdaniimHaktza;
+  //   });
+  // }
 
   //calculates total of column in the footer
   const sumForFooter = (titleHeader) => {
@@ -112,6 +117,7 @@ export default function TableHakzaViewPoint() {
       accessorKey: "category",
       header: "קטגוריה",
       cell: (props) => (
+        //todo - update state
         <Input
           defaultValue={tiubimIdaniimHaktzaState[props.row.index].category}
         ></Input>
@@ -121,6 +127,7 @@ export default function TableHakzaViewPoint() {
       accessorKey: "madorInChargeOf",
       header: "מדור אחראי",
       cell: (props) => (
+        //todo - update state
         <Input
           defaultValue={
             tiubimIdaniimHaktzaState[props.row.index].madorInChargeOf
@@ -138,7 +145,7 @@ export default function TableHakzaViewPoint() {
             tiubimIdaniimHaktzaState[props.row.index].tiubExplanation
           }
           onBlur={(e) => {
-            SetTiubimIdaniimHaktzaStateHandler(
+            reactTableP.options.meta?.updateTableData(
               props.row.index,
               "tiubExplanation",
               e.target.value
@@ -161,7 +168,7 @@ export default function TableHakzaViewPoint() {
             allowClear={false}
             format={dateFormat}
             onChange={(date, dateString) => {
-              SetTiubimIdaniimHaktzaStateHandler(
+              reactTableP.options.meta?.updateTableData(
                 props.row.index,
                 "begda",
                 dateString
@@ -185,7 +192,7 @@ export default function TableHakzaViewPoint() {
             allowClear={false}
             format={dateFormat}
             onChange={(date, dateString) => {
-              SetTiubimIdaniimHaktzaStateHandler(
+              reactTableP.options.meta?.updateTableData(
                 props.row.index,
                 "endda",
                 dateString
@@ -214,6 +221,13 @@ export default function TableHakzaViewPoint() {
           <TextArea
             style={{ direction: "rtl" }}
             defaultValue={tiubimIdaniimHaktzaState[props.row.index].comment}
+            onBlur={(e) => {
+              reactTableP.options.meta?.updateTableData(
+                props.row.index,
+                "comment",
+                e.target.value
+              );
+            }}
           ></TextArea>
         );
       },
@@ -228,13 +242,7 @@ export default function TableHakzaViewPoint() {
               tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiKatzinBahir
             }
             onChange={(e) => {
-              SetTiubimIdaniimHaktzaStateHandler(
-                props.row.index,
-                "kvutzotMinuiKatzinBahir",
-                e
-              );
-
-              reactTableZ.options.meta?.updateTableData(
+              reactTableP.options.meta?.updateTableData(
                 props.row.index,
                 "kvutzotMinuiKatzinBahir",
                 e
@@ -257,7 +265,7 @@ export default function TableHakzaViewPoint() {
               tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiKatzinMuvak
             }
             onChange={(e) =>
-              SetTiubimIdaniimHaktzaStateHandler(
+              reactTableP.options.meta?.updateTableData(
                 props.row.index,
                 "kvutzotMinuiKatzinMuvak",
                 e
@@ -281,7 +289,7 @@ export default function TableHakzaViewPoint() {
                 .kvutzotMinuiKatzinRishoni
             }
             onChange={(e) =>
-              SetTiubimIdaniimHaktzaStateHandler(
+              reactTableP.options.meta?.updateTableData(
                 props.row.index,
                 "kvutzotMinuiKatzinRishoni",
                 e
@@ -304,7 +312,7 @@ export default function TableHakzaViewPoint() {
               tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiNagadMuvak
             }
             onChange={(e) =>
-              SetTiubimIdaniimHaktzaStateHandler(
+              reactTableP.options.meta?.updateTableData(
                 props.row.index,
                 "kvutzotMinuiNagadMuvak",
                 e
@@ -327,7 +335,7 @@ export default function TableHakzaViewPoint() {
               tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiNagadRishoni
             }
             onChange={(e) =>
-              SetTiubimIdaniimHaktzaStateHandler(
+              reactTableP.options.meta?.updateTableData(
                 props.row.index,
                 "kvutzotMinuiNagadRishoni",
                 e
@@ -397,7 +405,8 @@ export default function TableHakzaViewPoint() {
         tableTitle={"טיובים ידניים - הקצאה"}
         columnsForTable={columns.reverse()}
         dataForTable={tiubimIdaniimHaktzaState}
-        ret={ret}
+        retTableP={retTableP}
+        retTableV={retTableV}
       ></GenericTable>
     </div>
   );

@@ -1,1 +1,2 @@
-1.in each table change the dataForTable to the state instead of the input!
+1.in each table change in PARAMETERS TABLE update the STATE in GENERIC TABLE.
+
