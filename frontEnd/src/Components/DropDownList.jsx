@@ -1,6 +1,12 @@
 import { Select } from "antd";
 import { useEffect, useState } from "react";
-export default function DropDownList({ optionsZ, defaultValueZ, styleZ }) {
+export default function DropDownList({
+  optionsZ,
+  defaultValueZ,
+  styleZ,
+  retDataFun,
+  onChange,
+}) {
   const [options, setOptions] = useState([
     { value: "option A", label: "option A" },
     { value: "option B", label: "option B" },
@@ -17,9 +23,19 @@ export default function DropDownList({ optionsZ, defaultValueZ, styleZ }) {
 
   return (
     <Select
+      //onChange={handleChange}
       options={options}
       defaultValue={defaultValueZ}
       style={styleZ}
+      onChange={(a, b) => {
+        if (retDataFun) {
+          retDataFun(b);
+        }
+
+        if (onChange) {
+          onChange(b.label);
+        }
+      }}
     ></Select>
   );
 }

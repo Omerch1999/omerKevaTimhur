@@ -1,11 +1,11 @@
 import GenericTable from "../../../Tables/GenericTable";
-import { TiubimIdaniimHaktzaData, bsisim_list } from "../../../../data";
-import { DatePicker, Form, Input, InputNumber } from "antd";
+import { TiubimIdaniimHaktzaData } from "../../../../data";
+import { DatePicker, Input, InputNumber } from "antd";
 import dayjs from "dayjs";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
-import { Button, Modal } from "antd";
-import DropDownList from "../../../DropDownList";
+import { Button } from "antd";
+import AddLineModal from "./AddLineModal";
 
 export default function TableHakzaViewPoint() {
   const dateFormat = "DD-MM-YYYY";
@@ -373,33 +373,11 @@ export default function TableHakzaViewPoint() {
         <Button onClick={showModal}>הוסף שורה</Button>
       </div>
 
-      <Modal
-        title="הוספת שורה"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Form style={{ direction: "rtl" }}>
-          <Form.Item label='קס"מ' name="Kasm">
-            <DropDownList optionsZ={bsisim_list}></DropDownList>
-          </Form.Item>
-          <Form.Item label="קטגוריה" name="category">
-            <DropDownList></DropDownList>
-          </Form.Item>
-          <Form.Item label="מדור אחראי" name="madorInChargeOf">
-            <DropDownList></DropDownList>
-          </Form.Item>
-          <Form.Item label="הסבר טיוב:" name="Input">
-            <TextArea />
-          </Form.Item>
-          <Form.Item label="תאריך התחלה" name="begda">
-            <DatePicker format={dateFormat}></DatePicker>
-          </Form.Item>
-          <Form.Item label="תאריך סיום" name="enda">
-            <DatePicker format={dateFormat}></DatePicker>
-          </Form.Item>
-        </Form>
-      </Modal>
+      <AddLineModal
+        isModalOpen={isModalOpen}
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+      ></AddLineModal>
 
       <GenericTable
         tableTitle={"טיובים ידניים - הקצאה"}
