@@ -4,7 +4,6 @@ export default function DropDownList({
   optionsZ,
   defaultValueZ,
   styleZ,
-  retDataFun,
   onChange,
 }) {
   const [options, setOptions] = useState([
@@ -28,10 +27,6 @@ export default function DropDownList({
       defaultValue={defaultValueZ}
       style={styleZ}
       onChange={(a, b) => {
-        if (retDataFun) {
-          retDataFun(b);
-        }
-
         if (onChange) {
           onChange(b.label);
         }

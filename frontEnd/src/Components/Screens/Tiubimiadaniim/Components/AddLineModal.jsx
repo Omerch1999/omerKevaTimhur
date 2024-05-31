@@ -15,11 +15,6 @@ export default function AddLineModal({ isModalOpen, handleOk, handleCancel }) {
     console.log(form.getFieldValue());
   };
 
-  function getDataFromDropDown(data) {
-    console.log(data);
-    setTempData(data);
-  }
-
   return (
     <Modal
       title="הוספת שורה"
@@ -31,17 +26,13 @@ export default function AddLineModal({ isModalOpen, handleOk, handleCancel }) {
         <Form.Item
           label='קס"מ'
           name="Kasm"
-          //   rules={[
-          //     {
-          //       required: true,
-          //     },
-          //   ]}
-          //getValueFromEvent={(value) => value}
+          rules={[
+            {
+              required: true,
+            },
+          ]}
         >
-          <DropDownList
-            optionsZ={bsisim_list}
-            retDataFun={getDataFromDropDown}
-          ></DropDownList>
+          <DropDownList optionsZ={bsisim_list}></DropDownList>
         </Form.Item>
         <Form.Item label="קטגוריה" name="category">
           <DropDownList></DropDownList>
