@@ -2,19 +2,24 @@ import { Modal, Form, DatePicker, InputNumber, Button } from "antd";
 import DropDownList from "../../../DropDownList";
 import { bsisim_list } from "../../../../data";
 import TextArea from "antd/es/input/TextArea";
-import { useState } from "react";
+import dayjs from "dayjs";
 
 const dateFormat = "DD-MM-YYYY";
 
 export default function AddLineModal({ isModalOpen, handleOk, handleCancel }) {
   const [form] = Form.useForm();
-  const [tempData, setTempData] = useState();
 
   const onFinish = (values) => {
     console.log(values);
     console.log(form.getFieldValue());
+    debugger;
   };
 
+  const initialValues = {
+    begda: dayjs("2024-06-01"), // Ensure it's a valid dayjs object
+  };
+
+  console.log(initialValues);
   return (
     <Modal
       title="הוספת שורה"
@@ -22,7 +27,12 @@ export default function AddLineModal({ isModalOpen, handleOk, handleCancel }) {
       onOk={handleOk}
       onCancel={handleCancel}
     >
-      <Form style={{ direction: "rtl" }} onFinish={onFinish} form={form}>
+      <Form
+        initialValues={initialValues}
+        style={{ direction: "rtl" }}
+        onFinish={onFinish}
+        form={form}
+      >
         <Form.Item
           label='קס"מ'
           name="Kasm"
@@ -43,10 +53,20 @@ export default function AddLineModal({ isModalOpen, handleOk, handleCancel }) {
         <Form.Item label="הסבר טיוב:" name="tiubExplanation">
           <TextArea />
         </Form.Item>
-        <Form.Item label="תאריך התחלה" name="begda">
-          <DatePicker format={dateFormat}></DatePicker>
+        <Form.Item
+          label="תאריך התחלה"
+          name="begda"
+          getValueFromEvent={(e, dateString) => dateString} //return dateString
+          getValueProps={(e) => e} //pass this value to [form] on submit
+        >
+          <DatePicker format="DD-MM-YYYY"></DatePicker>
         </Form.Item>
-        <Form.Item label="תאריך סיום" name="enda">
+        <Form.Item
+          label="תאריך סיום"
+          name="enda"
+          getValueFromEvent={(e, dateString) => dateString}
+          getValueProps={(e) => e}
+        >
           <DatePicker format={dateFormat}></DatePicker>
         </Form.Item>
         <Form.Item label="מקדם זמן נדרש" name="timeDiff">
@@ -55,19 +75,39 @@ export default function AddLineModal({ isModalOpen, handleOk, handleCancel }) {
         <Form.Item label="הערה" name="comment">
           <TextArea />
         </Form.Item>
-        <Form.Item label="קצין בכיר" name="kvutzotMinuiKatzinBahir">
+        <Form.Item
+          label="קצין בכיר"
+          name="kvutzotMinuiKatzinBahir"
+          initialValue={0}
+        >
           <InputNumber style={{ direction: "ltr" }} />
         </Form.Item>
-        <Form.Item label="קצין מובהק" name="kvutzotMinuiKatzinMuvak">
+        <Form.Item
+          label="קצין מובהק"
+          name="kvutzotMinuiKatzinMuvak"
+          initialValue={0}
+        >
           <InputNumber style={{ direction: "ltr" }} />
         </Form.Item>
-        <Form.Item label="קצין ראשוני" name="kvutzotMinuiKatzinRishoni">
+        <Form.Item
+          label="קצין ראשוני"
+          name="kvutzotMinuiKatzinRishoni"
+          initialValue={0}
+        >
           <InputNumber style={{ direction: "ltr" }} />
         </Form.Item>
-        <Form.Item label="נגד מובהק" name="kvutzotMinuiNagadMuvak">
+        <Form.Item
+          label="נגד מובהק"
+          name="kvutzotMinuiNagadMuvak"
+          initialValue={0}
+        >
           <InputNumber style={{ direction: "ltr" }} />
         </Form.Item>
-        <Form.Item label="נגד ראשוני" name="kvutzotMinuiNagadRishoni">
+        <Form.Item
+          label="נגד ראשוני"
+          name="kvutzotMinuiNagadRishoni"
+          initialValue={0}
+        >
           <InputNumber style={{ direction: "ltr" }} />
         </Form.Item>
 
