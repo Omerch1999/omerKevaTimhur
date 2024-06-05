@@ -3,11 +3,36 @@ import DropDownList from "../../../DropDownList";
 import { bsisim_list } from "../../../../data";
 import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
+import { useState } from "react";
 
 const dateFormat = "DD-MM-YYYY";
 
 export default function AddLineModal({ isModalOpen, handleOk, handleCancel }) {
   const [form] = Form.useForm();
+
+  const [dateDiffToCalc, setDateDiffToCalc] = useState({
+    begda: dayjs(),
+    endda: dayjs().add(1, "day"),
+    dateDiff: dayjs().diff(dayjs().subtract(1, "day"), "years", true),
+  });
+
+  const [totalToCalc, setTotalToCalc] = useState({
+    kvutzotMinuiKatzinBahir: 0,
+    kvutzotMinuiKatzinMuvak: 0,
+    kvutzotMinuiKatzinRishoni: 0,
+    kvutzotMinuiNagadMuvak: 0,
+    total: 0,
+    munahiRishoni: 0,
+  });
+
+  function DateDiffCalcHandler(begda, endda) {
+    const temp = {
+      begda: begda,
+      endda: endda,
+      dateDiff: begda.diff(endda, "years", true),
+    };
+    setDateDiffToCalc(temp);
+  }
 
   const onFinish = (values) => {
     console.log(values);
@@ -16,10 +41,10 @@ export default function AddLineModal({ isModalOpen, handleOk, handleCancel }) {
   };
 
   const initialValues = {
-    begda: dayjs("2024-06-01"), // Ensure it's a valid dayjs object
+    begda: dayjs(), // Ensure it's a valid dayjs object
+    enda: dayjs().add(1, "day"),
   };
 
-  console.log(initialValues);
   return (
     <Modal
       title="הוספת שורה"
@@ -53,24 +78,36 @@ export default function AddLineModal({ isModalOpen, handleOk, handleCancel }) {
         <Form.Item label="הסבר טיוב:" name="tiubExplanation">
           <TextArea />
         </Form.Item>
-        <Form.Item
-          label="תאריך התחלה"
-          name="begda"
-          getValueFromEvent={(e, dateString) => dateString} //return dateString
-          getValueProps={(e) => e} //pass this value to [form] on submit
-        >
-          <DatePicker format="DD-MM-YYYY"></DatePicker>
+        <Form.Item label="תאריך התחלה" name="begda">
+          <DatePicker
+            format={dateFormat}
+            showToday={false}
+            allowClear={false}
+            onChange={(e) => {
+              DateDiffCalcHandler(e, dateDiffToCalc.endda);
+            }}
+          ></DatePicker>
         </Form.Item>
         <Form.Item
           label="תאריך סיום"
           name="enda"
-          getValueFromEvent={(e, dateString) => dateString}
-          getValueProps={(e) => e}
+          getValueProps={(e) => {
+            let dateTemp = e;
+            if (e < dateDiffToCalc.begda) {
+              dateTemp = dateDiffToCalc.begda.add(1, "day");
+            }
+
+            return {
+              minDate: dateDiffToCalc.begda.add(1, "day"),
+              allowClear: false,
+              value: dateTemp,
+            };
+          }}
         >
-          <DatePicker format={dateFormat}></DatePicker>
+          <DatePicker format={dateFormat} showToday={false}></DatePicker>
         </Form.Item>
         <Form.Item label="מקדם זמן נדרש" name="timeDiff">
-          <div>נדרש לחשב</div>
+          {dateDiffToCalc.dateDiff.toFixed(3)}
         </Form.Item>
         <Form.Item label="הערה" name="comment">
           <TextArea />
@@ -80,7 +117,7 @@ export default function AddLineModal({ isModalOpen, handleOk, handleCancel }) {
           name="kvutzotMinuiKatzinBahir"
           initialValue={0}
         >
-          <InputNumber style={{ direction: "ltr" }} />
+          <InputNumber style={{ direction: "ltr" }} onChange={(e) => {}} />
         </Form.Item>
         <Form.Item
           label="קצין מובהק"
