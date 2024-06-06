@@ -7,12 +7,17 @@ import { useState } from "react";
 
 const dateFormat = "DD-MM-YYYY";
 
-export default function AddLineModal({ isModalOpen, handleOk, handleCancel }) {
+export default function AddLineModal({
+  isModalOpen,
+  handleOk,
+  handleCancel,
+  retNewLine,
+}) {
   const [form] = Form.useForm();
 
   const [dateDiffToCalc, setDateDiffToCalc] = useState({
-    begda: dayjs(),
-    endda: dayjs().add(1, "day"),
+    begda: dayjs().startOf("day"),
+    endda: dayjs().startOf("day").add(1, "day"),
     dateDiff: dayjs().diff(dayjs().subtract(1, "day"), "years", true),
   });
 
@@ -21,28 +26,56 @@ export default function AddLineModal({ isModalOpen, handleOk, handleCancel }) {
     kvutzotMinuiKatzinMuvak: 0,
     kvutzotMinuiKatzinRishoni: 0,
     kvutzotMinuiNagadMuvak: 0,
+    kvutzotMinuiNagadRishoni: 0,
     total: 0,
     munahiRishoni: 0,
   });
 
-  function DateDiffCalcHandler(begda, endda) {
-    const temp = {
-      begda: begda,
-      endda: endda,
-      dateDiff: begda.diff(endda, "years", true),
-    };
-    setDateDiffToCalc(temp);
+  function DateDiffCalcHandler(date, dateType) {
+    setDateDiffToCalc((prev) => {
+      const tempDate = { ...prev };
+
+      if (dateType === "begda") {
+        tempDate.begda = date;
+        if (date.isAfter(tempDate.endda) || date.isSame(tempDate.endda)) {
+          tempDate.endda = date.add(1, "day");
+        }
+      } else if (dateType === "endda") {
+        tempDate.endda = date;
+      }
+      tempDate.dateDiff = tempDate.endda.diff(tempDate.begda, "years", true);
+      return tempDate;
+    });
+  }
+
+  function TotalToCalcHandler(amount, KvutzatMinuiType) {
+    setTotalToCalc((prev) => {
+      const tempTotal = {
+        ...prev,
+        total:
+          prev.kvutzotMinuiKatzinBahir +
+          prev.kvutzotMinuiKatzinMuvak +
+          prev.kvutzotMinuiKatzinRishoni +
+          prev.kvutzotMinuiNagadMuvak +
+          prev.kvutzotMinuiNagadRishoni -
+          prev[KvutzatMinuiType] +
+          amount,
+        [KvutzatMinuiType]: amount,
+      };
+      console.log(tempTotal);
+      return tempTotal;
+    });
   }
 
   const onFinish = (values) => {
     console.log(values);
-    console.log(form.getFieldValue());
-    debugger;
+    retNewLine(values);
   };
 
   const initialValues = {
-    begda: dayjs(), // Ensure it's a valid dayjs object
-    enda: dayjs().add(1, "day"),
+    begda: dateDiffToCalc.begda,
+    endda: dateDiffToCalc.endda,
+    timeDiff: dateDiffToCalc.dateDiff,
   };
 
   return (
@@ -84,27 +117,28 @@ export default function AddLineModal({ isModalOpen, handleOk, handleCancel }) {
             showToday={false}
             allowClear={false}
             onChange={(e) => {
-              DateDiffCalcHandler(e, dateDiffToCalc.endda);
+              DateDiffCalcHandler(e, "begda");
             }}
           ></DatePicker>
         </Form.Item>
         <Form.Item
           label="תאריך סיום"
-          name="enda"
+          name="endda"
           getValueProps={(e) => {
-            let dateTemp = e;
-            if (e < dateDiffToCalc.begda) {
-              dateTemp = dateDiffToCalc.begda.add(1, "day");
-            }
-
             return {
               minDate: dateDiffToCalc.begda.add(1, "day"),
               allowClear: false,
-              value: dateTemp,
+              value: dateDiffToCalc.endda,
             };
           }}
         >
-          <DatePicker format={dateFormat} showToday={false}></DatePicker>
+          <DatePicker
+            format={dateFormat}
+            showToday={false}
+            onChange={(e) => {
+              DateDiffCalcHandler(e, "endda");
+            }}
+          ></DatePicker>
         </Form.Item>
         <Form.Item label="מקדם זמן נדרש" name="timeDiff">
           {dateDiffToCalc.dateDiff.toFixed(3)}
@@ -116,40 +150,105 @@ export default function AddLineModal({ isModalOpen, handleOk, handleCancel }) {
           label="קצין בכיר"
           name="kvutzotMinuiKatzinBahir"
           initialValue={0}
+          getValueProps={(e) => ({
+            value: totalToCalc.kvutzotMinuiKatzinBahir,
+          })}
         >
-          <InputNumber style={{ direction: "ltr" }} onChange={(e) => {}} />
+          <InputNumber
+            style={{ direction: "ltr" }}
+            min={0}
+            onChange={(e) => {
+              if (e != null) {
+                TotalToCalcHandler(e, "kvutzotMinuiKatzinBahir");
+              } else {
+                TotalToCalcHandler(0, "kvutzotMinuiKatzinBahir");
+              }
+            }}
+          />
         </Form.Item>
         <Form.Item
           label="קצין מובהק"
           name="kvutzotMinuiKatzinMuvak"
           initialValue={0}
+          getValueProps={(e) => ({
+            value: totalToCalc.kvutzotMinuiKatzinMuvak,
+          })}
         >
-          <InputNumber style={{ direction: "ltr" }} />
+          <InputNumber
+            style={{ direction: "ltr" }}
+            min={0}
+            onChange={(e) => {
+              if (e != null) {
+                TotalToCalcHandler(e, "kvutzotMinuiKatzinMuvak");
+              } else {
+                TotalToCalcHandler(0, "kvutzotMinuiKatzinMuvak");
+              }
+            }}
+          />
         </Form.Item>
         <Form.Item
           label="קצין ראשוני"
           name="kvutzotMinuiKatzinRishoni"
           initialValue={0}
+          getValueProps={(e) => ({
+            value: totalToCalc.kvutzotMinuiKatzinRishoni,
+          })}
         >
-          <InputNumber style={{ direction: "ltr" }} />
+          <InputNumber
+            style={{ direction: "ltr" }}
+            min={0}
+            onChange={(e) => {
+              if (e != null) {
+                TotalToCalcHandler(e, "kvutzotMinuiKatzinRishoni");
+              } else {
+                TotalToCalcHandler(0, "kvutzotMinuiKatzinRishoni");
+              }
+            }}
+          />
         </Form.Item>
         <Form.Item
           label="נגד מובהק"
           name="kvutzotMinuiNagadMuvak"
           initialValue={0}
+          getValueProps={(e) => ({
+            value: totalToCalc.kvutzotMinuiNagadMuvak,
+          })}
         >
-          <InputNumber style={{ direction: "ltr" }} />
+          <InputNumber
+            style={{ direction: "ltr" }}
+            min={0}
+            onChange={(e) => {
+              if (e != null) {
+                TotalToCalcHandler(e, "kvutzotMinuiNagadMuvak");
+              } else {
+                TotalToCalcHandler(0, "kvutzotMinuiNagadMuvak");
+              }
+            }}
+          />
         </Form.Item>
         <Form.Item
           label="נגד ראשוני"
           name="kvutzotMinuiNagadRishoni"
           initialValue={0}
+          getValueProps={(e) => ({
+            value: totalToCalc.kvutzotMinuiNagadRishoni,
+          })}
         >
-          <InputNumber style={{ direction: "ltr" }} />
+          <InputNumber
+            style={{ direction: "ltr" }}
+            min={0}
+            onChange={(e) => {
+              if (e != null) {
+                TotalToCalcHandler(e, "kvutzotMinuiNagadRishoni");
+              } else {
+                TotalToCalcHandler(0, "kvutzotMinuiNagadRishoni");
+              }
+            }}
+          />
         </Form.Item>
 
         <Form.Item label='סה"כ' name="total">
-          <div>נדרש לחשב</div>
+          <div>{totalToCalc.total}</div>
         </Form.Item>
         <Form.Item label="מונחי ראשוני" name="munahiRishoni">
           <div>נדרש לחשב</div>

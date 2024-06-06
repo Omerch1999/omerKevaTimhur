@@ -13,8 +13,15 @@ export default function TableHakzaViewPoint() {
   const [tiubimIdaniimHaktzaState, SetTiubimIdaniimHaktzaState] = useState(
     TiubimIdaniimHaktzaData
   );
-
   const [reactTableP, setReactTableP] = useState();
+
+  const [newLine, setNewLine] = useState();
+
+  function retNewLine(val) {
+    //return newLine from the modal form
+    setNewLine(val);
+    console.log("val ", val);
+  }
 
   function retTableP(val) {
     //return genericTable POINTER for Meta Functions Calling
@@ -377,6 +384,7 @@ export default function TableHakzaViewPoint() {
         isModalOpen={isModalOpen}
         handleOk={handleOk}
         handleCancel={handleCancel}
+        retNewLine={retNewLine}
       ></AddLineModal>
 
       <GenericTable
