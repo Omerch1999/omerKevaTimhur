@@ -47,10 +47,10 @@ export default function TableHakzaViewPoint() {
 
   const columns = [
     {
-      accessorKey: "name",
+      accessorKey: "nameKasm",
       header: 'קס"מ',
       cell: (props) => {
-        return <div>{tiubimIdaniimHaktzaState[props.row.index].name}</div>;
+        return <div>{tiubimIdaniimHaktzaState[props.row.index].nameKasm}</div>;
       },
     },
     {

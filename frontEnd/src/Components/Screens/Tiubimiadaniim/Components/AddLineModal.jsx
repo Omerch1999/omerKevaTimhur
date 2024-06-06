@@ -74,7 +74,7 @@ export default function AddLineModal({
       ...values,
       total: totalToCalc.total,
       timeDiff: dateDiffToCalc.timeDiff,
-      id: bsisim_list.find((basis) => basis.name === values.name).id,
+      id: bsisim_list.find((basis) => basis.name === values.nameKasm).id,
     };
     retNewLine(valuesNew);
     handleCancel();
@@ -103,7 +103,7 @@ export default function AddLineModal({
       >
         <Form.Item
           label='קס"מ'
-          name="name"
+          name="nameKasm"
           rules={[
             {
               required: true,

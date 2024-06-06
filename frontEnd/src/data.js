@@ -395,7 +395,7 @@ export const avarage_ratio_lvl8 = [
 export const TiubimIdaniimHaktzaData = [
   {
     id: 4518,
-    name: 'מפק בח"א 10',
+    nameKasm: 'מפק בח"א 10',
     category: "",
     madorInChargeOf: "",
     tiubExplanation: "מעבר לאזרוח מלאים",
@@ -413,7 +413,7 @@ export const TiubimIdaniimHaktzaData = [
   },
   {
     id: 3334,
-    name: 'מפק בח"א 28',
+    nameKasm: 'מפק בח"א 28',
     category: "",
     madorInChargeOf: "",
     tiubExplanation: "מעבר לאזרוח מלא במטבחים",
@@ -431,7 +431,7 @@ export const TiubimIdaniimHaktzaData = [
   },
   {
     id: 7171,
-    name: "להק המודיעין 5619",
+    nameKasm: "להק המודיעין 5619",
     category: "",
     madorInChargeOf: "",
     tiubExplanation: "סתם בדיקה",
