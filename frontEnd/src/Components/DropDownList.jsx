@@ -22,7 +22,6 @@ export default function DropDownList({
 
   return (
     <Select
-      //onChange={handleChange}
       options={options}
       defaultValue={defaultValueZ}
       style={styleZ}

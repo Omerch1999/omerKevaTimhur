@@ -9,18 +9,20 @@ const dateFormat = "DD-MM-YYYY";
 
 export default function AddLineModal({
   isModalOpen,
-  handleOk,
   handleCancel,
   retNewLine,
 }) {
+  //handles form data (not in use)
   const [form] = Form.useForm();
 
+  //handles dates changes from date picker and calc the difference
   const [dateDiffToCalc, setDateDiffToCalc] = useState({
     begda: dayjs().startOf("day"),
     endda: dayjs().startOf("day").add(1, "day"),
-    dateDiff: dayjs().diff(dayjs().subtract(1, "day"), "years", true),
+    timeDiff: dayjs().diff(dayjs().subtract(1, "day"), "years", true),
   });
 
+  //handles amount changes from NUMBERINPUTS and calc the SUM
   const [totalToCalc, setTotalToCalc] = useState({
     kvutzotMinuiKatzinBahir: 0,
     kvutzotMinuiKatzinMuvak: 0,
@@ -43,7 +45,7 @@ export default function AddLineModal({
       } else if (dateType === "endda") {
         tempDate.endda = date;
       }
-      tempDate.dateDiff = tempDate.endda.diff(tempDate.begda, "years", true);
+      tempDate.timeDiff = tempDate.endda.diff(tempDate.begda, "years", true);
       return tempDate;
     });
   }
@@ -62,28 +64,36 @@ export default function AddLineModal({
           amount,
         [KvutzatMinuiType]: amount,
       };
-      console.log(tempTotal);
       return tempTotal;
     });
   }
 
+  //onFinish take all the data from the FORM
   const onFinish = (values) => {
-    console.log(values);
-    retNewLine(values);
+    const valuesNew = {
+      ...values,
+      total: totalToCalc.total,
+      timeDiff: dateDiffToCalc.timeDiff,
+      id: bsisim_list.find((basis) => basis.name === values.name).id,
+    };
+    retNewLine(valuesNew);
+    handleCancel();
   };
 
   const initialValues = {
     begda: dateDiffToCalc.begda,
     endda: dateDiffToCalc.endda,
-    timeDiff: dateDiffToCalc.dateDiff,
+    timeDiff: dateDiffToCalc.timeDiff,
+    total: 0,
+    munahiRishoni: 0,
   };
 
   return (
     <Modal
       title="הוספת שורה"
       open={isModalOpen}
-      onOk={handleOk}
       onCancel={handleCancel}
+      footer={[]}
     >
       <Form
         initialValues={initialValues}
@@ -93,7 +103,7 @@ export default function AddLineModal({
       >
         <Form.Item
           label='קס"מ'
-          name="Kasm"
+          name="name"
           rules={[
             {
               required: true,
@@ -141,7 +151,7 @@ export default function AddLineModal({
           ></DatePicker>
         </Form.Item>
         <Form.Item label="מקדם זמן נדרש" name="timeDiff">
-          {dateDiffToCalc.dateDiff.toFixed(3)}
+          {dateDiffToCalc.timeDiff.toFixed(3)}
         </Form.Item>
         <Form.Item label="הערה" name="comment">
           <TextArea />
@@ -248,7 +258,7 @@ export default function AddLineModal({
         </Form.Item>
 
         <Form.Item label='סה"כ' name="total">
-          <div>{totalToCalc.total}</div>
+          {totalToCalc.total}
         </Form.Item>
         <Form.Item label="מונחי ראשוני" name="munahiRishoni">
           <div>נדרש לחשב</div>

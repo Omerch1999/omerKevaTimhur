@@ -15,12 +15,9 @@ export default function TableHakzaViewPoint() {
   );
   const [reactTableP, setReactTableP] = useState();
 
-  const [newLine, setNewLine] = useState();
-
   function retNewLine(val) {
-    //return newLine from the modal form
-    setNewLine(val);
-    console.log("val ", val);
+    //return newLine from the modal form and send it to the generic table
+    reactTableP.options.meta?.addRowToTableData(val);
   }
 
   function retTableP(val) {
@@ -36,74 +33,10 @@ export default function TableHakzaViewPoint() {
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
-  // /**returns the total column if one of the five rows of all types of ktzinim and nagadim
-  //  * @param {number} indexC - the index (row number).
-  //  * @returns {number} - sum of all ktzinim and nagadim sum
-  //  */
-  // function calcTotalColumn(indexC) {
-  //   const sum =
-  //     tiubimIdaniimHaktzaState[indexC].kvutzotMinuiKatzinBahir +
-  //     tiubimIdaniimHaktzaState[indexC].kvutzotMinuiKatzinMuvak +
-  //     tiubimIdaniimHaktzaState[indexC].kvutzotMinuiKatzinRishoni +
-  //     tiubimIdaniimHaktzaState[indexC].kvutzotMinuiNagadMuvak +
-  //     tiubimIdaniimHaktzaState[indexC].kvutzotMinuiNagadRishoni;
-  //   return sum;
-  // }
-
-  // /**
-  //  * updates the state after changing the cell
-  //  * @param {number} indexC - the index (row number).
-  //  * @param {string} keyC - the column you want to update.
-  //  * @param {*} valueC - the value that will be set at indexC row, at KeyC column
-  //  */
-  // function SetTiubimIdaniimHaktzaStateHandler(indexC, keyC, valueC) {
-  //   SetTiubimIdaniimHaktzaState((prev) => {
-  //     const updatedTiubimIdaniimHaktza = prev.map((item, index) => {
-  //       //if the user chages the rows of the 5 types it effects the "total" column
-  //       if (index === indexC) {
-  //         if (
-  //           keyC === "kvutzotMinuiKatzinBahir" ||
-  //           keyC === "kvutzotMinuiKatzinMuvak" ||
-  //           keyC === "kvutzotMinuiKatzinRishoni" ||
-  //           keyC === "kvutzotMinuiNagadMuvak" ||
-  //           keyC === "kvutzotMinuiNagadRishoni"
-  //         ) {
-  //           //sumTotal calculate the total of 5 columns and adds the delta between the input (valueC) and the prev (item[keyC])
-  //           const sumTotal = calcTotalColumn(indexC) + valueC - item[keyC];
-  //           return { ...item, [keyC]: valueC, total: sumTotal };
-  //         }
-  //         //if the user changes begda or endda it effects the timeDiff column
-  //         if (keyC === "begda" || keyC === "endda") {
-  //           let begdaT, enddaT;
-  //           if (keyC === "begda") {
-  //             begdaT = new Date(dayjs(valueC, dateFormat)).getTime();
-  //             enddaT = new Date(dayjs(item.endda, dateFormat)).getTime();
-  //           } else {
-  //             //keyC === "endda"
-  //             begdaT = new Date(dayjs(item.begda, dateFormat)).getTime();
-  //             enddaT = new Date(dayjs(valueC, dateFormat)).getTime();
-  //           }
-  //           const diffT = (enddaT - begdaT) / 1000 / 31556926;
-  //           return { ...item, [keyC]: valueC, timeDiff: diffT };
-  //         }
-  //         return { ...item, [keyC]: valueC };
-  //       }
-  //       return item;
-  //     });
-  //     console.log(updatedTiubimIdaniimHaktza);
-
-  //     return updatedTiubimIdaniimHaktza;
-  //   });
-  // }
-
-  //calculates total of column in the footer
   const sumForFooter = (titleHeader) => {
     const sumCol = tiubimIdaniimHaktzaState.reduce(
       (sum, currentV) => sum + currentV[titleHeader],
@@ -382,7 +315,6 @@ export default function TableHakzaViewPoint() {
 
       <AddLineModal
         isModalOpen={isModalOpen}
-        handleOk={handleOk}
         handleCancel={handleCancel}
         retNewLine={retNewLine}
       ></AddLineModal>

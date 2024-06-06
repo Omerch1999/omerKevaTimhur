@@ -35,6 +35,17 @@ export default function GenericTable({
     }
   }, [data]);
 
+  useEffect(() => {
+    if (tableTitle === "טיובים ידניים - הקצאה") {
+      setData((prev) => {
+        const temp = prev.map((item, index) => {
+          return { ...item, rowNum: index };
+        });
+        return temp;
+      });
+    }
+  }, [data.length]);
+
   function calcTotalColumn(indexC) {
     const sum =
       data[indexC].kvutzotMinuiKatzinBahir +
@@ -87,6 +98,14 @@ export default function GenericTable({
           });
 
           return newData;
+        });
+      },
+
+      addRowToTableData: (newRow) => {
+        setData((prev) => {
+          let temp = prev;
+          temp.push(newRow);
+          return temp;
         });
       },
     },
