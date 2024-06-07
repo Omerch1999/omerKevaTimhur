@@ -1,33 +1,40 @@
 import GenericTable from "../../../Tables/GenericTable";
-import { TiubimIdaniimHaktzaData } from "../../../../data";
-import { DatePicker, Input, InputNumber } from "antd";
+import { Checkbox, DatePicker, Input, InputNumber } from "antd";
 import dayjs from "dayjs";
 import TextArea from "antd/es/input/TextArea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "antd";
 import AddLineModal from "./AddLineModal";
 
-export default function TableHakzaViewPoint({ tableTitle }) {
+export default function TableHakzaViewPoint({ tableTitle, initialData }) {
   const dateFormat = "DD-MM-YYYY";
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [tiubimIdaniimHaktzaState, SetTiubimIdaniimHaktzaState] = useState(
-    TiubimIdaniimHaktzaData
-  );
+  const [tiubimIdaniimDataState, SetTiubimIdaniimDataState] =
+    useState(initialData);
   const [reactTableP, setReactTableP] = useState();
+  //checkBoxes array, all false at the begining and it changes depend on marking
+  const [checkboxesState, setCheckboxesState] = useState(
+    Array(initialData.length).fill(false)
+  );
 
+  //return newLine from the modal form and send it to the generic table
   function retNewLine(val) {
-    //return newLine from the modal form and send it to the generic table
     reactTableP.options.meta?.addRowToTableData(val);
   }
 
+  //return genericTable POINTER for Meta Functions Calling
   function retTableP(val) {
-    //return genericTable POINTER for Meta Functions Calling
     setReactTableP(val);
   }
 
+  //return checkboxes State
+  function retCheckBoxesV(val) {
+    setCheckboxesState(val);
+  }
+
+  //return genericTable Value for updating this state table also
   function retTableV(val) {
-    //return genericTable Value for updating this state table also
-    SetTiubimIdaniimHaktzaState(val);
+    SetTiubimIdaniimDataState(val);
   }
 
   const showModal = () => {
@@ -38,19 +45,55 @@ export default function TableHakzaViewPoint({ tableTitle }) {
   };
 
   const sumForFooter = (titleHeader) => {
-    const sumCol = tiubimIdaniimHaktzaState.reduce(
+    const sumCol = tiubimIdaniimDataState.reduce(
       (sum, currentV) => sum + currentV[titleHeader],
       0
     );
-    return sumCol;
+    return Math.round(sumCol * 100) / 100;
   };
 
   const columns = [
     {
+      accessorKey: "checkbox",
+      header: () => {
+        return (
+          <Checkbox
+            checked={checkboxesState.every((value) => value === true)}
+            onChange={(e) => {
+              checkboxesState.forEach((element, index) => {
+                reactTableP.options.meta?.updateCheckBoxes(
+                  index,
+                  e.target.checked
+                );
+              });
+            }}
+          ></Checkbox>
+        );
+      },
+      cell: (props) => {
+        return (
+          <div style={{ margin: "10px" }}>
+            <Checkbox
+              checked={checkboxesState[props.row.index]}
+              onChange={(e) => {
+                console.log(e.target.checked);
+                console.log(props.row.index);
+                reactTableP.options.meta?.updateCheckBoxes(
+                  props.row.index,
+                  e.target.checked
+                );
+              }}
+            ></Checkbox>
+          </div>
+        );
+      },
+      enableSorting: false,
+    },
+    {
       accessorKey: "nameKasm",
       header: 'קס"מ',
       cell: (props) => {
-        return <div>{tiubimIdaniimHaktzaState[props.row.index].nameKasm}</div>;
+        return <div>{tiubimIdaniimDataState[props.row.index].nameKasm}</div>;
       },
     },
     {
@@ -59,7 +102,7 @@ export default function TableHakzaViewPoint({ tableTitle }) {
       cell: (props) => (
         //todo - update state
         <Input
-          defaultValue={tiubimIdaniimHaktzaState[props.row.index].category}
+          defaultValue={tiubimIdaniimDataState[props.row.index].category}
         ></Input>
       ),
     },
@@ -69,9 +112,7 @@ export default function TableHakzaViewPoint({ tableTitle }) {
       cell: (props) => (
         //todo - update state
         <Input
-          defaultValue={
-            tiubimIdaniimHaktzaState[props.row.index].madorInChargeOf
-          }
+          defaultValue={tiubimIdaniimDataState[props.row.index].madorInChargeOf}
         ></Input>
       ),
     },
@@ -81,9 +122,7 @@ export default function TableHakzaViewPoint({ tableTitle }) {
       cell: (props) => (
         <TextArea
           style={{ direction: "rtl" }}
-          defaultValue={
-            tiubimIdaniimHaktzaState[props.row.index].tiubExplanation
-          }
+          defaultValue={tiubimIdaniimDataState[props.row.index].tiubExplanation}
           onBlur={(e) => {
             reactTableP.options.meta?.updateTableData(
               props.row.index,
@@ -97,11 +136,16 @@ export default function TableHakzaViewPoint({ tableTitle }) {
     {
       accessorKey: "begda",
       header: "תאריך התחלה",
+      sortingFn: (rowA, rowB) => {
+        const dateA = dayjs(dayjs(rowA.original.begda).format("DD-MM-YYYY"));
+        const dateB = dayjs(dayjs(rowB.original.begda).format("DD-MM-YYYY"));
+        return dateA - dateB;
+      },
       cell: (props) => {
         return (
           <DatePicker
             defaultValue={dayjs(
-              tiubimIdaniimHaktzaState[props.row.index].begda,
+              tiubimIdaniimDataState[props.row.index].begda,
               dateFormat
             )}
             showToday={false}
@@ -121,11 +165,16 @@ export default function TableHakzaViewPoint({ tableTitle }) {
     {
       accessorKey: "endda",
       header: "תאריך סיום",
+      sortingFn: (rowA, rowB) => {
+        const dateA = dayjs(dayjs(rowA.original.begda).format("DD-MM-YYYY"));
+        const dateB = dayjs(dayjs(rowB.original.begda).format("DD-MM-YYYY"));
+        return dateA - dateB;
+      },
       cell: (props) => {
         return (
           <DatePicker
             defaultValue={dayjs(
-              tiubimIdaniimHaktzaState[props.row.index].endda,
+              tiubimIdaniimDataState[props.row.index].endda,
               dateFormat
             )}
             showToday={false}
@@ -148,7 +197,7 @@ export default function TableHakzaViewPoint({ tableTitle }) {
       cell: (props) => {
         return (
           <div style={{ textAlign: "center" }}>
-            {tiubimIdaniimHaktzaState[props.row.index].timeDiff.toFixed(2)}
+            {tiubimIdaniimDataState[props.row.index].timeDiff.toFixed(2)}
           </div>
         );
       },
@@ -160,7 +209,7 @@ export default function TableHakzaViewPoint({ tableTitle }) {
         return (
           <TextArea
             style={{ direction: "rtl" }}
-            defaultValue={tiubimIdaniimHaktzaState[props.row.index].comment}
+            defaultValue={tiubimIdaniimDataState[props.row.index].comment}
             onBlur={(e) => {
               reactTableP.options.meta?.updateTableData(
                 props.row.index,
@@ -179,7 +228,7 @@ export default function TableHakzaViewPoint({ tableTitle }) {
         return (
           <InputNumber
             defaultValue={
-              tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiKatzinBahir
+              tiubimIdaniimDataState[props.row.index].kvutzotMinuiKatzinBahir
             }
             onChange={(e) => {
               reactTableP.options.meta?.updateTableData(
@@ -202,7 +251,7 @@ export default function TableHakzaViewPoint({ tableTitle }) {
         return (
           <InputNumber
             defaultValue={
-              tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiKatzinMuvak
+              tiubimIdaniimDataState[props.row.index].kvutzotMinuiKatzinMuvak
             }
             onChange={(e) =>
               reactTableP.options.meta?.updateTableData(
@@ -225,8 +274,7 @@ export default function TableHakzaViewPoint({ tableTitle }) {
         return (
           <InputNumber
             defaultValue={
-              tiubimIdaniimHaktzaState[props.row.index]
-                .kvutzotMinuiKatzinRishoni
+              tiubimIdaniimDataState[props.row.index].kvutzotMinuiKatzinRishoni
             }
             onChange={(e) =>
               reactTableP.options.meta?.updateTableData(
@@ -249,7 +297,7 @@ export default function TableHakzaViewPoint({ tableTitle }) {
         return (
           <InputNumber
             defaultValue={
-              tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiNagadMuvak
+              tiubimIdaniimDataState[props.row.index].kvutzotMinuiNagadMuvak
             }
             onChange={(e) =>
               reactTableP.options.meta?.updateTableData(
@@ -272,7 +320,7 @@ export default function TableHakzaViewPoint({ tableTitle }) {
         return (
           <InputNumber
             defaultValue={
-              tiubimIdaniimHaktzaState[props.row.index].kvutzotMinuiNagadRishoni
+              tiubimIdaniimDataState[props.row.index].kvutzotMinuiNagadRishoni
             }
             onChange={(e) =>
               reactTableP.options.meta?.updateTableData(
@@ -292,7 +340,7 @@ export default function TableHakzaViewPoint({ tableTitle }) {
       accessorKey: "total",
       header: 'סה"כ',
       cell: (props) => {
-        return <div>{tiubimIdaniimHaktzaState[props.row.index].total}</div>;
+        return <div>{tiubimIdaniimDataState[props.row.index].total}</div>;
       },
       footer: () => {
         return sumForFooter("total");
@@ -309,8 +357,23 @@ export default function TableHakzaViewPoint({ tableTitle }) {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "right" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "right",
+          flexDirection: "row-reverse",
+        }}
+      >
         <Button onClick={showModal}>הוסף שורה</Button>
+        <div>&nbsp;&nbsp;</div>
+        <Button
+          disabled={!checkboxesState.find((e) => e == true)}
+          onClick={() => {
+            console.log("Hi");
+          }}
+        >
+          מחק שורות מסומנות
+        </Button>
       </div>
 
       <AddLineModal
@@ -322,9 +385,10 @@ export default function TableHakzaViewPoint({ tableTitle }) {
       <GenericTable
         tableTitle={tableTitle}
         columnsForTable={columns.reverse()}
-        dataForTable={tiubimIdaniimHaktzaState}
+        dataForTable={tiubimIdaniimDataState}
         retTableP={retTableP}
         retTableV={retTableV}
+        retCheckBoxesV={retCheckBoxesV}
       ></GenericTable>
     </div>
   );
