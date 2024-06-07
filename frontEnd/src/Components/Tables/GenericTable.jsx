@@ -16,7 +16,7 @@ export default function GenericTable({
   dataForTable,
   tableTitle,
   styleForRow = "body-table-row",
-  isVertical = 1,
+  isVertical = true,
   retTableP,
   retTableV,
 }) {
@@ -24,19 +24,19 @@ export default function GenericTable({
   const [data, setData] = useState(dataForTable);
 
   useEffect(() => {
-    if (tableTitle === "טיובים ידניים - הקצאה") {
+    if (tableTitle.includes("שינויים בהיבט")) {
       retTableP(table);
     }
   }, []);
 
   useEffect(() => {
-    if (tableTitle === "טיובים ידניים - הקצאה") {
+    if (tableTitle.includes("שינויים בהיבט")) {
       retTableV(data);
     }
   }, [data]);
 
   useEffect(() => {
-    if (tableTitle === "טיובים ידניים - הקצאה") {
+    if (tableTitle.includes("שינויים בהיבט")) {
       setData((prev) => {
         const temp = prev.map((item, index) => {
           return { ...item, rowNum: index };
@@ -111,7 +111,7 @@ export default function GenericTable({
     },
   });
 
-  if (isVertical === 1) {
+  if (isVertical) {
     return (
       <>
         <div>
@@ -198,7 +198,8 @@ export default function GenericTable({
       </>
     );
   }
-  if (isVertical === 0) {
+  //horizontal table
+  if (isVertical === false) {
     return (
       <>
         <div>

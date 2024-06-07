@@ -1,4 +1,4 @@
-import TableHakzaViewPoint from "./Components/TableHakzaViewPoint";
+import TableHakzaViewPoint from "./Components/TiubimIadniimTable";
 import { Button, Form, DatePicker } from "antd";
 import dayjs from "dayjs";
 
@@ -24,7 +24,11 @@ export default function TiubimIadaniim() {
       </div>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <TableHakzaViewPoint />
+        <TableHakzaViewPoint tableTitle={"שינויים בהיבט הקצאה"} />
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <TableHakzaViewPoint tableTitle={"שינויים בהיבט תקינה"} />
       </div>
     </>
   );

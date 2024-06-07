@@ -7,7 +7,11 @@ const columns = [
     accessorKey: "name",
     header: "מקצוע",
     cell: (props) => {
-      return <div style={{ direction: "rtl" }}>{props.getValue()}</div>;
+      return (
+        <div style={{ direction: "rtl", textAlign: "center" }}>
+          {props.getValue()}
+        </div>
+      );
     },
   },
   {
@@ -34,7 +38,7 @@ export default function Table1Input() {
       columnsForTable={columns}
       dataForTable={mekadmi_haktza_level1}
       tableTitle={"שלב 1- מקדמי הקצאה עבור קבוצת מקדם"}
-      isVertical={0}
+      isVertical={false}
       styleForRow={"body-table-row-input-1"}
     ></GenericTable>
   );

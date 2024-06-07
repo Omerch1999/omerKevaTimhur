@@ -1,2 +1,2 @@
 1.in each table change in PARAMETERS TABLE update the STATE in GENERIC TABLE.
-
+2.in generic table horizontal table make generic the headers with percentage of size etc...

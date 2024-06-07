@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Button } from "antd";
 import AddLineModal from "./AddLineModal";
 
-export default function TableHakzaViewPoint() {
+export default function TableHakzaViewPoint({ tableTitle }) {
   const dateFormat = "DD-MM-YYYY";
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tiubimIdaniimHaktzaState, SetTiubimIdaniimHaktzaState] = useState(
@@ -320,7 +320,7 @@ export default function TableHakzaViewPoint() {
       ></AddLineModal>
 
       <GenericTable
-        tableTitle={"טיובים ידניים - הקצאה"}
+        tableTitle={tableTitle}
         columnsForTable={columns.reverse()}
         dataForTable={tiubimIdaniimHaktzaState}
         retTableP={retTableP}
