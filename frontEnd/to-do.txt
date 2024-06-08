@@ -1,4 +1,4 @@
 1.in each table change in PARAMETERS TABLE update the STATE in GENERIC TABLE.
 2.in generic table horizontal table make generic the headers with percentage of size etc...
 3.date verification in "TiubimIadniimTable"(endda cant be before begda) - use the same method like the Modal and Form
-4. in "TiubimIadniimTable" repair the on change that doesnt allow the editing by typing and wait until finish
+
