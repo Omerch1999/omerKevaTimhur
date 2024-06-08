@@ -135,8 +135,8 @@ export default function TableHakzaViewPoint({ tableTitle, initialData }) {
       accessorKey: "begda",
       header: "תאריך התחלה",
       sortingFn: (rowA, rowB) => {
-        const dateA = dayjs(dayjs(rowA.original.begda).format("DD-MM-YYYY"));
-        const dateB = dayjs(dayjs(rowB.original.begda).format("DD-MM-YYYY"));
+        const dateA = dayjs(rowA.original.begda);
+        const dateB = dayjs(rowB.original.begda);
         return dateA - dateB;
       },
       cell: (props) => {
@@ -153,7 +153,7 @@ export default function TableHakzaViewPoint({ tableTitle, initialData }) {
               reactTableP.options.meta?.updateTableData(
                 props.row.index,
                 "begda",
-                dateString
+                date
               );
             }}
           ></DatePicker>
@@ -164,8 +164,8 @@ export default function TableHakzaViewPoint({ tableTitle, initialData }) {
       accessorKey: "endda",
       header: "תאריך סיום",
       sortingFn: (rowA, rowB) => {
-        const dateA = dayjs(dayjs(rowA.original.begda).format("DD-MM-YYYY"));
-        const dateB = dayjs(dayjs(rowB.original.begda).format("DD-MM-YYYY"));
+        const dateA = dayjs(rowA.original.begda);
+        const dateB = dayjs(rowB.original.begda);
         return dateA - dateB;
       },
       cell: (props) => {
@@ -182,7 +182,7 @@ export default function TableHakzaViewPoint({ tableTitle, initialData }) {
               reactTableP.options.meta?.updateTableData(
                 props.row.index,
                 "endda",
-                dateString
+                date
               );
             }}
           ></DatePicker>
@@ -228,11 +228,19 @@ export default function TableHakzaViewPoint({ tableTitle, initialData }) {
             defaultValue={
               tiubimIdaniimDataState[props.row.index].kvutzotMinuiKatzinBahir
             }
-            onChange={(e) => {
+            //onStep and onBlur because first for the arrows up and down. the second is for the typing on the keyboard. if you use only onChange when you use the keyboard after the first digit it update the state with the meta function and leave the cell
+            onStep={(e) => {
               reactTableP.options.meta?.updateTableData(
                 props.row.index,
                 "kvutzotMinuiKatzinBahir",
                 e
+              );
+            }}
+            onBlur={(e) => {
+              reactTableP.options.meta?.updateTableData(
+                props.row.index,
+                "kvutzotMinuiKatzinBahir",
+                parseInt(e.target.value)
               );
             }}
           ></InputNumber>
@@ -251,13 +259,20 @@ export default function TableHakzaViewPoint({ tableTitle, initialData }) {
             defaultValue={
               tiubimIdaniimDataState[props.row.index].kvutzotMinuiKatzinMuvak
             }
-            onChange={(e) =>
+            onStep={(e) => {
               reactTableP.options.meta?.updateTableData(
                 props.row.index,
                 "kvutzotMinuiKatzinMuvak",
                 e
-              )
-            }
+              );
+            }}
+            onBlur={(e) => {
+              reactTableP.options.meta?.updateTableData(
+                props.row.index,
+                "kvutzotMinuiKatzinMuvak",
+                parseInt(e.target.value)
+              );
+            }}
           ></InputNumber>
         );
       },
@@ -274,13 +289,20 @@ export default function TableHakzaViewPoint({ tableTitle, initialData }) {
             defaultValue={
               tiubimIdaniimDataState[props.row.index].kvutzotMinuiKatzinRishoni
             }
-            onChange={(e) =>
+            onStep={(e) => {
               reactTableP.options.meta?.updateTableData(
                 props.row.index,
                 "kvutzotMinuiKatzinRishoni",
                 e
-              )
-            }
+              );
+            }}
+            onBlur={(e) => {
+              reactTableP.options.meta?.updateTableData(
+                props.row.index,
+                "kvutzotMinuiKatzinRishoni",
+                parseInt(e.target.value)
+              );
+            }}
           ></InputNumber>
         );
       },
@@ -297,13 +319,20 @@ export default function TableHakzaViewPoint({ tableTitle, initialData }) {
             defaultValue={
               tiubimIdaniimDataState[props.row.index].kvutzotMinuiNagadMuvak
             }
-            onChange={(e) =>
+            onStep={(e) => {
               reactTableP.options.meta?.updateTableData(
                 props.row.index,
                 "kvutzotMinuiNagadMuvak",
                 e
-              )
-            }
+              );
+            }}
+            onBlur={(e) => {
+              reactTableP.options.meta?.updateTableData(
+                props.row.index,
+                "kvutzotMinuiNagadMuvak",
+                parseInt(e.target.value)
+              );
+            }}
           ></InputNumber>
         );
       },
@@ -320,13 +349,20 @@ export default function TableHakzaViewPoint({ tableTitle, initialData }) {
             defaultValue={
               tiubimIdaniimDataState[props.row.index].kvutzotMinuiNagadRishoni
             }
-            onChange={(e) =>
+            onStep={(e) => {
               reactTableP.options.meta?.updateTableData(
                 props.row.index,
                 "kvutzotMinuiNagadRishoni",
                 e
-              )
-            }
+              );
+            }}
+            onBlur={(e) => {
+              reactTableP.options.meta?.updateTableData(
+                props.row.index,
+                "kvutzotMinuiNagadRishoni",
+                parseInt(e.target.value)
+              );
+            }}
           ></InputNumber>
         );
       },

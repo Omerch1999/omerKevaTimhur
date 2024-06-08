@@ -65,8 +65,6 @@ export default function GenericTable({
       else if (data.length < checkboxesState.length) {
         setCheckboxesState((prev) => {
           const temp = Array(data.length).fill(false);
-          console.log(temp);
-          debugger;
           return temp;
         });
       }
@@ -149,8 +147,6 @@ export default function GenericTable({
       removeRowsFromTable: () => {
         setData((prev) => {
           const temp = prev.filter((e, index) => !checkboxesState[index]);
-          console.log(temp);
-          debugger;
           return temp;
         });
       },
