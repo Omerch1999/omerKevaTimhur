@@ -1,8 +1,8 @@
 import GenericTable from "../../../Tables/GenericTable";
-import { Checkbox, DatePicker, Input, InputNumber } from "antd";
+import { Checkbox, DatePicker, Input, InputNumber, Popconfirm } from "antd";
 import dayjs from "dayjs";
 import TextArea from "antd/es/input/TextArea";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "antd";
 import AddLineModal from "./AddLineModal";
 
@@ -76,8 +76,6 @@ export default function TableHakzaViewPoint({ tableTitle, initialData }) {
             <Checkbox
               checked={checkboxesState[props.row.index]}
               onChange={(e) => {
-                console.log(e.target.checked);
-                console.log(props.row.index);
                 reactTableP.options.meta?.updateCheckBoxes(
                   props.row.index,
                   e.target.checked
@@ -366,14 +364,23 @@ export default function TableHakzaViewPoint({ tableTitle, initialData }) {
       >
         <Button onClick={showModal}>הוסף שורה</Button>
         <div>&nbsp;&nbsp;</div>
-        <Button
-          disabled={!checkboxesState.find((e) => e == true)}
-          onClick={() => {
-            console.log("Hi");
+        <Popconfirm
+          title="מחק שורות מסומנות"
+          description="האם אתה בטוח כי ברצונך למחוק את השורות המסומנות"
+          okText="כן"
+          cancelText="לא"
+          onConfirm={() => {
+            reactTableP.options.meta?.removeRowsFromTable();
           }}
         >
-          מחק שורות מסומנות
-        </Button>
+          <Button
+            disabled={!checkboxesState.find((e) => e == true)}
+            danger={true}
+            type="primary"
+          >
+            מחק שורות מסומנות
+          </Button>
+        </Popconfirm>
       </div>
 
       <AddLineModal

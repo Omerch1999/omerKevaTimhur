@@ -51,6 +51,25 @@ export default function GenericTable({
         });
         return temp;
       });
+      //add new cell to the array of the checkboxes state when new row added
+      if (data.length > checkboxesState.length) {
+        setCheckboxesState((prev) => {
+          let temp = [...prev];
+          const amountNeedToAdd = data.length - checkboxesState.length;
+          for (let i = 0; i < amountNeedToAdd; i++) {
+            temp.push(false);
+          }
+          return temp;
+        });
+      } //delete the not extra checkboxes left and turn all off
+      else if (data.length < checkboxesState.length) {
+        setCheckboxesState((prev) => {
+          const temp = Array(data.length).fill(false);
+          console.log(temp);
+          debugger;
+          return temp;
+        });
+      }
     }
   }, [data.length]);
 
@@ -75,7 +94,6 @@ export default function GenericTable({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    useSortBy: getSortedRowModel(),
     meta: {
       updateTableData: (indexC, keyC, valueC) => {
         setData((prev) => {
@@ -128,23 +146,16 @@ export default function GenericTable({
         });
       },
 
-      removeRowsFromTable: (rowNum) => {
+      removeRowsFromTable: () => {
         setData((prev) => {
-          let temp = [...prev];
-          temp.splice(rowNum, 1);
+          const temp = prev.filter((e, index) => !checkboxesState[index]);
+          console.log(temp);
+          debugger;
           return temp;
         });
-
-        // setCheckboxesState((prev) => {
-        //   const temp = prev.splice(rowNum, 1, false); //change to false in rowNum
-        //   return temp;
-        // });
       },
 
       updateCheckBoxes: (rowNum, status) => {
-        console.log(checkboxesState);
-        console.log(rowNum);
-        console.log(status);
         setCheckboxesState((prev) => {
           let temp = [...prev];
           temp.splice(rowNum, 1, status);
