@@ -1,6 +1,9 @@
 const dataD = require("./dataB");
 const TiubimIdaniimHaktzaData = require("./dataB");
 const TiubimIdaniimTkinaData = require("./dataB");
+const dataShit = require("./dataShit");
+const fs = require("fs");
+const path = require("path");
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -26,8 +29,22 @@ app.post("/log", (req, res) => {
 });
 
 app.get("/gett", (req, res) => {
-  console.log(dataD);
-  res.send(dataD);
+  console.log(dataShit);
+  res.send(dataShit);
+});
+
+app.post("/gett", (req, res) => {
+  const newData = req.body;
+  dataShit.push(newData);
+  for (let i = 0; i < dataShit.length; i++) {
+    console.log(dataShit[i]);
+  }
+  fs.writeFileSync(
+    path.join(__dirname, "dataShit.js"),
+    `module.exports = ${JSON.stringify(dataShit, null, 2)};\n`
+  );
+
+  res.status(201).json(newData);
 });
 
 app.get("/getTiubimIdaniimHaktzaData", (req, res) => {
