@@ -12,9 +12,9 @@ import "../../Styles/TableStyles.css";
 import { Button } from "antd";
 
 export default function GenericTable({
-  columnsForTable,
-  dataForTable,
-  tableTitle,
+  columnsForTable = [],
+  dataForTable = [],
+  tableTitle = "no title",
   styleForRow = "body-table-row",
   isVertical = true,
   retTableP,

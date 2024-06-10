@@ -4,12 +4,14 @@ import TiubimIadaniim from "./Components/Screens/Tiubimiadaniim/TiubimIadaniimSc
 import LevelsNavBar from "./Components/NavBars/LevelsNavBar";
 
 import "./Styles/TableStyles.css";
+import TTry from "./Components/TTry/Ttry";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LevelsNavBar />,
     children: [
+      { path: "/", element: <TTry></TTry> },
       { path: "/input_screen", element: <InputScreen /> },
       { path: "/tiubim_idaniim", element: <TiubimIadaniim /> },
     ],
@@ -17,7 +19,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={router}></RouterProvider>;
 }
 
 export default App;

@@ -1,9 +1,45 @@
-import { TiubimIdaniimHaktzaData } from "../../../data.js";
-import TableHakzaViewPoint from "./Components/TiubimIadniimTable";
-import { Button, Form, DatePicker } from "antd";
-import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import TableTiubim from "./Components/TiubimIadniimTable";
+import { Button, Spin } from "antd";
+import axios from "axios";
 
 export default function TiubimIadaniim() {
+  const [initialHaktzaData, setInitialHaktzaData] = useState([]);
+  const [initialTkinaData, setInitialTkinaData] = useState();
+  const [fetchHaktzaData, setFetchHaktzaData] = useState(false);
+  const [fetchTkinaData, setFetchTkinaData] = useState(false);
+
+  useEffect(() => {
+    async function fetchInitialHaktzaData() {
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/getTiubimIdaniimHaktzaData"
+        );
+        console.log(response.data.TiubimIdaniimHaktzaData);
+        setInitialHaktzaData(response.data.TiubimIdaniimHaktzaData);
+      } catch (error) {
+        console.log("error");
+      } finally {
+        setFetchHaktzaData(true);
+      }
+    }
+
+    async function fetchInitialTkinaData() {
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/getTiubimIdaniimTkinaData"
+        );
+        setInitialTkinaData(response.data.TiubimIdaniimTkinaData);
+      } catch (error) {
+        console.log("error");
+      } finally {
+        setFetchTkinaData(true);
+      }
+    }
+
+    fetchInitialHaktzaData();
+    fetchInitialTkinaData();
+  }, []);
   return (
     <>
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -11,17 +47,25 @@ export default function TiubimIadaniim() {
       </div>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <TableHakzaViewPoint
-          tableTitle={"שינויים בהיבט הקצאה"}
-          initialData={TiubimIdaniimHaktzaData}
-        />
+        {!fetchHaktzaData ? (
+          <Spin />
+        ) : (
+          <TableTiubim
+            tableTitle={"שינויים בהיבט הקצאה"}
+            initialData={initialHaktzaData}
+          />
+        )}
       </div>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <TableHakzaViewPoint
-          tableTitle={"שינויים בהיבט תקינה"}
-          initialData={TiubimIdaniimHaktzaData}
-        />
+        {!fetchTkinaData ? (
+          <Spin />
+        ) : (
+          <TableTiubim
+            tableTitle={"שינויים בהיבט תקינה"}
+            initialData={initialTkinaData}
+          />
+        )}
       </div>
     </>
   );

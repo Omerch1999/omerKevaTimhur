@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Button } from "antd";
 import AddLineModal from "./AddLineModal";
 
-export default function TableHakzaViewPoint({ tableTitle, initialData }) {
+export default function TableTiubim({ tableTitle, initialData }) {
   const dateFormat = "DD-MM-YYYY";
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tiubimIdaniimDataState, SetTiubimIdaniimDataState] =
