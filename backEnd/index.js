@@ -47,6 +47,10 @@ app.post("/gett", (req, res) => {
   res.status(201).json(newData);
 });
 
+app.patch("/gett/:id", (req, res) => {
+  console.log("omer");
+});
+
 app.get("/getTiubimIdaniimHaktzaData", (req, res) => {
   console.log(TiubimIdaniimHaktzaData);
   res.send(TiubimIdaniimHaktzaData);

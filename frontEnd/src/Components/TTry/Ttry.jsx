@@ -9,12 +9,6 @@ const fetchTableData = async () => {
   return response;
 };
 export default function TTry() {
-  const [data, setData] = useState([
-    { id: 1, name: "Omer A", age: 25 },
-    { id: 2, name: "Omer B", age: 30 },
-  ]);
-  const [updateZ, setUpdateZ] = useState(true);
-
   // useEffect(() => {
   //   async function fetchTableData() {
   //     try {
@@ -31,26 +25,55 @@ export default function TTry() {
   //   fetchTableData();
   // }, []);
 
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+
   const columns = [
     { accessorKey: "id" },
-    { accessorKey: "name" },
+    {
+      accessorKey: "name",
+      cell: (props) => {
+        return (
+          <Input
+            defaultValue={props.getValue()}
+            onBlur={async (e) => {
+              console.log(props.row.original.id);
+              setId(props.row.original.id);
+              handleUpdate();
+            }}
+          ></Input>
+        );
+      },
+    },
     { accessorKey: "age" },
   ];
 
   const ABC = useQuery({ queryKey: ["a"], queryFn: fetchTableData });
   console.log(ABC.data?.data);
 
-  if (ABC.isLoading) {
-    console.log("isLoading");
-  }
+  const handleUpdate = async (e) => {
+    try {
+      console.log("try");
+      const response = await axios.patch(`http://localhost:3000/gett/${id}`, {
+        name,
+      });
+      if (response.status === 200) {
+        alert(`Data updated: ${JSON.stringify(response.data)}`);
+      } else {
+        alert("Failed to update data");
+      }
+    } catch (error) {
+      alert("Failed to update data");
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Input
-        onBlur={(e) => {
+        onBlur={async (e) => {
           const val = { name: e.target.value };
-          axios
-            .post("http://localhost:4000/gett", val)
-            .then((e) => console.log(e));
+          axios.post("http://localhost:4000/gett", val).then();
         }}
       ></Input>
       {ABC.isLoading ? (
