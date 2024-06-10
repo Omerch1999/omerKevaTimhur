@@ -15,7 +15,7 @@ export default function TTry() {
         const response = await axios.get(
           "http://localhost:4000/getTiubimIdaniimHaktzaData"
         );
-        setData(response.data);
+        setData(response.data.omer);
         console.log(response.data);
       } catch (error) {
         console.log("error");
