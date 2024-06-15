@@ -37,9 +37,8 @@ export default function TTry() {
           <Input
             defaultValue={props.getValue()}
             onBlur={async (e) => {
-              console.log(props.row.original.id);
               setId(props.row.original.id);
-              handleUpdate();
+              handleUpdate(e.target.value);
             }}
           ></Input>
         );
@@ -53,12 +52,12 @@ export default function TTry() {
 
   const handleUpdate = async (e) => {
     try {
-      console.log("try");
-      const response = await axios.patch(`http://localhost:3000/gett/${id}`, {
-        name,
+      console.log(e);
+      const response = await axios.patch(`http://localhost:4000/gett/${id}`, {
+        e,
       });
       if (response.status === 200) {
-        alert(`Data updated: ${JSON.stringify(response.data)}`);
+        console.log(response.data);
       } else {
         alert("Failed to update data");
       }
@@ -70,12 +69,7 @@ export default function TTry() {
 
   return (
     <>
-      <Input
-        onBlur={async (e) => {
-          const val = { name: e.target.value };
-          axios.post("http://localhost:4000/gett", val).then();
-        }}
-      ></Input>
+      d
       {ABC.isLoading ? (
         <Spin></Spin>
       ) : (
