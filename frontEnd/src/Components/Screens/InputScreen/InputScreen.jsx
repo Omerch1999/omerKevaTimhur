@@ -8,12 +8,13 @@ import TablePriceAirFrceInput from "./Components/TablePriceAirForceInput";
 import TablePriceAgatInput from "./Components/TablePriceAgatInput";
 import Table6InputTargetMatseva from "./Components/Table6InputTargetMatseva";
 import Table8Input from "./Components/Table8Input";
-
+import { Button } from "antd";
 import "../../../Styles/InputScreenStyles.css";
 
 export default function InputScreen() {
   return (
     <div>
+      <Button>שמור</Button>
       <div className="tables-in-page-first-row">
         <Table1Input></Table1Input>
       </div>

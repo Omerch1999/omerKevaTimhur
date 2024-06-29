@@ -1,4 +1,3 @@
-const dataD = require("./dataB");
 const TiubimIdaniimHaktzaData = require("./dataB");
 const TiubimIdaniimTkinaData = require("./dataB");
 const dataShit = require("./dataShit");
@@ -30,12 +29,31 @@ app.post("/log", (req, res) => {
 
 app.get("/gett", (req, res) => {
   // console.log(dataShit);
-  res.send(dataShit);
+  res.send(dataShit.omer);
+});
+
+app.get("/gett1", (req, res) => {
+  // console.log(dataShit);
+  res.send(dataShit.max);
 });
 
 app.post("/gett", (req, res) => {
   const newData = req.body;
-  dataShit.push(newData);
+  dataShit.omer.push(newData);
+  for (let i = 0; i < dataShit.length; i++) {
+    // console.log(dataShit[i]);
+  }
+  fs.writeFileSync(
+    path.join(__dirname, "dataShit.js"),
+    `module.exports = ${JSON.stringify(dataShit, null, 2)};\n`
+  );
+
+  res.status(201).json(newData);
+});
+
+app.post("/gett2", (req, res) => {
+  const newData = req.body;
+  dataShit.max.push(newData);
   for (let i = 0; i < dataShit.length; i++) {
     // console.log(dataShit[i]);
   }
@@ -51,13 +69,21 @@ app.patch("/gett/:id", (req, res) => {
   const id = req.params;
   const e = req.body;
   console.log(e);
-  console.log(id);
 
-  const item = dataShit.find((item) => item.id == id.id);
+  const item = dataShit.omer.find((item) => item.id == id.id);
   if (item) {
     item.name = e.e;
     console.log(item);
-    res.status(200).json(item);
+    const fileContent = `module.exports = ${JSON.stringify(
+      dataShit,
+      null,
+      2
+    )};`;
+    fs.writeFileSync(
+      path.join(__dirname, "dataShit.js"),
+      `module.exports = ${JSON.stringify(dataShit, null, 2)};\n`
+    );
+    res.status(200).json(dataShit.omer);
   } else {
     res.status(404).json({ message: "Item not found" });
   }
