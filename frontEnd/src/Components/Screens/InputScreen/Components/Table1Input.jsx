@@ -36,7 +36,7 @@ export default function Table1Input() {
   return (
     <GenericTable
       columnsForTable={columns}
-      dataForTable={mekadmi_haktza_level1}
+      // dataForTable={mekadmi_haktza_level1}
       tableTitle={"שלב 1- מקדמי הקצאה עבור קבוצת מקדם"}
       isVertical={false}
       styleForRow={"body-table-row-input-1"}

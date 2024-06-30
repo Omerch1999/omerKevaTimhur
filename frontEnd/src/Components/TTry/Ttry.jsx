@@ -126,7 +126,8 @@ export default function TTry() {
 
   return (
     <>
-      <Input
+      omer
+      {/* <Input
         defaultValue={"first table"}
         onBlur={(e) => {
           mutate(e.target.value);
@@ -162,7 +163,7 @@ export default function TTry() {
         data.data.map((item) => <div>{item.id}</div>)
       ) : (
         <div>loading...</div>
-      )}
+      )} */}
     </>
   );
 }

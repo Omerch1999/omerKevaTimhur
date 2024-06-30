@@ -1,6 +1,7 @@
 const TiubimIdaniimHaktzaData = require("./dataB");
 const TiubimIdaniimTkinaData = require("./dataB");
 const dataShit = require("./dataShit");
+const dataForInputScreen = require("./dataForInputScreen");
 const fs = require("fs");
 const path = require("path");
 
@@ -9,9 +10,6 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = 4000;
 const cors = require("cors");
-
-const getRoutes = require("./routes/getRoutes/getTableInput");
-app.use("/", getRoutes);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,6 +21,38 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.get("/mekadmi_haktza_level1", (req, res) => {
+  res.send(dataForInputScreen.mekadmi_haktza_level1);
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
+//
+//
+//
+//
+//
+
+//
+//
+//
+//
+//
+
+//
+//
+//
+//
+//
+
+//
+//
+//
+//
+//
 
 app.post("/log", (req, res) => {
   const state = req.body.dataToPass; // Get the state from the request body
@@ -100,8 +130,4 @@ app.get("/getTiubimIdaniimHaktzaData", (req, res) => {
 app.get("/getTiubimIdaniimTkinaData", (req, res) => {
   // console.log(TiubimIdaniimTkinaData);
   res.send(TiubimIdaniimTkinaData);
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
 });
