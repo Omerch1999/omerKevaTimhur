@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import "../../Styles/TableStyles.css";
 import { Button } from "antd";
+import { useQuery } from "@tanstack/react-query";
 
 export default function GenericTable({
   columnsForTable = [],
@@ -20,6 +21,7 @@ export default function GenericTable({
   retTableP,
   retTableV,
   retCheckBoxesV,
+  getUrl = "",
 }) {
   const columns = columnsForTable;
   const [data, setData] = useState(dataForTable);
@@ -27,6 +29,27 @@ export default function GenericTable({
   const [checkboxesState, setCheckboxesState] = useState(
     Array(dataForTable.length).fill(false)
   );
+
+  const fetchDbData = async () => {
+    const response = await axios.get("http://localhost:4000/gett");
+    console.log("response");
+    return response;
+  };
+
+  const {
+    data: fetchedDbData,
+    error,
+    isLoading,
+    isFetching,
+  } = useQuery({
+    queryKey: ["fetchedDbData"],
+    queryFn: fetchDbData,
+  });
+
+  if (dataForTable.length === 0) {
+    //if no data passed means we need get Function to get the data
+    console.log("empty");
+  }
 
   useEffect(() => {
     //return pointer to the table so we can use it for meta fuctions

@@ -10,6 +10,9 @@ const app = express();
 const port = 4000;
 const cors = require("cors");
 
+const getRoutes = require("./routes/getRoutes/getTableInput");
+app.use("/", getRoutes);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

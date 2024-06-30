@@ -6,7 +6,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const fetchTableData = async () => {
   const response = await axios.get("http://localhost:4000/gett");
-  console.log("response");
+  console.log("response1");
   return response;
 };
 const fetchTableData2 = async () => {
@@ -84,7 +84,8 @@ export default function TTry() {
 
   const add1 = async (e) => {
     console.log(e);
-    await axios.post("http://localhost:4000/gett", {
+    const url = "http://localhost:4000/gett";
+    await axios.post(url, {
       id: e,
     });
   };
@@ -99,7 +100,7 @@ export default function TTry() {
   const { mutate, isIdle, isPending, isSuccess } = useMutation({
     mutationFn: async (newPost) => {
       console.log("newPost", newPost);
-      // await add1(newPost);
+      await add1(newPost);
       console.log("newData", data.data);
     },
     onSuccess: () => {
