@@ -2,3 +2,6 @@
 2.in generic table horizontal table make generic the headers with percentage of size etc...
 3.date verification in "TiubimIadniimTable"(endda cant be before begda) - use the same method like the Modal and Form
 
+1.7.2024
+in table1 iinput connected to the backend. now i have to repiar the updateData meta function in the Generic table.
+so it will update it as needed

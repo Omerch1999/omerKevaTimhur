@@ -1,7 +1,9 @@
 import { mekadmi_itiaalut_level2, tax_darga_level2 } from "../../../../data";
 import GenericTable from "../../../Tables/GenericTable";
 import DropDownList from "../../../DropDownList";
-import { InputNumber } from "antd";
+import { InputNumber, Spin } from "antd";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const columns = [
   {
@@ -41,12 +43,49 @@ const columns = [
   },
 ];
 
+const fetchTableData = async () => {
+  const response = await axios.get(
+    "http://localhost:4000/mekadmi_itiaalut_level2"
+  );
+  return response;
+};
+
+const fetchTableData2 = async () => {
+  const response = await axios.get(
+    "http://localhost:4000/mekadmi_haktza_level1"
+  );
+  return response;
+};
+
 export default function Table2Input() {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["getTableData2"],
+    queryFn: fetchTableData,
+  });
+
+  const {
+    data: data2,
+    isLoading: isLoading2,
+    isError: isError2,
+  } = useQuery({
+    queryKey: ["getTableData2.1"],
+    queryFn: fetchTableData,
+  });
+
+  if (isError) {
+    return <div>error in get Data table 1 input</div>;
+  }
   return (
-    <GenericTable
-      columnsForTable={columns}
-      dataForTable={mekadmi_itiaalut_level2}
-      tableTitle={"שלב 2- מקדם התייעלות"}
-    ></GenericTable>
+    <>
+      {isLoading ? (
+        <Spin></Spin>
+      ) : (
+        <GenericTable
+          columnsForTable={columns}
+          dataForTable={data.data}
+          tableTitle={"שלב 2- מקדם התייעלות"}
+        ></GenericTable>
+      )}
+    </>
   );
 }

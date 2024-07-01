@@ -30,14 +30,14 @@ export default function GenericTable({
 
   useEffect(() => {
     //return pointer to the table so we can use it for meta fuctions
-    if (tableTitle.includes("שינויים בהיבט")) {
+    if (tableTitle.includes("שינויים בהיבט") || tableTitle.includes("שלב 1")) {
       retTableP(table);
     }
   }, []);
 
   useEffect(() => {
     //return data of the table to update the state at father component
-    if (tableTitle.includes("שינויים בהיבט")) {
+    if (tableTitle.includes("שינויים בהיבט") || tableTitle.includes("שלב 1")) {
       retTableV(data);
     }
   }, [data]);

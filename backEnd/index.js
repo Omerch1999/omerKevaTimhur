@@ -26,6 +26,14 @@ app.get("/mekadmi_haktza_level1", (req, res) => {
   res.send(dataForInputScreen.mekadmi_haktza_level1);
 });
 
+app.get("/tax_darga_level2", (req, res) => {
+  res.send(dataForInputScreen.tax_darga_level2);
+});
+
+app.get("/mekadmi_itiaalut_level2", (req, res) => {
+  res.send(dataForInputScreen.mekadmi_itiaalut_level2);
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
