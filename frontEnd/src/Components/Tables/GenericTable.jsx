@@ -128,8 +128,12 @@ export default function GenericTable({
                 }
                 return { ...item, [keyC]: valueC };
               }
+            } else {
+              if (index === indexC) {
+                return { ...item, [keyC]: valueC };
+              }
             }
-            return item;
+            return { ...item };
           });
 
           return newData;

@@ -6,14 +6,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Table1Input() {
+  //get pointer to the React table
   function retTableP(val) {
     setReactTableP(val);
   }
 
+  //get the data from the React table
   function retTableV(val) {
     setTableData(val);
-    console.log(val);
-    debugger;
   }
 
   const columns = [
