@@ -34,7 +34,9 @@ export default function GenericTable({
       tableTitle.includes("שינויים בהיבט") ||
       tableTitle.includes("שלב 1") ||
       tableTitle.includes("שלב 2") ||
-      tableTitle.includes("שלב 3")
+      tableTitle.includes("שלב 3") ||
+      tableTitle.includes("שלב 4") ||
+      tableTitle.includes("שלב 6- תמהיל")
     ) {
       retTableP(table);
     }
@@ -46,7 +48,9 @@ export default function GenericTable({
       tableTitle.includes("שינויים בהיבט") ||
       tableTitle.includes("שלב 1") ||
       tableTitle.includes("שלב 2") ||
-      tableTitle.includes("שלב 3")
+      tableTitle.includes("שלב 3") ||
+      tableTitle.includes("שלב 4") ||
+      tableTitle.includes("שלב 6- תמהיל")
     ) {
       retTableV(data);
     }
@@ -145,7 +149,7 @@ export default function GenericTable({
             }
             return { ...item };
           });
-
+          console.log(newData);
           return newData;
         });
       },

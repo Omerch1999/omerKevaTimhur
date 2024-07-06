@@ -19,6 +19,7 @@ export default function Table2Input() {
   function retTableV(val) {
     setTableData(val);
   }
+
   const columns = [
     {
       accessorKey: "tax_darga",

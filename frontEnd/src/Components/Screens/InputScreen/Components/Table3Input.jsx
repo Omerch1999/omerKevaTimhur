@@ -1,5 +1,4 @@
 import GenericTable from "../../../Tables/GenericTable";
-import { model_segel_tax_level3 } from "../../../../data";
 import { InputNumber } from "antd";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";

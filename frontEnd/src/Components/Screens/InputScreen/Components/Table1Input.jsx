@@ -85,6 +85,7 @@ export default function Table1Input() {
   if (isError) {
     return ErrorFechTableData(tableTitle);
   }
+
   return (
     <>
       {isLoading || tableData === undefined ? (

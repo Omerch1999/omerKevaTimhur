@@ -38,6 +38,22 @@ app.get("/model_segel_tax_level3", (req, res) => {
   res.send(dataForInputScreen.model_segel_tax_level3);
 });
 
+app.get("/compare_options_level4", (req, res) => {
+  res.send(dataForInputScreen.compare_options_level4);
+});
+
+app.get("/tamhil_level6", (req, res) => {
+  res.send(dataForInputScreen.tamhil_level6);
+});
+
+app.get("/tax_darga_level6", (req, res) => {
+  res.send(dataForInputScreen.tax_darga_level6);
+});
+
+app.get("/tax_targeted_percentage_level6", (req, res) => {
+  res.send(dataForInputScreen.tax_targeted_percentage_level6);
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
