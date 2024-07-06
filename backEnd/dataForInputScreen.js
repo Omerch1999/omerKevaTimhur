@@ -126,8 +126,17 @@ mekadmi_itiaalut_level2 = [
   { id: 3478, name: 'שט"ל 121', efficiencyTax: 14, tax_darga: "נגד מובהק" },
 ];
 
+model_segel_tax_level3 = [
+  {
+    id: 222233,
+    name: "נגד מובהק",
+    tax: 0.73,
+  },
+];
+
 module.exports = {
   mekadmi_haktza_level1,
   tax_darga_level2,
   mekadmi_itiaalut_level2,
+  model_segel_tax_level3,
 };

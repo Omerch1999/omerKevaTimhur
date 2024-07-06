@@ -69,9 +69,8 @@ export default function Table1Input() {
     isLoading,
     isError,
     isFetched,
-    isSuccess,
   } = useQuery({
-    queryKey: ["getTableDataInput1"],
+    queryKey: ["mekadmi_haktza_level1"],
     queryFn: () =>
       FetchTableData("http://localhost:4000/mekadmi_haktza_level1"),
   });

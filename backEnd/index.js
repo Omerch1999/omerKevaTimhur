@@ -34,6 +34,10 @@ app.get("/mekadmi_itiaalut_level2", (req, res) => {
   res.send(dataForInputScreen.mekadmi_itiaalut_level2);
 });
 
+app.get("/model_segel_tax_level3", (req, res) => {
+  res.send(dataForInputScreen.model_segel_tax_level3);
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

@@ -1,11 +1,14 @@
-import { tax_darga_level2 } from "../../../../data";
 import GenericTable from "../../../Tables/GenericTable";
 import DropDownList from "../../../DropDownList";
 import { InputNumber, Spin } from "antd";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useState } from "react";
+import { useQueries } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
+import {
+  FetchTableData,
+  ErrorFechTableData,
+} from "../../../../Hooks/HooksAxios";
 
+const tableTitle = "שלב 2- מקדם התייעלות";
 export default function Table2Input() {
   //get pointer to the React table
   function retTableP(val) {
@@ -24,9 +27,16 @@ export default function Table2Input() {
         const styleForCell = { scale: "90%", width: "6vw" };
         return (
           <DropDownList
-            optionsZ={tax_darga_level2}
-            defaultValueZ={props.getValue()}
+            optionsZ={resultsQueries[1].data.data}
+            defaultValueZ={tableData[props.row.index].tax_darga}
             styleZ={styleForCell}
+            onChange={(e) => {
+              reactTableP.options.meta.updateTableData(
+                props.row.index,
+                "tax_darga",
+                e
+              );
+            }}
           ></DropDownList>
         );
       },
@@ -39,7 +49,14 @@ export default function Table2Input() {
         return (
           <InputNumber
             style={styleForCell}
-            defaultValue={props.getValue()}
+            defaultValue={tableData[props.row.index].efficiencyTax}
+            onChange={(e) => {
+              reactTableP.options.meta.updateTableData(
+                props.row.index,
+                "efficiencyTax",
+                e
+              );
+            }}
             min={0}
             max={100}
             step={0.05}
@@ -51,51 +68,55 @@ export default function Table2Input() {
     {
       accessorKey: "name",
       header: 'קס"מ',
+      cell: (props) => {
+        return <div>{tableData[props.row.index].name}</div>;
+      },
     },
   ];
 
-  const fetchTableData = async () => {
-    const response = await axios.get(
-      "http://localhost:4000/mekadmi_itiaalut_level2"
-    );
-    return response;
-  };
-
-  const fetchTableData2 = async () => {
-    const response = await axios.get(
-      "http://localhost:4000/mekadmi_haktza_level1"
-    );
-    return response;
-  };
-
   const [reactTableP, setReactTableP] = useState();
   const [tableData, setTableData] = useState();
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["getTableData2"],
-    queryFn: fetchTableData,
+
+  const queries = [
+    {
+      id: "getTableDataInput2Rows",
+      url: "http://localhost:4000/mekadmi_itiaalut_level2",
+    },
+    {
+      id: "getTableDataInput2Options",
+      url: "http://localhost:4000/tax_darga_level2",
+    },
+  ];
+  const resultsQueries = useQueries({
+    queries: queries.map((query) => ({
+      queryKey: [query.id],
+      queryFn: () => FetchTableData(query.url),
+    })),
   });
 
-  // const {
-  //   data: data2,
-  //   isLoading: isLoading2,
-  //   isError: isError2,
-  // } = useQuery({
-  //   queryKey: ["getTableData2.1"],
-  //   queryFn: fetchTableData,
-  // });
+  useEffect(() => {
+    //update after fetch completed the state that holds the data
+    if (resultsQueries[0].isFetched && !resultsQueries[0].isError) {
+      setTableData(resultsQueries[0].data.data);
+    }
+  }, [resultsQueries[0].isFetched]);
 
-  if (isError) {
-    return <div>error in get Data table 1 input</div>;
+  if (resultsQueries[0].isError || resultsQueries[1].isError) {
+    return ErrorFechTableData(tableTitle);
   }
   return (
     <>
-      {isLoading ? (
+      {resultsQueries[0].isLoading ||
+      resultsQueries[1].isLoading ||
+      tableData === undefined ? (
         <Spin></Spin>
       ) : (
         <GenericTable
           columnsForTable={columns}
-          dataForTable={data.data}
-          tableTitle={"שלב 2- מקדם התייעלות"}
+          dataForTable={resultsQueries[0].data.data}
+          tableTitle={tableTitle}
+          retTableP={retTableP}
+          retTableV={retTableV}
         ></GenericTable>
       )}
     </>
