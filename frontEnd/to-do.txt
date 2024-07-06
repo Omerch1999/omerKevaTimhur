@@ -8,3 +8,4 @@ add save - post + write in the js file(to input screen)
 
 6.7.2024
 make all level 6 מס יעדי מצבות feching data from db.
+לסדר למחירון אגת וחייל האוויר פונקציות META

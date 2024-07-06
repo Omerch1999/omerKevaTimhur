@@ -2,8 +2,26 @@ import { InputNumber, Tooltip } from "antd";
 import { costs_agat } from "../../../../data";
 import GenericTable from "../../../Tables/GenericTable";
 import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Spin } from "antd";
+import {
+  FetchTableData,
+  ErrorFechTableData,
+} from "../../../../Hooks/HooksAxios";
 
 export default function TablePriceAgatInput() {
+  //get pointer to the React table
+  function retTableP(val) {
+    setReactTableP(val);
+  }
+
+  //get the data from the React table
+  function retTableV(val) {
+    setTableData(val);
+  }
+
+  //pointer for the table to get the meta functions
+  const [reactTableP, setReactTableP] = useState();
   const [tableData, setTableData] = useState(costs_agat);
   const [tamhilKatzar, setTamhilKatzar] = useState([
     costs_agat.find((row) => row.id === 222224).percentege,
@@ -183,11 +201,31 @@ export default function TablePriceAgatInput() {
     },
   ];
 
+  const {
+    data: initalFetchedData,
+    isLoading,
+    isError,
+    isFetched,
+  } = useQuery({
+    queryKey: ["costs_agat"],
+    queryFn: () => FetchTableData("http://localhost:4000/costs_agat"),
+  });
+
   return (
-    <GenericTable
-      tableTitle={'מחירון דרגות אג"ת'}
-      columnsForTable={columns}
-      dataForTable={costs_agat}
-    ></GenericTable>
+    <>
+      {isLoading || tableData === undefined ? (
+        <Spin></Spin>
+      ) : (
+        <>
+          <GenericTable
+            tableTitle={'מחירון דרגות אג"ת'}
+            columnsForTable={columns}
+            dataForTable={tableData}
+            retTableP={retTableP}
+            retTableV={retTableV}
+          ></GenericTable>
+        </>
+      )}
+    </>
   );
 }
