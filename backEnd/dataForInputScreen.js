@@ -228,6 +228,8 @@ tax_targeted_percentage_level6 = [
   { id: 3478, name: 'שט"ל 121', tax_darga: "לא ידוע" },
 ];
 
+hitkansutPercentage = [{ hitkansutPercentage: 2.57 }];
+
 module.exports = {
   mekadmi_haktza_level1,
   tax_darga_level2,
@@ -237,4 +239,5 @@ module.exports = {
   tamhil_level6,
   tax_darga_level6,
   tax_targeted_percentage_level6,
+  hitkansutPercentage,
 };

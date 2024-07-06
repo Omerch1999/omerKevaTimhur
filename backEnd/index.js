@@ -54,6 +54,10 @@ app.get("/tax_targeted_percentage_level6", (req, res) => {
   res.send(dataForInputScreen.tax_targeted_percentage_level6);
 });
 
+app.get("/hitkansutPercentage", (req, res) => {
+  res.send(dataForInputScreen.hitkansutPercentage);
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
