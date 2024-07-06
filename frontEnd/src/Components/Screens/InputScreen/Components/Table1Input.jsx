@@ -2,10 +2,18 @@ import { InputNumber } from "antd";
 import GenericTable from "../../../Tables/GenericTable";
 import { useQuery } from "@tanstack/react-query";
 import { Spin } from "antd";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { SaveButtonContext } from "../../../../Contexts/SaveButtonInputContext";
+import {
+  FetchTableData,
+  ErrorFechTableData,
+} from "../../../../Hooks/HooksAxios";
+
+const tableTitle = "שלב 1- מקדמי הקצאה עבור קבוצת מקדם";
 
 export default function Table1Input() {
+  const { logForCheck } = useContext(SaveButtonContext);
+
   //get pointer to the React table
   function retTableP(val) {
     setReactTableP(val);
@@ -53,13 +61,6 @@ export default function Table1Input() {
     },
   ];
 
-  const fetchTableData = async () => {
-    const response = await axios.get(
-      "http://localhost:4000/mekadmi_haktza_level1"
-    );
-    return response;
-  };
-
   //pointer for the table to get the meta functions
   const [reactTableP, setReactTableP] = useState();
   const [tableData, setTableData] = useState();
@@ -71,17 +72,19 @@ export default function Table1Input() {
     isSuccess,
   } = useQuery({
     queryKey: ["getTableDataInput1"],
-    queryFn: fetchTableData,
+    queryFn: () =>
+      FetchTableData("http://localhost:4000/mekadmi_haktza_level1"),
   });
 
   useEffect(() => {
-    if (isFetched) {
+    //update after fetch completed the state that holds the data
+    if (isFetched && !isError) {
       setTableData(initalFetchedData.data);
     }
   }, [isFetched]);
 
   if (isError) {
-    return <div>error in get Data table 1 input</div>;
+    return ErrorFechTableData(tableTitle);
   }
   return (
     <>
@@ -92,7 +95,7 @@ export default function Table1Input() {
           <GenericTable
             columnsForTable={columns}
             dataForTable={tableData}
-            tableTitle={"שלב 1- מקדמי הקצאה עבור קבוצת מקדם"}
+            tableTitle={tableTitle}
             retTableP={retTableP}
             retTableV={retTableV}
             isVertical={false}

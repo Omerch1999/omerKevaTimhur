@@ -12,7 +12,7 @@ module.exports = {
     },
     {
       "id": 3,
-      "name": "Omer Csd",
+      "name": "Omer Csd23",
       "age": 35
     },
     {
@@ -22,6 +22,9 @@ module.exports = {
     {
       "id": "first tabless",
       "name": "ss"
+    },
+    {
+      "id": "first tables"
     }
   ],
   "max": [
@@ -32,6 +35,12 @@ module.exports = {
     },
     {
       "id": "second tables"
+    },
+    {
+      "id": "second tablesss"
+    },
+    {
+      "id": "second tablez"
     }
   ]
 };

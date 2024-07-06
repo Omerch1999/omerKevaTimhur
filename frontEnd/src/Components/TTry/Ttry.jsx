@@ -1,14 +1,14 @@
 import axios from "axios";
-import { useRef, useState } from "react";
 import { Spin, Input } from "antd";
 import GenericTable from "../Tables/GenericTable";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-
-const fetchTableData = async () => {
-  const response = await axios.get("http://localhost:4000/gett");
-  console.log("response1");
-  return response;
-};
+import { FetchTableData } from "../../Hooks/HooksAxios";
+// const fetchTableData = async (url) => {
+//   const response = await axios.get(url);
+//   console.log("response1");
+//   GetPromiseHookZ("123");
+//   return response;
+// };
 const fetchTableData2 = async () => {
   const response = await axios.get("http://localhost:4000/gett1");
   console.log("response2");
@@ -73,7 +73,7 @@ export default function TTry() {
 
   const { data, error, isLoading, isFetching } = useQuery({
     queryKey: ["a"],
-    queryFn: fetchTableData,
+    queryFn: async () => FetchTableData("http://localhost:4000/gett"),
   });
   const {
     data: data2,
@@ -127,7 +127,7 @@ export default function TTry() {
   return (
     <>
       omer
-      {/* <Input
+      <Input
         defaultValue={"first table"}
         onBlur={(e) => {
           mutate(e.target.value);
@@ -163,7 +163,7 @@ export default function TTry() {
         data.data.map((item) => <div>{item.id}</div>)
       ) : (
         <div>loading...</div>
-      )} */}
+      )}
     </>
   );
 }
