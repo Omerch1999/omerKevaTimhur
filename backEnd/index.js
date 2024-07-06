@@ -58,6 +58,18 @@ app.get("/hitkansutPercentage", (req, res) => {
   res.send(dataForInputScreen.hitkansutPercentage);
 });
 
+app.get("/costs_agat", (req, res) => {
+  res.send(dataForInputScreen.costs_agat);
+});
+
+app.get("/costs_airforce", (req, res) => {
+  res.send(dataForInputScreen.costs_airforce);
+});
+
+app.get("/avarage_ratio_lvl8", (req, res) => {
+  res.send(dataForInputScreen.avarage_ratio_lvl8);
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

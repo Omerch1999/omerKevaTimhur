@@ -69,9 +69,7 @@ export default function Table2Input() {
     {
       accessorKey: "name",
       header: 'קס"מ',
-      cell: (props) => {
-        return <div>{tableData[props.row.index].name}</div>;
-      },
+      cell: (props) => tableData[props.row.index].name,
     },
   ];
 

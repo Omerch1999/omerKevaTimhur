@@ -230,6 +230,130 @@ tax_targeted_percentage_level6 = [
 
 hitkansutPercentage = [{ hitkansutPercentage: 2.57 }];
 
+costs_airforce = [
+  {
+    id: 222223,
+    name: "קצין בכיר",
+    price: 615000,
+  },
+  {
+    id: 222222,
+    name: "קצין מובהק",
+    price: 313000,
+  },
+  {
+    id: 222221,
+    name: "קצין ראשוני",
+    price: 188000,
+  },
+  {
+    id: 222233,
+    name: "נגד מובהק",
+    price: 250000,
+  },
+  {
+    id: 222230,
+    name: "מונחי ראשוני",
+    price: 137000,
+  },
+  {
+    id: 222232,
+    name: "נגד ראשוני",
+    price: 150000,
+  },
+
+  {
+    id: 222231,
+    name: "נגד קצר",
+    price: 125000,
+  },
+];
+
+costs_agat = [
+  {
+    id: 222223,
+    name: "קצין בכיר",
+    price: 634577,
+  },
+  {
+    id: 222222,
+    name: "קצין מובהק",
+    price: 386337,
+  },
+  {
+    id: 222221,
+    name: "קצין ראשוני",
+    price: 259338,
+    percentege: 0.25,
+  },
+  {
+    id: 222224,
+    name: "קצין קצר",
+    price: 206203,
+    percentege: 0.75,
+  },
+  {
+    id: 222220,
+    name: "קצין ראשוני ממוצע ותמהיל",
+    price: 219486.75,
+  },
+  {
+    id: 222233,
+    name: "נגד מובהק",
+    price: 280517,
+  },
+  {
+    id: 222230,
+    name: "מונחי ראשוני",
+    price: 154324,
+  },
+  {
+    id: 222232,
+    name: "נגד ראשוני ארוך",
+    price: 165384,
+  },
+
+  {
+    id: 222231,
+    name: "נגד ראשוני קצר",
+    price: 143264,
+  },
+];
+
+avarage_ratio_lvl8 = [
+  {
+    id: 222223,
+    name: "קצין בכיר",
+    ratio: 1,
+  },
+  {
+    id: 222222,
+    name: "קצין מובהק",
+    ratio: 1,
+  },
+  {
+    id: 222221,
+    name: "קצין ראשוני",
+    ratio: 0.75,
+  },
+  {
+    id: 222233,
+    name: "נגד מובהק",
+    ratio: 0.73,
+  },
+  {
+    id: 222232,
+    name: "נגד ראשוני",
+    ratio: 0.6,
+  },
+
+  {
+    id: 222231,
+    name: "נגד קצר",
+    ratio: 0.6,
+  },
+];
+
 module.exports = {
   mekadmi_haktza_level1,
   tax_darga_level2,
@@ -240,4 +364,7 @@ module.exports = {
   tax_darga_level6,
   tax_targeted_percentage_level6,
   hitkansutPercentage,
+  costs_agat,
+  costs_airforce,
+  avarage_ratio_lvl8,
 };
