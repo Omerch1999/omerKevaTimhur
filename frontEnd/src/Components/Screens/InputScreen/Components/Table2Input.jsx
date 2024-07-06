@@ -114,7 +114,7 @@ export default function Table2Input() {
       ) : (
         <GenericTable
           columnsForTable={columns}
-          dataForTable={resultsQueries[0].data.data}
+          dataForTable={tableData}
           tableTitle={tableTitle}
           retTableP={retTableP}
           retTableV={retTableV}
