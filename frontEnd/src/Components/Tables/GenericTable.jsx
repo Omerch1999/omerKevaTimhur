@@ -154,6 +154,7 @@ export default function GenericTable({
             return { ...item };
           });
           console.log(newData);
+          //debugger;
           return newData;
         });
       },

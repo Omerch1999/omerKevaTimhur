@@ -109,6 +109,7 @@ export default function TablePriceAirFrceInput() {
     {
       accessorKey: "name",
       header: "דרגה",
+      cell: (props) => tableData[props.row.index].name,
     },
   ];
 

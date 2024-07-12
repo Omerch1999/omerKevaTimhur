@@ -9,6 +9,7 @@ import {
   ErrorFechTableData,
 } from "../../../../Hooks/HooksAxios";
 
+const tableTitle = 'מחירון דרגות אג"ת';
 export default function TablePriceAgatInput() {
   //get pointer to the React table
   function retTableP(val) {
@@ -22,67 +23,88 @@ export default function TablePriceAgatInput() {
 
   //pointer for the table to get the meta functions
   const [reactTableP, setReactTableP] = useState();
-  const [tableData, setTableData] = useState(costs_agat);
-  const [tamhilKatzar, setTamhilKatzar] = useState([
-    costs_agat.find((row) => row.id === 222224).percentege,
-  ]); //save only katzin katzar because katzin rishoni will be: 1-katzinKatzar
+  const [tableData, setTableData] = useState();
+  const {
+    data: initalFetchedData,
+    isLoading,
+    isError,
+    isFetched,
+  } = useQuery({
+    queryKey: ["costs_agat"],
+    queryFn: () => FetchTableData("http://localhost:4000/costs_agat"),
+  });
 
-  //save the changes of input in state
-  function handleSetTableData(rowIndex, columnId, value) {
-    setTableData((prev) => {
-      const newData = prev.map((row, index) => {
-        if (rowIndex === index) {
-          return { ...prev[rowIndex], [columnId]: parseFloat(value) };
-        }
-        return row;
-      });
-      return newData;
-    });
+  useEffect(() => {
+    //update after fetch completed the state that holds the data
+    if (isFetched && !isError) {
+      setTableData(initalFetchedData.data);
+    }
+  }, [isFetched]);
+
+  if (isError) {
+    return ErrorFechTableData(tableTitle);
   }
 
-  //on change price of nagad katzar or nagad rishoni, it calculate the avarage price "מונחי ראשוני"
-  useEffect(() => {
-    const priceNagadKatsar = tableData.find((row) => row.id === 222231).price;
-    const priceNagadRishoni = tableData.find((row) => row.id === 222232).price;
+  // const [tamhilKatzar, setTamhilKatzar] = useState([
+  //   costs_agat.find((row) => row.id === 222224).percentege,
+  // ]); //save only katzin katzar because katzin rishoni will be: 1-katzinKatzar
 
-    setTableData((prev) => {
-      const newData = prev.map((item) => {
-        if (item.id === 222230) {
-          return { ...item, price: (priceNagadKatsar + priceNagadRishoni) / 2 };
-        }
-        return item;
-      });
-      return newData;
-    });
-  }, [
-    tableData.find((row) => row.id === 222231).price,
-    tableData.find((row) => row.id === 222232).price,
-  ]);
+  // //save the changes of input in state
+  // function handleSetTableData(rowIndex, columnId, value) {
+  //   setTableData((prev) => {
+  //     const newData = prev.map((row, index) => {
+  //       if (rowIndex === index) {
+  //         return { ...prev[rowIndex], [columnId]: parseFloat(value) };
+  //       }
+  //       return row;
+  //     });
+  //     return newData;
+  //   });
+  // }
 
-  //on change price of katzin katzar or katzin rishoni, it calculate the price "קצין ראשוני ממוצע ותמהיל"
-  useEffect(() => {
-    const priceKatzinKatzar = tableData.find((row) => row.id === 222224).price;
-    const priceKatzinRishoni = tableData.find((row) => row.id === 222221).price;
+  // //on change price of nagad katzar or nagad rishoni, it calculate the avarage price "מונחי ראשוני"
+  // useEffect(() => {
+  //   const priceNagadKatsar = tableData.find((row) => row.id === 222231).price;
+  //   const priceNagadRishoni = tableData.find((row) => row.id === 222232).price;
 
-    setTableData((prev) => {
-      const newData = prev.map((item) => {
-        if (item.id === 222220) {
-          return {
-            ...item,
-            price:
-              priceKatzinKatzar * tamhilKatzar +
-              priceKatzinRishoni * (1 - tamhilKatzar),
-          };
-        }
-        return item;
-      });
-      return newData;
-    });
-  }, [
-    tamhilKatzar,
-    tableData.find((row) => row.id === 222221).price,
-    tableData.find((row) => row.id === 222224).price,
-  ]);
+  //   setTableData((prev) => {
+  //     const newData = prev.map((item) => {
+  //       if (item.id === 222230) {
+  //         return { ...item, price: (priceNagadKatsar + priceNagadRishoni) / 2 };
+  //       }
+  //       return item;
+  //     });
+  //     return newData;
+  //   });
+  // }, [
+  //   tableData.find((row) => row.id === 222231).price,
+  //   tableData.find((row) => row.id === 222232).price,
+  // ]);
+
+  // //on change price of katzin katzar or katzin rishoni, it calculate the price "קצין ראשוני ממוצע ותמהיל"
+  // useEffect(() => {
+  //   const priceKatzinKatzar = tableData.find((row) => row.id === 222224).price;
+  //   const priceKatzinRishoni = tableData.find((row) => row.id === 222221).price;
+
+  //   setTableData((prev) => {
+  //     const newData = prev.map((item) => {
+  //       if (item.id === 222220) {
+  //         return {
+  //           ...item,
+  //           price:
+  //             priceKatzinKatzar * tamhilKatzar +
+  //             priceKatzinRishoni * (1 - tamhilKatzar),
+  //         };
+  //       }
+  //       return item;
+  //     });
+  //     return newData;
+  //   });
+  // }, [
+  //   tamhilKatzar,
+  //   tableData.find((row) => row.id === 222221).price,
+  //   tableData.find((row) => row.id === 222224).price,
+  // ]);
 
   const columns = [
     {
@@ -135,7 +157,45 @@ export default function TablePriceAgatInput() {
             defaultValue={tableData[props.row.index].price}
             addonAfter={"₪"}
             onChange={(value) => {
-              handleSetTableData(props.row.index, props.column.id, value);
+              reactTableP.options.meta.updateTableData(
+                props.row.index,
+                props.column.id,
+                value
+              );
+              if ([222236, 222235].includes(props.row.original.id)) {
+                //munahi rishoni
+                //if changed nagad katzar or nagad rishoni update the calculated value
+                //the values for the meta function is the index and not the id so we need
+                //to find the index of calculated value
+                reactTableP.options.meta.updateTableData(
+                  tableData.findIndex((e) => e.id === 222230),
+                  "price",
+                  (tableData.find((e) => e.id === 222235).price +
+                    tableData.find((e) => e.id === 222236).price +
+                    value -
+                    tableData.find((e) => e.id === props.row.original.id)
+                      .price) /
+                    2
+                );
+              }
+              if ([222221, 222224].includes(props.row.original.id)) {
+                //console.log(props.row.original.id);
+                reactTableP.options.meta.updateTableData(
+                  tableData.findIndex((e) => e.id === 222220),
+                  "price",
+                  tableData.find((e) => e.id === 222221).price *
+                    tableData.find((e) => e.id === 222221).percentege +
+                    tableData.find((e) => e.id === 222224).price *
+                      tableData.find((e) => e.id === 222224).percentege +
+                    value *
+                      tableData.find((e) => e.id === props.row.original.id)
+                        .percentege -
+                    tableData.find((e) => e.id === props.row.original.id)
+                      .price *
+                      tableData.find((e) => e.id === props.row.original.id)
+                        .percentege
+                );
+              }
             }}
           ></InputNumber>
         );
@@ -159,7 +219,7 @@ export default function TablePriceAgatInput() {
                 alignItems: "center",
               }}
             >
-              {props.getValue()}
+              {tableData[props.row.index].name}
               {tableData[props.row.index].id === 222221 ? (
                 <Tooltip
                   placement="topRight"
@@ -167,28 +227,70 @@ export default function TablePriceAgatInput() {
                 >
                   <InputNumber //katzin rishoni tamhil
                     style={styleForCell}
-                    defaultValue={(1 - tamhilKatzar).toFixed(2)}
+                    defaultValue={tableData[props.row.index].percentege.toFixed(
+                      2
+                    )}
                     min={0}
                     max={1}
                     step={0.01}
                     onChange={(value) => {
-                      setTamhilKatzar((1 - value).toFixed(2));
+                      //update katzin rishoni mekadem
+                      reactTableP.options.meta.updateTableData(
+                        props.row.index,
+                        "percentege",
+                        value
+                      );
+                      //update katzin katzar mekadem by 1-value
+                      reactTableP.options.meta.updateTableData(
+                        tableData.findIndex((e) => e.id === 222224),
+                        "percentege",
+                        1 - value
+                      );
+                      //update the total price of the "calculated avarage" value
+                      reactTableP.options.meta.updateTableData(
+                        tableData.findIndex((e) => e.id === 222220),
+                        "price",
+                        value * tableData.find((e) => e.id === 222221).price +
+                          (1 - value) *
+                            tableData.find((e) => e.id === 222224).price
+                      );
                     }}
                   ></InputNumber>
                 </Tooltip>
               ) : (
                 <Tooltip
                   placement="topRight"
-                  title="תמהיל- חישוב מחיר קצין ראשוני ממוצע ותמהיל"
+                  title="תמהיל- חישוב מחיר קצין קצר ממוצע ותמהיל"
                 >
                   <InputNumber //katzin katzar tamhil
                     style={styleForCell}
-                    defaultValue={tamhilKatzar}
+                    defaultValue={tableData[props.row.index].percentege.toFixed(
+                      2
+                    )}
                     min={0}
                     max={1}
                     step={0.01}
                     onChange={(value) => {
-                      setTamhilKatzar(value.toFixed(2));
+                      //update katzin katzar mekadem
+                      reactTableP.options.meta.updateTableData(
+                        props.row.index,
+                        "percentege",
+                        value
+                      );
+                      //update katzin rishoni mekadem by 1-value
+                      reactTableP.options.meta.updateTableData(
+                        tableData.findIndex((e) => e.id === 222221),
+                        "percentege",
+                        1 - value
+                      );
+                      //update the total price of the "calculated avarage" value
+                      reactTableP.options.meta.updateTableData(
+                        tableData.findIndex((e) => e.id === 222220),
+                        "price",
+                        value * tableData.find((e) => e.id === 222224).price +
+                          (1 - value) *
+                            tableData.find((e) => e.id === 222221).price
+                      );
                     }}
                   ></InputNumber>
                 </Tooltip>
@@ -196,20 +298,10 @@ export default function TablePriceAgatInput() {
             </div>
           );
         }
-        return <div>{props.getValue()}</div>;
+        return <div>{tableData[props.row.index].name}</div>;
       },
     },
   ];
-
-  const {
-    data: initalFetchedData,
-    isLoading,
-    isError,
-    isFetched,
-  } = useQuery({
-    queryKey: ["costs_agat"],
-    queryFn: () => FetchTableData("http://localhost:4000/costs_agat"),
-  });
 
   return (
     <>
@@ -218,7 +310,7 @@ export default function TablePriceAgatInput() {
       ) : (
         <>
           <GenericTable
-            tableTitle={'מחירון דרגות אג"ת'}
+            tableTitle={tableTitle}
             columnsForTable={columns}
             dataForTable={tableData}
             retTableP={retTableP}
