@@ -8,7 +8,7 @@ import {
   ErrorFechTableData,
 } from "../../../../Hooks/HooksAxios";
 
-const tableTitle = "מקדם הקצאה ממוצע לדרגה";
+const tableTitle = "שלב 8- מקדם הקצאה ממוצע לדרגה";
 
 export default function Table8Input() {
   //get pointer to the React table

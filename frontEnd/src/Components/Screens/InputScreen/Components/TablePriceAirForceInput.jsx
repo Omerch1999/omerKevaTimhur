@@ -1,42 +1,48 @@
 import GenericTable from "../../../Tables/GenericTable";
-import { costs_airforce } from "../../../../data";
 import { useEffect, useState } from "react";
-import { InputNumber, Tooltip } from "antd";
+import { InputNumber, Tooltip, Spin } from "antd";
+import { useQuery } from "@tanstack/react-query";
+import {
+  FetchTableData,
+  ErrorFechTableData,
+} from "../../../../Hooks/HooksAxios";
+
+const tableTitle = 'מחירון דרגות ח"א';
 
 export default function TablePriceAirFrceInput() {
-  const [tableData, setTableData] = useState(costs_airforce);
-
-  //save the changes of input in state
-  function handleSetTableData(rowIndex, columnId, value) {
-    setTableData((prev) => {
-      const newData = prev.map((row, index) => {
-        if (rowIndex === index) {
-          return { ...prev[rowIndex], [columnId]: parseFloat(value) };
-        }
-        return row;
-      });
-      return newData;
-    });
+  //get pointer to the React table
+  function retTableP(val) {
+    setReactTableP(val);
   }
 
-  //on change price of nagad katzar or nagad rishoni, it calculate the avarage price "מונחי ראשוני"
-  useEffect(() => {
-    const priceNagadkatsar = tableData.find((row) => row.id === 222231).price;
-    const priceNagadRishoni = tableData.find((row) => row.id === 222232).price;
+  //get the data from the React table
+  function retTableV(val) {
+    setTableData(val);
+  }
 
-    setTableData((prev) => {
-      const newData = prev.map((item) => {
-        if (item.id === 222230) {
-          return { ...item, price: (priceNagadkatsar + priceNagadRishoni) / 2 };
-        }
-        return item;
-      });
-      return newData;
-    });
-  }, [
-    tableData.find((row) => row.id === 222231).price,
-    tableData.find((row) => row.id === 222232).price,
-  ]);
+  //pointer for the table to get the meta functions
+  const [reactTableP, setReactTableP] = useState();
+  const [tableData, setTableData] = useState();
+  const {
+    data: initalFetchedData,
+    isLoading,
+    isError,
+    isFetched,
+  } = useQuery({
+    queryKey: ["costs_airforce"],
+    queryFn: () => FetchTableData("http://localhost:4000/costs_airforce"),
+  });
+
+  useEffect(() => {
+    //update after fetch completed the state that holds the data
+    if (isFetched && !isError) {
+      setTableData(initalFetchedData.data);
+    }
+  }, [isFetched]);
+
+  if (isError) {
+    return ErrorFechTableData(tableTitle);
+  }
 
   const columns = [
     {
@@ -59,8 +65,6 @@ export default function TablePriceAirFrceInput() {
               <InputNumber
                 style={styleForCellGreen}
                 defaultValue={tableData[props.row.index].price}
-                min={tableData[props.row.index].price}
-                max={tableData[props.row.index].price}
                 readOnly={true}
                 addonAfter={"₪"}
               ></InputNumber>
@@ -76,8 +80,27 @@ export default function TablePriceAirFrceInput() {
             max={1000000}
             step={1}
             addonAfter={"₪"}
-            onChange={(value) => {
-              handleSetTableData(props.row.index, props.column.id, value);
+            onChange={(value, s) => {
+              reactTableP.options.meta.updateTableData(
+                props.row.index,
+                "price",
+                value
+              );
+              if ([222232, 222231].includes(props.row.original.id)) {
+                //if changed nagad katzar or nagad rishoni update the calculated value
+                //the values for the meta function is the index and not the id so we need
+                //to find the index of calculated value
+                reactTableP.options.meta.updateTableData(
+                  tableData.findIndex((e) => e.id === 222230),
+                  "price",
+                  (tableData.find((e) => e.id === 222232).price +
+                    tableData.find((e) => e.id === 222231).price +
+                    value -
+                    tableData.find((e) => e.id === props.row.original.id)
+                      .price) /
+                    2
+                );
+              }
             }}
           ></InputNumber>
         );
@@ -90,10 +113,20 @@ export default function TablePriceAirFrceInput() {
   ];
 
   return (
-    <GenericTable
-      tableTitle={'מחירון דרגות ח"א'}
-      columnsForTable={columns}
-      dataForTable={tableData}
-    ></GenericTable>
+    <>
+      {isLoading || tableData === undefined ? (
+        <Spin></Spin>
+      ) : (
+        <>
+          <GenericTable
+            tableTitle={tableTitle}
+            columnsForTable={columns}
+            dataForTable={tableData}
+            retTableP={retTableP}
+            retTableV={retTableV}
+          ></GenericTable>
+        </>
+      )}
+    </>
   );
 }

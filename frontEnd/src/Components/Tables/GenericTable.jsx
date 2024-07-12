@@ -37,7 +37,8 @@ export default function GenericTable({
       tableTitle.includes("שלב 3") ||
       tableTitle.includes("שלב 4") ||
       tableTitle.includes("שלב 6") ||
-      tableTitle.includes("מקדם הקצאה ממוצע לדרגה")
+      tableTitle.includes("שלב 8") ||
+      tableTitle.includes("מחירון")
     ) {
       retTableP(table);
     }
@@ -52,7 +53,8 @@ export default function GenericTable({
       tableTitle.includes("שלב 3") ||
       tableTitle.includes("שלב 4") ||
       tableTitle.includes("שלב 6") ||
-      tableTitle.includes("מקדם הקצאה ממוצע לדרגה")
+      tableTitle.includes("שלב 8") ||
+      tableTitle.includes("מחירון")
     ) {
       retTableV(data);
     }
